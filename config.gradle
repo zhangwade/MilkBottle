@@ -1,0 +1,14 @@
+ext {
+
+    android = [    compileSdkVersion : 24,
+                   buildToolsVersion : "25.0.1",
+                   applicationId      : "com.wadezhang.milkbottle",
+                   minSdkVersion      : 15,
+                   targetSdkVersion  : 24,
+                   versionCode        : 1,
+                   versionName        : "1.0"]
+
+    dependencies = ["appcompat-v7"                       : 'com.android.support:appcompat-v7:24.2.1',
+                    "ButterKnife"                        : 'com.jakewharton:butterknife:8.4.0',
+                    "ButterKnife-AnnotationProcessor" : 'com.jakewharton:butterknife-compiler:8.4.0']
+}
