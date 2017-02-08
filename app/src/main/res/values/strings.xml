@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MilkBottle</string>
+    <string name="bottom_navigation_bar_1">牛奶</string>
+    <string name="bottom_navigation_bar_2">话题</string>
+    <string name="bottom_navigation_bar_3">消息</string>
+    <string name="bottom_navigation_bar_4">瓶子</string>
+    <string name="bottom_navigation_bar_5">我</string>
 </resources>

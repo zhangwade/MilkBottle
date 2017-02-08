@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initBottomNavigationBar();
+    }
 
+    private void initBottomNavigationBar(){
+        mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        mBottomNavigationBar.addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_1).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_2).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_3).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_4).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_5).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .setFirstSelectedPosition(0)
+                .initialise();
     }
 }
