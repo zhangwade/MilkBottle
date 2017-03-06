@@ -16,6 +16,11 @@ public class BaseFragment extends Fragment {
 
     protected Activity mActivity;  //避免getActivity()空指针
 
+    public static BaseFragment newInstance() {
+        BaseFragment mBaseFragment = new BaseFragment();
+        return mBaseFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) { //重新切换到该Fragment
