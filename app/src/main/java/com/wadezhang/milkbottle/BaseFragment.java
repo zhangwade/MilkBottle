@@ -23,6 +23,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (savedInstanceState != null) { //重新切换到该Fragment
             boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN); //获取该Fragment原本的状态
             FragmentTransaction ft = getFragmentManager().beginTransaction();

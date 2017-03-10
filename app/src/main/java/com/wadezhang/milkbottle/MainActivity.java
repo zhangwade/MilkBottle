@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bottom_navigation_bar) BottomNavigationBar mBottomNavigationBar;
 
-    FragmentTransaction mFragmentTransaction;
-    FragmentManager mFragmentManager;
-
     Fragment mShowingFragment, mReplaceFragment; //正在显示的Fragment，将要显示的Fragment
 
     @Override
@@ -35,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mFragmentManager = getFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
         if(savedInstanceState == null){
             setDefaultFragment();
         }
@@ -46,16 +41,18 @@ public class MainActivity extends AppCompatActivity {
     private void initBottomNavigationBar(){
         mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavigationBar.addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_1).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_2).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_3).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_4).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(,R.string.bottom_navigation_bar_5).setActiveColor(R.color.bottomNavigationBarActiveColor))
+        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_1).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_2).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_4).setActiveColor(R.color.bottomNavigationBarActiveColor))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_5).setActiveColor(R.color.bottomNavigationBarActiveColor))
                 .setFirstSelectedPosition(0)
                 .initialise();
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
             @Override
             public void onTabSelected(int position){//TODO:当重复点击同一Tab时，隐藏再显示可能会有跳转的画面
+                FragmentManager mFragmentManager = getFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                 if(mShowingFragment != null){
                     mFragmentTransaction.hide(mShowingFragment);
                 }
@@ -107,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setDefaultFragment(){
+        FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
         mShowingFragment = PostFragment.newInstance();
         mFragmentTransaction.add(R.id.framelayout_root, mShowingFragment, PostFragment.class.getName()).commit();
     }
