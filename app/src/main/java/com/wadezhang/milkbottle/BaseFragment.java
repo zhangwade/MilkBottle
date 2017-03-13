@@ -5,6 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by zhangxix on 2017/3/2.
@@ -22,8 +26,16 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(getClass().getSimpleName(), "onAttach");
+        this.mActivity = (Activity) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(getClass().getSimpleName(), "onCreate");
         if (savedInstanceState != null) { //重新切换到该Fragment
             boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN); //获取该Fragment原本的状态
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -37,13 +49,63 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden()); //保存该Fragment是否隐藏的状态
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        Log.d(getClass().getSimpleName(), "onCreateView");
+        return null;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (Activity) context;
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(getClass().getSimpleName(), "onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(getClass().getSimpleName(), "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(getClass().getSimpleName(), "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(getClass().getSimpleName(), "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(getClass().getSimpleName(), "onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(getClass().getSimpleName(), "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(getClass().getSimpleName(), "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(getClass().getSimpleName(), "onDetach");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden()); //保存该Fragment是否隐藏的状态
     }
 }

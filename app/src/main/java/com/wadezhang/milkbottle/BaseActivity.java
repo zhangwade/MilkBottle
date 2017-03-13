@@ -1,6 +1,5 @@
 package com.wadezhang.milkbottle;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,7 +44,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.d("BaseActivity", getClass().getSimpleName()+"onDestroy");
+        Log.d(getClass().getSimpleName(), "onDestroy");
         ActivityCollector.removeActivity(this);
     }
 

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -19,16 +21,19 @@ import butterknife.ButterKnife;
  * Created by zhangxix on 2017/1/24.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bottom_navigation_bar) BottomNavigationBar mBottomNavigationBar;
 
     Fragment mShowingFragment, mReplaceFragment; //正在显示的Fragment，将要显示的Fragment
 
+    private long clickTime = 0; // 第一次点击的时间
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.DayTheme);
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -107,5 +112,35 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
         mShowingFragment = PostFragment.newInstance();
         mFragmentTransaction.add(R.id.framelayout_root, mShowingFragment, PostFragment.class.getName()).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 是否触发按键为back键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else { // 如果不是back键正常响应
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+    /* 注意：重写onKeyDown()和onBackPressed()方法都能捕获Back的点击事件，
+    onKeyDown()兼容Android 1.0到Android 2.1，也是常规方法，Android 2.0开始又多出了
+    一种新的方法onBackPressed()，可以单独获取Back键的按下事件， 方法二的代码将两
+    种方法嵌套使用了，onBackPressed()方法会处理返回键的操作，不会向上传播，如果想
+    向上传播，则需要使用onKeyDown() */
+
+    private void exit() {
+        if ((System.currentTimeMillis() - clickTime) > 2000) {
+            Toast.makeText(this, "再按一次后退键退出程序", Toast.LENGTH_SHORT).show();
+            clickTime = System.currentTimeMillis();
+        } else {
+            ActivityCollector.finishAll();
+        }
     }
 }
