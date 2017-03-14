@@ -33,7 +33,6 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.DayTheme);
         super.onCreate(savedInstanceState);
-        ActivityCollector.addActivity(this);
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -141,6 +140,7 @@ public class MainActivity extends BaseActivity {
             clickTime = System.currentTimeMillis();
         } else {
             ActivityCollector.finishAll();
+            android.os.Process.killProcess(android.os.Process.myPid()); //杀掉当前进程
         }
     }
 }

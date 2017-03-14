@@ -25,6 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["RecyclerView"]
     compile rootProject.ext.dependencies["Bottom-Navigation-Bar"]
     compile rootProject.ext.dependencies["ButterKnife"]
     annotationProcessor rootProject.ext.dependencies["ButterKnife-AnnotationProcessor"]
