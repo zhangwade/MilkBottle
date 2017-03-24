@@ -5,22 +5,23 @@
 
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            style="@android:style/TextAppearance.Medium"
             android:text="@string/fragment_post_button_send"
-            android:gravity="center"
-            android:layout_margin="5dp"/>
+            android:gravity="center" />
 
         <LinearLayout android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_margin="5dp">
+            android:orientation="horizontal">
 
             <TextView android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                style="@android:style/TextAppearance.Medium"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:paddingRight="3dp"
@@ -32,20 +33,24 @@
 
             <TextView android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                style="@android:style/TextAppearance.Medium"
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="3dp"
                 android:text="发现"/>
         </LinearLayout>
 
-        <TextView android:layout_height="wrap_content"
+        <ImageButton android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="搜索"
-            android:gravity="center"
-            android:layout_margin="5dp"/>
+            android:background="@mipmap/search"/>
     </LinearLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="@android:color/darker_gray"/>
 
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"/>
 </LinearLayout>
