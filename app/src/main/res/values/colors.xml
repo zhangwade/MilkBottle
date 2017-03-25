@@ -3,8 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="dayWindowBackground">#ffffff</color>
-    <color name="nightWindowBackground">#484545</color>
-    <color name="bottomNavigationBarActiveColor">#484545</color>
-    <color name="bottomNavigationBarInActiveColor">#d2cece</color>
+
+    <color name="accentColor">#607D88</color>
+    <color name="highLight">#E53935</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="textColorFirst">#616161</color>
+    <color name="textColorSecond">#9E9E9E</color>
+
+    <color name="dayWindowBackground">#FFFFFF</color>
+    <color name="dayNavigationbarSelectedColor">#616161</color>
+
+    <color name="nightWindowBackground">#424242</color>
+    <color name="nightNonWindowBackground">#212121</color>
+    <color name="nightNavigationbarSelectedColor">#4DD0E1</color>
 </resources>

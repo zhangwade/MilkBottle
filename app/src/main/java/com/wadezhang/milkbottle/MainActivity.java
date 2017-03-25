@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayTheme);
+        setTheme(R.style.NightTheme); //TODO: 判断再切换主题
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
@@ -45,11 +45,11 @@ public class MainActivity extends BaseActivity {
     private void initBottomNavigationBar(){
         mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_1).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_2).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_4).setActiveColor(R.color.bottomNavigationBarActiveColor))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_5).setActiveColor(R.color.bottomNavigationBarActiveColor))
+        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_1))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_2))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_4))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_5))
                 .setFirstSelectedPosition(0)
                 .initialise();
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){

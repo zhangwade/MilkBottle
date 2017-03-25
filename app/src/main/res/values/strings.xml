@@ -6,4 +6,7 @@
     <string name="bottom_navigation_bar_4">瓶子</string>
     <string name="bottom_navigation_bar_5">我</string>
     <string name="fragment_post_button_send">发帖</string>
+    <string name="text_size_first">20sp</string>
+    <string name="text_size_second">15sp</string>
+    <string name="text_size_third">10sp</string>
 </resources>
