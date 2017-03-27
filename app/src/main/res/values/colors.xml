@@ -13,7 +13,7 @@
     <color name="dayWindowBackground">#FFFFFF</color>
     <color name="dayNavigationbarSelectedColor">#616161</color>
 
-    <color name="nightWindowBackground">#424242</color>
-    <color name="nightNonWindowBackground">#212121</color>
+    <color name="nightWindowBackground">#212121</color>
+    <color name="nightNonWindowBackground">#424242</color>
     <color name="nightNavigationbarSelectedColor">#4DD0E1</color>
 </resources>
