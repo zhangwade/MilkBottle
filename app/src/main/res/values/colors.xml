@@ -6,14 +6,15 @@
 
     <color name="accentColor">#607D88</color>
     <color name="highLight">#E53935</color>
-    <color name="divider">#E0E0E0</color>
     <color name="textColorFirst">#616161</color>
     <color name="textColorSecond">#9E9E9E</color>
 
     <color name="dayWindowBackground">#FFFFFF</color>
-    <color name="dayNavigationbarSelectedColor">#616161</color>
+    <color name="dayNavigationColor">#616161</color>
+    <color name="dayDividerColor">#E0E0E0</color>
 
     <color name="nightWindowBackground">#212121</color>
     <color name="nightNonWindowBackground">#424242</color>
-    <color name="nightNavigationbarSelectedColor">#4DD0E1</color>
+    <color name="nightNavigationColor">#4DD0E1</color>
+    <color name="nightDividerColor">#212121</color>
 </resources>

@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="diyColor">
         <attr name="navigationbarBackgroundColor" format="reference|color"/>
-        <attr name="navigationbarSelectedColor" format="reference|color"/>
+        <attr name="navigationColor" format="reference|color"/>
+        <attr name="dividerColor" format="reference|color"/>
     </declare-styleable>
 </resources>

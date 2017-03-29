@@ -12,6 +12,7 @@
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"
             android:text="@string/fragment_post_button_send"
             android:gravity="center" />
 
@@ -23,6 +24,7 @@
             <TextView android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 style="@android:style/TextAppearance.Medium"
+                android:textColor="?attr/navigationColor"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:paddingRight="3dp"
@@ -35,6 +37,7 @@
             <TextView android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 style="@android:style/TextAppearance.Medium"
+                android:textColor="?attr/navigationColor"
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="3dp"
@@ -48,7 +51,7 @@
 
     <TextView android:layout_height="0.5dp"
         android:layout_width="match_parent"
-        android:background="@color/divider"/>
+        android:background="?attr/dividerColor"/>
 
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
         android:layout_height="wrap_content"

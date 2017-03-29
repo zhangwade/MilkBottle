@@ -23,8 +23,9 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="colorControlNormal">@color/accentColor</item>
         <item name="android:textColor">@color/textColorFirst</item>
-        <item name="navigationbarSelectedColor">@color/dayNavigationbarSelectedColor</item>
+        <item name="navigationColor">@color/dayNavigationColor</item>
         <item name="navigationbarBackgroundColor">@color/dayWindowBackground</item>
+        <item name="dividerColor">@color/dayDividerColor</item>
     </style>
 
 
@@ -37,9 +38,8 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="colorControlNormal">@color/accentColor</item>
         <item name="android:textColor">@color/textColorFirst</item>
-        <item name="navigationbarSelectedColor">@color/nightNavigationbarSelectedColor</item>
+        <item name="navigationColor">@color/nightNavigationColor</item>
         <item name="navigationbarBackgroundColor">@color/nightNonWindowBackground</item>
+        <item name="dividerColor">@color/nightDividerColor</item>
     </style>
-
-
 </resources>

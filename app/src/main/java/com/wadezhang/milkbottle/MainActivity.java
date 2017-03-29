@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.NightTheme); //TODO: 判断再切换主题
+        setTheme(R.style.DayTheme); //TODO: 判断再切换主题
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
