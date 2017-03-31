@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="MilkBottle官方"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="推荐了"/>
+    </LinearLayout>
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="话题"/>
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="+关注"/>
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+        <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="昵称"/>
+
+    <ImageView android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="内容"/>
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:text="3-31"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/post_item_good_count"
+            android:layout_alignParentRight="true"
+            android:text="3"/>
+        <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_item_good_pic"
+            android:layout_toLeftOf="@id/post_item_good_count"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/post_item_comment_count"
+            android:layout_toLeftOf="@id/post_item_good_pic"
+            android:text="3"/>
+        <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_item_comment_pic"
+            android:layout_toLeftOf="@id/post_item_comment_count"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/post_item_forward_count"
+            android:layout_toLeftOf="@id/post_item_comment_pic"
+            android:text="3"/>
+        <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_item_forward_pic"
+            android:layout_toLeftOf="@id/post_item_forward_count"/>
+    </RelativeLayout>
+</LinearLayout>
