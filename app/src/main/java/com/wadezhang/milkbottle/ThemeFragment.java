@@ -23,9 +23,7 @@ public class ThemeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_test, container, false);
-        TextView mTextView = (TextView) mView.findViewById(R.id.text_fragment_test);
-        mTextView.setText("2");
+        View mView = inflater.inflate(R.layout.fragment_post_item, container, false);
         return mView;
     }
 }

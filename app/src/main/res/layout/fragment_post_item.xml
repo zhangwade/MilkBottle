@@ -5,30 +5,40 @@
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="3dp">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            style="@style/TextSecond"
             android:text="MilkBottle官方"/>
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            style="@style/TextSecond"
             android:text="推荐了"/>
     </LinearLayout>
 
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="话题"/>
+        android:padding="3dp"
+        android:text="话题"
+        style="@style/TextFirst"
+        android:id="@+id/textView" />
 
     <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="3dp">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            style="@style/TextFirst"
             android:text="+关注"/>
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@mipmap/ic_3d_rotation_black_24dp"
             android:layout_centerInParent="true"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,27 +48,36 @@
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="昵称"/>
+        android:padding="3dp"
+        android:text="昵称"
+        style="@style/TextSecond"
+        android:id="@+id/textView2" />
 
     <ImageView android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="3dp"/>
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="3dp"
+        style="@style/TextFirst"
         android:text="内容"/>
 
     <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="3dp">
 
         <TextView android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            style="@style/TextSecond"
             android:text="3-31"/>
 
         <TextView android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/post_item_good_count"
             android:layout_alignParentRight="true"
+            style="@style/TextSecond"
             android:text="3"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,9 +85,11 @@
             android:layout_toLeftOf="@id/post_item_good_count"/>
 
         <TextView android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:id="@+id/post_item_comment_count"
             android:layout_toLeftOf="@id/post_item_good_pic"
+            style="@style/TextSecond"
             android:text="3"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,9 +97,11 @@
             android:layout_toLeftOf="@id/post_item_comment_count"/>
 
         <TextView android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:id="@+id/post_item_forward_count"
             android:layout_toLeftOf="@id/post_item_comment_pic"
+            style="@style/TextSecond"
             android:text="3"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"

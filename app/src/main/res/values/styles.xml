@@ -42,4 +42,36 @@
         <item name="navigationbarBackgroundColor">@color/nightNonWindowBackground</item>
         <item name="dividerColor">@color/nightDividerColor</item>
     </style>
+
+    <!-- 白天小字主题 -->
+    <style name="DayThemeSmallText" parent="DayTheme">
+        <item name="textSizeFirst">@dimen/smallTextSizeFirst</item>
+        <item name="textSizeSecond">@dimen/smallTextSizeSecond</item>
+    </style>
+
+    <!-- 白天大字主题 -->
+    <style name="DayThemeBigText" parent="DayTheme">
+        <item name="textSizeFirst">@dimen/BigTextSizeFirst</item>
+        <item name="textSizeSecond">@dimen/BigTextSizeSecond</item>
+    </style>
+
+    <!-- 黑夜小字主题 -->
+    <style name="NightThemeSmallText" parent="NightTheme">
+        <item name="textSizeFirst">@dimen/smallTextSizeFirst</item>
+        <item name="textSizeSecond">@dimen/smallTextSizeSecond</item>
+    </style>
+
+    <!-- 黑夜大字主题 -->
+    <style name="NightThemeBigText" parent="NightTheme">
+        <item name="textSizeFirst">@dimen/BigTextSizeFirst</item>
+        <item name="textSizeSecond">@dimen/BigTextSizeSecond</item>
+    </style>
+
+    <style name="TextFirst">
+        <item name="android:textSize">?attr/textSizeFirst</item>
+    </style>
+
+    <style name="TextSecond">
+        <item name="android:textSize">?attr/textSizeSecond</item>
+    </style>
 </resources>

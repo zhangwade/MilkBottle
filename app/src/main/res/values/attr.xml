@@ -4,5 +4,8 @@
         <attr name="navigationbarBackgroundColor" format="reference|color"/>
         <attr name="navigationColor" format="reference|color"/>
         <attr name="dividerColor" format="reference|color"/>
+
+        <attr name="textSizeFirst" format="reference|dimension"/>
+        <attr name="textSizeSecond" format="reference|dimension"/>
     </declare-styleable>
 </resources>
