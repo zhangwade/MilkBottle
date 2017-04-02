@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="smallTextSizeFirst">15sp</dimen>
-    <dimen name="smallTextSizeSecond">10sp</dimen>
+    <dimen name="smallTextSizeFirst">20sp</dimen>
+    <dimen name="smallTextSizeSecond">15sp</dimen>
+    <dimen name="smallTextSizeThird">10sp</dimen>
 
-    <dimen name="BigTextSizeFirst">20sp</dimen>
-    <dimen name="BigTextSizeSecond">15sp</dimen>
+    <dimen name="BigTextSizeFirst">25sp</dimen>
+    <dimen name="BigTextSizeSecond">20sp</dimen>
+    <dimen name="BigTextSizeThird">15sp</dimen>
 </resources>
