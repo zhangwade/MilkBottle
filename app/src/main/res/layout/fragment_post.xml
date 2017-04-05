@@ -52,8 +52,9 @@
         android:layout_width="match_parent"
         android:background="?attr/dividerColor"/>
 
-    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_post_viewpager"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_weight="1"/>
 </LinearLayout>

@@ -6,7 +6,7 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,7 +29,7 @@
 
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,15 +60,15 @@
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="10dp"
         style="@style/TextSecond"
         android:text="内容"/>
 
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="5dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:id="@+id/post_item_comment_count"
             android:layout_toLeftOf="@id/post_item_good_pic"
             style="@style/TextThird"
@@ -104,7 +104,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:id="@+id/post_item_forward_count"
             android:layout_toLeftOf="@id/post_item_comment_pic"
             style="@style/TextThird"
