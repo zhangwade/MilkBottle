@@ -2,6 +2,7 @@ package com.wadezhang.milkbottle;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by zhangxix on 2017/3/6.
@@ -20,7 +22,10 @@ import butterknife.BindView;
 public class PostFragment extends BaseFragment {
 
     @BindView(R.id.fragment_post_viewpager) ViewPager mViewPager;
+    @BindView(R.id.text_friend_fragment_post) TextView mTopNavigationFriend;
+    @BindView(R.id.text_find_fragment_post) TextView mTopNavigationFind;
     ArrayList<Fragment> mViewPagerFragmentList;
+    FragmentManager mFragmentManager;
 
     public static PostFragment newInstance() {
         PostFragment mPostFragment = new PostFragment();
@@ -36,17 +41,21 @@ public class PostFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_post, container, false);
+        ButterKnife.bind(this, mView);
         initViewPager();
         return mView;
     }
 
     public void initViewPager(){
+        mFragmentManager = getChildFragmentManager();
         mViewPagerFragmentList = new ArrayList<Fragment>();
-        Fragment mVierPagerFriendsFragment = new VierPagerFriendsFragment();
-        Fragment mVierPagerFindFragment = new VierPagerFindFragment();
-        mViewPagerFragmentList.add(mVierPagerFriendsFragment);
-        mViewPagerFragmentList.add(mVierPagerFindFragment);
-        mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+        Fragment mViewPagerFriendFragment = mFragmentManager.findFragmentByTag(ViewPagerFriendFragment.class.getName());
+        if(mViewPagerFriendFragment == null) mViewPagerFriendFragment = ViewPagerFriendFragment.newInstance();
+        Fragment mViewPagerFindFragment = mFragmentManager.findFragmentByTag(ViewPagerFindFragment.class.getName());
+        if(mViewPagerFindFragment == null) mViewPagerFindFragment = ViewPagerFindFragment.newInstance();
+        mViewPagerFragmentList.add(mViewPagerFriendFragment);
+        mViewPagerFragmentList.add(mViewPagerFindFragment);
+        mViewPager.setAdapter(new ViewPagerAdapter(mFragmentManager));
         mViewPager.setCurrentItem(0);
     }
 
@@ -64,6 +73,17 @@ public class PostFragment extends BaseFragment {
         @Override
         public int getCount(){
             return mViewPagerFragmentList.size();
+        }
+    }
+
+    private class TopNavigationViewPagerOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view){
+            if(view.getId() == R.id.text_friend_fragment_post){
+                mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
+                mViewPager.setCurrentItem(0);
+            }
         }
     }
 }

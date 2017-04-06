@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  * Created by zhangxix on 2017/3/2.
  */
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends android.support.v4.app.Fragment {
 
     private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN"; //用于保存该Fragment是否隐藏的状态
 
@@ -38,7 +38,7 @@ public class BaseFragment extends Fragment {
         Log.d(getClass().getSimpleName(), "onCreate");
         if (savedInstanceState != null) { //重新切换到该Fragment
             boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN); //获取该Fragment原本的状态
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
             if (isSupportHidden) { //判断该隐藏还是显示
                 ft.hide(this);
             } else {

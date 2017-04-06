@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bottom_navigation_bar) BottomNavigationBar mBottomNavigationBar;
 
-    Fragment mShowingFragment, mReplaceFragment; //正在显示的Fragment，将要显示的Fragment
+    android.support.v4.app.Fragment mShowingFragment, mReplaceFragment; //正在显示的Fragment，将要显示的Fragment
 
     private long clickTime = 0; // 第一次点击的时间
 
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
             @Override
             public void onTabSelected(int position){//TODO:当重复点击同一Tab时，隐藏再显示可能会有跳转的画面
-                FragmentManager mFragmentManager = getFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                android.support.v4.app.FragmentManager mFragmentManager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                 if(mShowingFragment != null){
                     mFragmentTransaction.hide(mShowingFragment);
                 }
@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void setDefaultFragment(){
-        FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mShowingFragment = PostFragment.newInstance();
         mFragmentTransaction.add(R.id.framelayout_root, mShowingFragment, PostFragment.class.getName()).commit();
     }
