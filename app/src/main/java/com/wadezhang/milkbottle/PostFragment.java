@@ -43,6 +43,8 @@ public class PostFragment extends BaseFragment {
         View mView = inflater.inflate(R.layout.fragment_post, container, false);
         ButterKnife.bind(this, mView);
         initViewPager();
+        //mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
+        //mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         return mView;
     }
 
@@ -80,10 +82,8 @@ public class PostFragment extends BaseFragment {
 
         @Override
         public void onClick(View view){
-            if(view.getId() == R.id.text_friend_fragment_post){
-                mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
-                mViewPager.setCurrentItem(0);
-            }
+            if(view.getId() == R.id.text_friend_fragment_post) mViewPager.setCurrentItem(0);
+                else mViewPager.setCurrentItem(1);
         }
     }
 }

@@ -24,9 +24,10 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/text_friend_fragment_post"
                 style="@android:style/TextAppearance.Medium"
-                android:textColor="?attr/navigationColor"
+                android:clickable="true"
+                android:textColor="@drawable/viewpager_color_selector"
                 android:layout_toLeftOf="@+id/fragment_post_vertical_divider"
-                android:paddingRight="3dp"
+                android:layout_marginRight="5dp"
                 android:text="好友" />
 
             <TextView android:layout_height="match_parent"
@@ -39,9 +40,10 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/text_find_fragment_post"
                 style="@android:style/TextAppearance.Medium"
-                android:textColor="?attr/navigationColor"
+                android:clickable="true"
+                android:textColor="@drawable/viewpager_color_selector"
                 android:layout_toRightOf="@+id/fragment_post_vertical_divider"
-                android:paddingLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:text="发现"/>
         </RelativeLayout>
 

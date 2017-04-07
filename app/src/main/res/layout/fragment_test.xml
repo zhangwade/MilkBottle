@@ -5,6 +5,7 @@
 
     <TextView android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:text="TEST"
         android:textSize="24dp"
         android:id="@+id/text_fragment_test"/>
 </LinearLayout>

@@ -25,7 +25,7 @@ public class ViewPagerFindFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_post_viewpager, container, false);
+        View mView = inflater.inflate(R.layout.fragment_test, container, false);
         return mView;
     }
 }
