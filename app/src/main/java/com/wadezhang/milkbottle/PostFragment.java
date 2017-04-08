@@ -1,10 +1,12 @@
 package com.wadezhang.milkbottle;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +45,9 @@ public class PostFragment extends BaseFragment {
         View mView = inflater.inflate(R.layout.fragment_post, container, false);
         ButterKnife.bind(this, mView);
         initViewPager();
-        //mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
-        //mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
+        mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
+        mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
+        mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
         return mView;
     }
 
@@ -59,6 +62,7 @@ public class PostFragment extends BaseFragment {
         mViewPagerFragmentList.add(mViewPagerFindFragment);
         mViewPager.setAdapter(new ViewPagerAdapter(mFragmentManager));
         mViewPager.setCurrentItem(0);
+        mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -82,8 +86,45 @@ public class PostFragment extends BaseFragment {
 
         @Override
         public void onClick(View view){
-            if(view.getId() == R.id.text_friend_fragment_post) mViewPager.setCurrentItem(0);
-                else mViewPager.setCurrentItem(1);
+            switch(view.getId()){
+                case R.id.text_friend_fragment_post:
+                    if(mViewPager.getCurrentItem() != 0) mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.text_find_fragment_post:
+                    if(mViewPager.getCurrentItem() != 1) mViewPager.setCurrentItem(1);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private int getOldNavigationColor(){
+        return getResources().getColor(R.color.dayNavigationColor); //TODO:根据SharedPreferences判断当前主题的默认NavigationColor
+    }
+
+    private class onPageChangeListener implements ViewPager.OnPageChangeListener{
+
+        @Override
+        public void onPageScrollStateChanged(int state){}
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
+
+        @Override
+        public void onPageSelected(int position){
+            switch (position){
+                case 0 :
+                    mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
+                    mTopNavigationFind.setTextColor(getOldNavigationColor());
+                    break;
+                case 1 :
+                    mTopNavigationFind.setTextColor(getResources().getColor(R.color.highLight));
+                    mTopNavigationFriend.setTextColor(getOldNavigationColor());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

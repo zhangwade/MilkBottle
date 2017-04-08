@@ -24,8 +24,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/text_friend_fragment_post"
                 style="@android:style/TextAppearance.Medium"
-                android:clickable="true"
-                android:textColor="@drawable/viewpager_color_selector"
+                android:textColor="?attr/navigationColor"
                 android:layout_toLeftOf="@+id/fragment_post_vertical_divider"
                 android:layout_marginRight="5dp"
                 android:text="好友" />
@@ -40,8 +39,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/text_find_fragment_post"
                 style="@android:style/TextAppearance.Medium"
-                android:clickable="true"
-                android:textColor="@drawable/viewpager_color_selector"
+                android:textColor="?attr/navigationColor"
                 android:layout_toRightOf="@+id/fragment_post_vertical_divider"
                 android:layout_marginLeft="5dp"
                 android:text="发现"/>
