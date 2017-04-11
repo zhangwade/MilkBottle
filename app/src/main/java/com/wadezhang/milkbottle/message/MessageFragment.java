@@ -1,10 +1,13 @@
-package com.wadezhang.milkbottle;
+package com.wadezhang.milkbottle.message;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.wadezhang.milkbottle.BaseFragment;
+import com.wadezhang.milkbottle.R;
 
 /**
  * Created by zhangxix on 2017/3/6.

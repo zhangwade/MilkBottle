@@ -31,8 +31,8 @@
 
     <!-- 黑夜主题 -->
     <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/nightNonWindowBackground</item>
-        <item name="colorPrimaryDark">@color/nightNonWindowBackground</item>
+        <item name="colorPrimary">@color/nightWindowBackground</item>
+        <item name="colorPrimaryDark">@color/nightWindowBackground</item>
         <item name="android:windowBackground">@color/nightWindowBackground</item>
         <item name="android:textColorPrimary">@color/textColorFirst</item>
         <item name="colorAccent">@color/accentColor</item>

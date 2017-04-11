@@ -1,18 +1,17 @@
 package com.wadezhang.milkbottle;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.wadezhang.milkbottle.bottle.BottleFragment;
+import com.wadezhang.milkbottle.me.MeFragment;
+import com.wadezhang.milkbottle.message.MessageFragment;
+import com.wadezhang.milkbottle.post.PostFragment;
+import com.wadezhang.milkbottle.theme.ThemeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,20 +1,22 @@
-package com.wadezhang.milkbottle;
+package com.wadezhang.milkbottle.post;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.wadezhang.milkbottle.BaseFragment;
+import com.wadezhang.milkbottle.R;
 
 /**
  * Created by zhangxix on 2017/4/6.
  */
 
-public class ViewPagerFindFragment extends BaseFragment{
+public class ViewPagerFriendFragment extends BaseFragment {
 
-    public static ViewPagerFindFragment newInstance() {
-        ViewPagerFindFragment mViewPagerFindFragment = new ViewPagerFindFragment();
-        return mViewPagerFindFragment;
+    public static ViewPagerFriendFragment newInstance() {
+        ViewPagerFriendFragment mViewPagerFriendFragment = new ViewPagerFriendFragment();
+        return mViewPagerFriendFragment;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class ViewPagerFindFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_test, container, false);
+        View mView = inflater.inflate(R.layout.fragment_post_viewpager_item, container, false);
         return mView;
     }
 }
