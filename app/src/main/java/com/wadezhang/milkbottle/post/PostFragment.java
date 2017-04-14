@@ -1,17 +1,19 @@
 package com.wadezhang.milkbottle.post;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.search.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,8 @@ public class PostFragment extends BaseFragment {
     @BindView(R.id.fragment_post_viewpager) ViewPager mViewPager;
     @BindView(R.id.text_friend_fragment_post) TextView mTopNavigationFriend;
     @BindView(R.id.text_find_fragment_post) TextView mTopNavigationFind;
+    @BindView(R.id.fragment_post_imagebn_search) ImageButton mSearchButton;
+
     ArrayList<Fragment> mViewPagerFragmentList;
     FragmentManager mFragmentManager;
 
@@ -49,38 +53,27 @@ public class PostFragment extends BaseFragment {
         mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.actionStart(getActivity());
+            }
+        });
         return mView;
     }
 
     public void initViewPager(){
         mFragmentManager = getChildFragmentManager();
         mViewPagerFragmentList = new ArrayList<Fragment>();
-        Fragment mViewPagerFriendFragment = mFragmentManager.findFragmentByTag(ViewPagerFriendFragment.class.getName());
-        if(mViewPagerFriendFragment == null) mViewPagerFriendFragment = ViewPagerFriendFragment.newInstance();
-        Fragment mViewPagerFindFragment = mFragmentManager.findFragmentByTag(ViewPagerFindFragment.class.getName());
-        if(mViewPagerFindFragment == null) mViewPagerFindFragment = ViewPagerFindFragment.newInstance();
+        Fragment mViewPagerFriendFragment = mFragmentManager.findFragmentByTag(PostFriendFragment.class.getName());
+        if(mViewPagerFriendFragment == null) mViewPagerFriendFragment = PostFriendFragment.newInstance();
+        Fragment mViewPagerFindFragment = mFragmentManager.findFragmentByTag(PostFindFragment.class.getName());
+        if(mViewPagerFindFragment == null) mViewPagerFindFragment = PostFindFragment.newInstance();
         mViewPagerFragmentList.add(mViewPagerFriendFragment);
         mViewPagerFragmentList.add(mViewPagerFindFragment);
-        mViewPager.setAdapter(new ViewPagerAdapter(mFragmentManager));
+        mViewPager.setAdapter(new PostViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        public ViewPagerAdapter(android.support.v4.app.FragmentManager fragmentManager){
-            super(fragmentManager);
-        }
-
-        @Override
-        public Fragment getItem(int position){
-            return mViewPagerFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount(){
-            return mViewPagerFragmentList.size();
-        }
     }
 
     private class TopNavigationViewPagerOnClickListener implements View.OnClickListener{

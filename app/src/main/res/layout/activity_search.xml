@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -13,24 +15,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/search"
-            android:background="@color/dayNavigationColor"
+            android:background="@color/dayDividerColor"
             android:layout_marginRight="10dp"
             android:hint="搜索话题/昵称/ID"
+            style="@android:style/TextAppearance.Medium"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@android:style/TextAppearance.Medium"
+            android:id="@+id/activity_search_text_cancel"
             android:text="取消"/>
     </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:tabTextColor="@color/textColorFirst"
+        app:tabSelectedTextColor="@color/accentColor"
+        android:id="@+id/activity_search_tab"/>
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:id="@+id/activity_search_viewpager"/>
 </LinearLayout>
