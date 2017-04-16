@@ -13,7 +13,9 @@
         android:padding="10dp">
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"
+            android:id="@+id/activity_post_detail_button_back"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -22,19 +24,21 @@
             style="@android:style/TextAppearance.Medium"
             android:textColor="?attr/navigationColor"
             android:text="帖子详情"/>
-        <ImageButton
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="```"/>
     </LinearLayout>
-
+    <!--
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"> -->
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
@@ -78,6 +82,7 @@
                     </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
 
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,16 +124,25 @@
                         android:layout_weight="1"
                         android:text="赞"/>
                 </LinearLayout>
+                -->
+                <android.support.design.widget.TabLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabTextColor="@color/textColorFirst"
+                    app:tabSelectedTextColor="@color/accentColor"
+                    android:id="@+id/activity_post_detail_tab"/>
+
             </android.support.design.widget.AppBarLayout>
 
-            <FrameLayout
+            <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:id="@+id/activity_post_detail_viewpager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            </FrameLayout>
+            </android.support.v4.view.ViewPager>
         </android.support.design.widget.CoordinatorLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!-- </android.support.v4.widget.SwipeRefreshLayout> -->
 
     <LinearLayout
         android:layout_width="match_parent"

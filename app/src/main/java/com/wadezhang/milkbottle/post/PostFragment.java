@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 import com.wadezhang.milkbottle.search.SearchActivity;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class PostFragment extends BaseFragment {
     @BindView(R.id.fragment_post_viewpager) ViewPager mViewPager;
     @BindView(R.id.text_friend_fragment_post) TextView mTopNavigationFriend;
     @BindView(R.id.text_find_fragment_post) TextView mTopNavigationFind;
-    @BindView(R.id.fragment_post_imagebn_search) ImageButton mSearchButton;
+    @BindView(R.id.fragment_post_imagebn_search) ImageButton mButtonSearch;
+    @BindView(R.id.fragment_post_text_newpost) TextView mButtonNewPost;
 
     ArrayList<Fragment> mViewPagerFragmentList;
     FragmentManager mFragmentManager;
@@ -53,10 +55,16 @@ public class PostFragment extends BaseFragment {
         mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
+        mButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchActivity.actionStart(getActivity());
+            }
+        });
+        mButtonNewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostDetailActivity.actionStart(getActivity());
             }
         });
         return mView;

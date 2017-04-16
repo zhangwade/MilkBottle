@@ -1,4 +1,4 @@
-package com.wadezhang.milkbottle.search;
+package com.wadezhang.milkbottle.post_detail;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,14 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by zhangxix on 2017/4/14.
+ * Created by Administrator on 2017/4/16 0016.
  */
 
-public class SearchViewPagerAdapter extends FragmentPagerAdapter {
+public class PostDetailViewPagerAdapter extends FragmentPagerAdapter {
 
     ArrayList<Fragment> mFragmentList;
 
-    public SearchViewPagerAdapter(FragmentManager fragmentManager, ArrayList<Fragment> fragmentList){
+    public PostDetailViewPagerAdapter(FragmentManager fragmentManager, ArrayList<Fragment> fragmentList){
         super(fragmentManager);
         this.mFragmentList = fragmentList;
     }
@@ -33,11 +33,13 @@ public class SearchViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0 :
-                return "用户";
+                return "推荐";
             case 1 :
-                return "话题";
+                return "评论";
+            case 2 :
+                return "赞";
             default:
-                return "用户";
+                return "推荐";
         }
     }
 }

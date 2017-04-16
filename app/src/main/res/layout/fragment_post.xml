@@ -14,6 +14,7 @@
             style="@android:style/TextAppearance.Medium"
             android:textColor="?attr/navigationColor"
             android:text="@string/fragment_post_button_send"
+            android:id="@+id/fragment_post_text_newpost"
             android:gravity="center" />
 
         <RelativeLayout android:layout_width="wrap_content"

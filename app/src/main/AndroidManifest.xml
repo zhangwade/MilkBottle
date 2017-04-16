@@ -16,6 +16,8 @@
 
         <activity android:name=".search.SearchActivity"/>
 
+        <activity android:name=".post_detail.PostDetailActivity"/>
+
     </application>
 
 </manifest>
