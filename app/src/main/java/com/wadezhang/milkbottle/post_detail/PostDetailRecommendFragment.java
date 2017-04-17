@@ -27,7 +27,7 @@ public class PostDetailRecommendFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.activity_post_detail_recommend_item, container, false);
+        View mView = inflater.inflate(R.layout.activity_post_detail_viewpager, container, false);
         return mView;
     }
 }

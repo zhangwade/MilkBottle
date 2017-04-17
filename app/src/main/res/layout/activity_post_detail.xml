@@ -37,17 +37,19 @@
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <!--
                 <android.support.design.widget.CollapsingToolbarLayout
-                    app:layout_scrollFlags="scroll"
+                    app:layout_scrollFlags="scroll|enterAlways"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        app:layout_scrollFlags="scroll|enterAlways"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -81,7 +83,42 @@
                             android:text="内容"/>
                     </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
+                -->
 
+                <LinearLayout
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="话题"
+                        style="@style/TextFirst"
+                        android:id="@+id/textView"
+                        android:padding="10dp"/>
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_3d_rotation_black_24dp"
+                        android:layout_gravity="center"/>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="昵称"
+                        style="@style/TextSecond"
+                        android:textColor="@color/textColorSecond"
+                        android:id="@+id/textView2"
+                        android:padding="10dp"/>
+
+                    <ImageView android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        style="@style/TextSecond"
+                        android:text="内容"/>
+                </LinearLayout>
                 <!--
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -130,17 +167,16 @@
                     android:layout_height="wrap_content"
                     app:tabTextColor="@color/textColorFirst"
                     app:tabSelectedTextColor="@color/accentColor"
-                    android:id="@+id/activity_post_detail_tab"/>
+                    android:id="@+id/activity_post_detail_tab" />
 
             </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="10dp"
-                android:id="@+id/activity_post_detail_viewpager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            </android.support.v4.view.ViewPager>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:id="@+id/activity_post_detail_viewpager"/>
         </android.support.design.widget.CoordinatorLayout>
     <!-- </android.support.v4.widget.SwipeRefreshLayout> -->
 
