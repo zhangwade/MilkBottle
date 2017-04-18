@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@android:style/TextAppearance.Medium"
+            android:text="取消"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            style="@android:style/TextAppearance.Medium"
+            android:text="发帖"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@android:style/TextAppearance.Medium"
+            android:text="发布"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="?attr/textSizeFirst"
+            android:text="话题"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="?attr/textSizeFirst"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="选择话题 +"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="?attr/textSizeFirst"
+            android:textColor="@color/textColorSecond"
+            android:text="修改 >"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:hint="输入文字"
+        android:gravity="top"
+        android:padding="10dp"
+        android:textSize="?attr/textSizeSecond"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:scaleType="center"
+        android:src="@mipmap/ic_3d_rotation_black_24dp"
+        android:background="@drawable/square_image_view"/>
+</LinearLayout>
