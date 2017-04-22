@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.wadezhang.milkbottle.bottle.BottleFragment;
+import com.wadezhang.milkbottle.book.BookFragment;
 import com.wadezhang.milkbottle.me.MeFragment;
 import com.wadezhang.milkbottle.message.MessageFragment;
 import com.wadezhang.milkbottle.post.PostFragment;
@@ -79,10 +79,10 @@ public class MainActivity extends BaseActivity {
                             mFragmentTransaction.add(R.id.framelayout_root, mReplaceFragment, MessageFragment.class.getName());
                         break;
                     case 3 :
-                        mReplaceFragment = mFragmentManager.findFragmentByTag(BottleFragment.class.getName());
-                        if(mReplaceFragment == null) mReplaceFragment = BottleFragment.newInstance();
+                        mReplaceFragment = mFragmentManager.findFragmentByTag(BookFragment.class.getName());
+                        if(mReplaceFragment == null) mReplaceFragment = BookFragment.newInstance();
                         if(!mReplaceFragment.isAdded())
-                            mFragmentTransaction.add(R.id.framelayout_root, mReplaceFragment, BottleFragment.class.getName());
+                            mFragmentTransaction.add(R.id.framelayout_root, mReplaceFragment, BookFragment.class.getName());
                         break;
                     case 4 :
                         mReplaceFragment = mFragmentManager.findFragmentByTag(MeFragment.class.getName());
