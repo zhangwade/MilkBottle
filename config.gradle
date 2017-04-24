@@ -14,5 +14,7 @@ ext {
                     "ButterKnife-AnnotationProcessor" : 'com.jakewharton:butterknife-compiler:8.4.0',
                     "Bottom-Navigation-Bar"             : 'com.ashokvarma.android:bottom-navigation-bar:1.3.0',
                     "Material-Design"                    : 'com.android.support:design:24.1.1',
-                    "CardView"                            : 'com.android.support:cardview-v7:24.2.1']
+                    "CardView"                            : 'com.android.support:cardview-v7:24.2.1',
+                    "SwipeToLoadLayout"                 : 'com.github.Aspsine:SwipeToLoadLayout:1.0.4',
+                    "Bmob-Sdk"                            : 'cn.bmob.android:bmob-sdk:3.5.5']
 }

@@ -12,7 +12,7 @@ import com.wadezhang.milkbottle.R;
  * Created by Administrator on 2017/4/22 0022.
  */
 
-public class BookShopFragment extends BaseFragment {
+public class BookShopFragment extends BaseFragment implements BookShopContract.View {
 
     public static BookShopFragment newInstance() {
         BookShopFragment mBookShopFragment = new BookShopFragment();

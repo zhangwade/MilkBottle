@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_book_viewpager_swipe_to_load_layout">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.wadezhang.milkbottle.RefreshHeaderView
+        android:id="@id/swipe_refresh_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+        android:gravity="center"
+        android:layout_height="100dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.wadezhang.milkbottle.LoadMoreFooterView
+        android:id="@id/swipe_load_more_footer"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="100dp" />
+</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
