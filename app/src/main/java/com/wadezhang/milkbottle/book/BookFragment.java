@@ -13,6 +13,7 @@ import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +28,7 @@ public class BookFragment extends BaseFragment {
     @BindView(R.id.fragment_book_text_shop) TextView mTopNavigationShop;
     @BindView(R.id.fragment_book_text_mine) TextView mTopNavigationMine;
 
-    ArrayList<Fragment> mViewPagerFragmentList;
+    List<Fragment> mViewPagerFragmentList;
     FragmentManager mFragmentManager;
 
     public static BookFragment newInstance() {
@@ -54,7 +55,7 @@ public class BookFragment extends BaseFragment {
 
     public void initViewPager(){
         mFragmentManager = getChildFragmentManager();
-        mViewPagerFragmentList = new ArrayList<Fragment>();
+        mViewPagerFragmentList = new ArrayList<>();
         Fragment mViewPagerShopFragment = mFragmentManager.findFragmentByTag(BookShopFragment.class.getName());
         if(mViewPagerShopFragment == null) mViewPagerShopFragment = BookShopFragment.newInstance();
         Fragment mViewPagerMineFragment = mFragmentManager.findFragmentByTag(BookMineFragment.class.getName());
@@ -63,6 +64,7 @@ public class BookFragment extends BaseFragment {
         mViewPagerFragmentList.add(mViewPagerMineFragment);
         mViewPager.setAdapter(new BookViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
+        new BookShopPresenter((BookShopFragment) mViewPagerShopFragment);//MVP
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 

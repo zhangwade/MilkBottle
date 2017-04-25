@@ -31,6 +31,7 @@ dependencies {
     compile rootProject.ext.dependencies["CardView"]
     compile rootProject.ext.dependencies["Bmob-Sdk"]
     compile rootProject.ext.dependencies["SwipeToLoadLayout"]
+    compile rootProject.ext.dependencies["Glide"]
     compile rootProject.ext.dependencies["ButterKnife"]
     annotationProcessor rootProject.ext.dependencies["ButterKnife-AnnotationProcessor"]
     testCompile 'junit:junit:4.12'

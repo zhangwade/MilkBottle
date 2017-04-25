@@ -15,6 +15,7 @@ import com.wadezhang.milkbottle.theme.ThemeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.Bmob;
 
 /**
  * Created by zhangxix on 2017/1/24.
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
         super.onCreate(savedInstanceState);
+        Bmob.initialize(this, "88948b7c6b14026453c55e34644c8b2c");
         SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/22 0022.
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 
 public class BookViewPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> mFragmentList;
+    List<Fragment> mFragmentList;
 
-    public BookViewPagerAdapter(FragmentManager fragmentManager, ArrayList<Fragment> fragmentList){
+    public BookViewPagerAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList){
         super(fragmentManager);
         this.mFragmentList = fragmentList;
     }
