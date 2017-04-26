@@ -58,13 +58,14 @@ public class BookFragment extends BaseFragment {
         mViewPagerFragmentList = new ArrayList<>();
         Fragment mViewPagerShopFragment = mFragmentManager.findFragmentByTag(BookShopFragment.class.getName());
         if(mViewPagerShopFragment == null) mViewPagerShopFragment = BookShopFragment.newInstance();
-        Fragment mViewPagerMineFragment = mFragmentManager.findFragmentByTag(BookMineFragment.class.getName());
-        if(mViewPagerMineFragment == null) mViewPagerMineFragment = BookMineFragment.newInstance();
+        Fragment mViewPagerShelfFragment = mFragmentManager.findFragmentByTag(BookShelfFragment.class.getName());
+        if(mViewPagerShelfFragment == null) mViewPagerShelfFragment = BookShelfFragment.newInstance();
         mViewPagerFragmentList.add(mViewPagerShopFragment);
-        mViewPagerFragmentList.add(mViewPagerMineFragment);
+        mViewPagerFragmentList.add(mViewPagerShelfFragment);
         mViewPager.setAdapter(new BookViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
         new BookShopPresenter((BookShopFragment) mViewPagerShopFragment);//MVP
+        new BookShelfPresenter((BookShelfFragment) mViewPagerShelfFragment);
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 

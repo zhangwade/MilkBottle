@@ -14,7 +14,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:id="@+id/fragment_book_viewpager_item_img_photo"
             android:scaleType="centerCrop"/>
         <TextView

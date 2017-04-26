@@ -33,17 +33,23 @@ public class BookShelfPresenter implements BookShelfContract.Presenter {
 
     public void getBook(){
         BmobQuery<BookShelf> mQuery = new BmobQuery<BookShelf>();
-        User mUser = new User();
-        mUser.setObjectId("C0NeXXX3");
-        mQuery.addWhereEqualTo("user", new BmobPointer(mUser));
-        mQuery.include("book.photo,book.name");
+        //User mUser = new User();
+        //mUser.setObjectId("C0NeXXX3");
+        //mQuery.addWhereEqualTo("user",new BmobPointer(mUser));
+        mQuery.include("book");
         mQuery.findObjects(new FindListener<BookShelf>() {
             @Override
             public void done(List<BookShelf> list, BmobException e) {
                 if(e == null){
+                    if(list.size() != 0) Log.i(getClass().getSimpleName(), "bmob查询成功:list.size() != 0");
                     List<Book> mList = new ArrayList<>();
-                    for(BookShelf bookShelf : list) mList.add(bookShelf.getBook());
+                    for(BookShelf bookShelf : list){
+                        mList.add(bookShelf.getBook());
+                        Log.i(getClass().getSimpleName(), "bmob查询成功:"+bookShelf.getBook().getName());
+                    }
+                    if(mList.size() != 0) Log.i(getClass().getSimpleName(), "bmob查询成功:mList.size() != 0");
                     mBookList = mList;
+                    showBook();
                 }else {
                     Log.i(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }

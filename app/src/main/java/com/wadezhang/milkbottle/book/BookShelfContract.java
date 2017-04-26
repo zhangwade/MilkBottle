@@ -9,9 +9,9 @@ import java.util.List;
  * Created by Administrator on 2017/4/25 0025.
  */
 
-public class BookShelfContract {
+public interface BookShelfContract {
 
-    interface View extends BaseView<BookShopContract.Presenter> {
+    interface View extends BaseView<Presenter> {
         void updateAdapter(List<Book> bookList);
     }
 

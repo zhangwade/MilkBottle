@@ -13,12 +13,12 @@ public class User extends BmobUser {
     private String introduction;
     private BmobFile icon;
 
-    public BmobFile getIcon() {
-        return icon;
+    public Boolean getSex() {
+        return sex;
     }
 
-    public void setIcon(BmobFile icon) {
-        this.icon = icon;
+    public void setSex(Boolean sex) {
+        this.sex = sex;
     }
 
     public String getIntroduction() {
@@ -29,11 +29,11 @@ public class User extends BmobUser {
         this.introduction = introduction;
     }
 
-    public Boolean getSex() {
-        return sex;
+    public BmobFile getIcon() {
+        return icon;
     }
 
-    public void setSex(Boolean sex) {
-        this.sex = sex;
+    public void setIcon(BmobFile icon) {
+        this.icon = icon;
     }
 }
