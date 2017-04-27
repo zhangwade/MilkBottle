@@ -1,6 +1,8 @@
 package com.wadezhang.milkbottle.book;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,8 +25,9 @@ public class BookContentFragment extends BaseFragment implements BookContentCont
     @BindView(R.id.fragment_book_content_text) TextView mContentText;
 
     final int FLIP_DISTANCE = 50;
-
     GestureDetector mGestureDetector;
+
+    int mPageSize = 900;
 
     private BookContentContract.Presenter mBookContentPresenter;
 
@@ -54,6 +57,22 @@ public class BookContentFragment extends BaseFragment implements BookContentCont
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        //mPageSize = GetWordsLimit.getPageWordsLimit(mContentText.getHeight(), mContentText.getLineHeight(), mContentText.getWidth(), (int)mContentText.getTextSize());
+        mBookContentPresenter.setPageSize(mPageSize, mHandler);
+        mBookContentPresenter.start();
+
+    }
+
+    public Handler mHandler = new Handler(){
+
+        public void handleMessage(Message message){
+            if(message.what == 1) mBookContentPresenter.getPreviousPage();
+        }
+    };
+
+    @Override
     public void setPresenter(BookContentContract.Presenter presenter){
         mBookContentPresenter = presenter;
     }
@@ -68,8 +87,10 @@ public class BookContentFragment extends BaseFragment implements BookContentCont
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
             if(event1.getX() - event2.getX() > FLIP_DISTANCE){
+                mBookContentPresenter.getNextPage();
                 return true;
             }else if(event2.getX() - event1.getX() > FLIP_DISTANCE){
+                mBookContentPresenter.getPreviousPage();
                 return true;
             }
             return false;

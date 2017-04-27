@@ -37,7 +37,7 @@ public class BookShopPresenter implements BookShopContract.Presenter {
                     mBookList = list;
                     showBook();
                 }else{
-                    Log.i(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });

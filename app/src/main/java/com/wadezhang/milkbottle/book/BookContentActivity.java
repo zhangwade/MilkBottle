@@ -1,5 +1,7 @@
 package com.wadezhang.milkbottle.book;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,8 +24,13 @@ public class BookContentActivity extends BaseActivity {
 
     //GestureDetector mGestureDetector;
 
+    public static void actionStart(Context context){
+        context.startActivity(new Intent(context, BookContentActivity.class));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState){
+        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -33,9 +40,10 @@ public class BookContentActivity extends BaseActivity {
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         Fragment mBookContentFragment = mFragmentManager.findFragmentByTag(BookContentFragment.class.getName());
-        if(mBookContentFragment == null) mBookContentFragment = BookShopFragment.newInstance();
+        if(mBookContentFragment == null) mBookContentFragment = BookContentFragment.newInstance();
         mFragmentTransaction.add(R.id.activity_book_content_framelayout, mBookContentFragment, BookContentFragment.class.getName());
         mFragmentTransaction.commit();
+        new BookContentPresenter((BookContentFragment)mBookContentFragment);
     }
 /*
     @Override

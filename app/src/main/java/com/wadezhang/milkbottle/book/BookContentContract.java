@@ -1,5 +1,7 @@
 package com.wadezhang.milkbottle.book;
 
+import android.os.Handler;
+
 import com.wadezhang.milkbottle.BasePresenter;
 import com.wadezhang.milkbottle.BaseView;
 
@@ -14,6 +16,7 @@ public interface BookContentContract {
     }
 
     interface Presenter extends BasePresenter{
+        void setPageSize(int pageSize, Handler handler);
         void getPreviousPage();
         void getNextPage();
         void showBookContent();

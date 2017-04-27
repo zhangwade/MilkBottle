@@ -31,6 +31,8 @@
 
         <activity android:name=".post_detail.PostDetailActivity"/>
 
+        <activity android:name=".book.BookContentActivity"/>
+
     </application>
 
 </manifest>

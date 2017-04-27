@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.message.MessageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +59,15 @@ public class BookFragment extends BaseFragment {
         mViewPagerFragmentList = new ArrayList<>();
         Fragment mViewPagerShopFragment = mFragmentManager.findFragmentByTag(BookShopFragment.class.getName());
         if(mViewPagerShopFragment == null) mViewPagerShopFragment = BookShopFragment.newInstance();
-        Fragment mViewPagerShelfFragment = mFragmentManager.findFragmentByTag(BookShelfFragment.class.getName());
-        if(mViewPagerShelfFragment == null) mViewPagerShelfFragment = BookShelfFragment.newInstance();
+        Fragment mViewPagerShelfFragment = MessageFragment.newInstance();//TODO:测试！！
+        //Fragment mViewPagerShelfFragment = mFragmentManager.findFragmentByTag(BookShelfFragment.class.getName());
+        //if(mViewPagerShelfFragment == null) mViewPagerShelfFragment = BookShelfFragment.newInstance();
         mViewPagerFragmentList.add(mViewPagerShopFragment);
         mViewPagerFragmentList.add(mViewPagerShelfFragment);
         mViewPager.setAdapter(new BookViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
         new BookShopPresenter((BookShopFragment) mViewPagerShopFragment);//MVP
-        new BookShelfPresenter((BookShelfFragment) mViewPagerShelfFragment);
+        //new BookShelfPresenter((BookShelfFragment) mViewPagerShelfFragment);
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 

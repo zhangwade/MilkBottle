@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.book.BookContentActivity;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 import com.wadezhang.milkbottle.search.SearchActivity;
 
@@ -58,7 +59,7 @@ public class PostFragment extends BaseFragment {
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.actionStart(getActivity());
+                BookContentActivity.actionStart(getActivity()); //TODO:修改
             }
         });
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {
