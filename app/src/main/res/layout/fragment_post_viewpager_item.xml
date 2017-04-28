@@ -10,6 +10,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/fragment_post_viewpager_item_text_recommender"
             style="@style/TextSecond"
             android:text="MilkBottle官方"/>
         <TextView android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
         android:layout_gravity="center"
         android:text="话题"
         style="@style/TextFirst"
-        android:id="@+id/textView" />
+        android:id="@+id/fragment_post_viewpager_item_text_theme" />
 
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +40,9 @@
             android:text="+关注"/>
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/fragment_post_viewpager_item_img_icon"
             android:src="@mipmap/ic_3d_rotation_black_24dp"
+            android:scaleType="centerCrop"
             android:layout_centerInParent="true"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,15 +55,18 @@
         android:text="昵称"
         style="@style/TextSecond"
         android:textColor="@color/textColorSecond"
-        android:id="@+id/textView2" />
+        android:id="@+id/fragment_post_viewpager_item_text_author" />
 
     <ImageView android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:id="@+id/fragment_post_viewpager_item_img_photo"
         android:paddingTop="5dp"/>
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:id="@+id/fragment_post_viewpager_item_text_content"
         style="@style/TextSecond"
         android:text="内容"/>
 
@@ -72,6 +78,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/fragment_post_viewpager_item_text_time"
             android:layout_alignParentLeft="true"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
@@ -79,7 +86,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/post_item_good_count"
+            android:id="@+id/fragment_post_viewpager_item_text_good_count"
             android:layout_alignParentRight="true"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
@@ -87,12 +94,12 @@
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/post_item_good_pic"
-            android:layout_toLeftOf="@id/post_item_good_count"/>
+            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_good_count"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
-            android:id="@+id/post_item_comment_count"
+            android:id="@+id/fragment_post_viewpager_item_text_comment_count"
             android:layout_toLeftOf="@id/post_item_good_pic"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
@@ -100,12 +107,12 @@
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/post_item_comment_pic"
-            android:layout_toLeftOf="@id/post_item_comment_count"/>
+            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_comment_count"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
-            android:id="@+id/post_item_forward_count"
+            android:id="@+id/fragment_post_viewpager_item_text_recommend_count"
             android:layout_toLeftOf="@id/post_item_comment_pic"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
@@ -113,6 +120,6 @@
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/post_item_forward_pic"
-            android:layout_toLeftOf="@id/post_item_forward_count"/>
+            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_recommend_count"/>
     </RelativeLayout>
 </LinearLayout>

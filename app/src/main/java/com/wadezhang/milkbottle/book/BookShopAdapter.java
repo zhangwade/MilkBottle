@@ -40,7 +40,7 @@ public class BookShopAdapter extends RecyclerView.Adapter<BookShopAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){ //TODO:ViewHolder是自己创建的？
+    public void onBindViewHolder(ViewHolder holder, int position){
         if(mBookList != null){
             Book mBook = mBookList.get(position);
             holder.mBookName.setText(mBook.getName());
