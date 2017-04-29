@@ -65,8 +65,8 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
         @BindView(R.id.fragment_post_viewpager_item_text_content) TextView mContent;
         @BindView(R.id.fragment_post_viewpager_item_text_time) TextView mTime;
         @BindView(R.id.fragment_post_viewpager_item_text_recommend_count) TextView mRecommendCount;
-        @BindView(R.id.post_item_comment_count) TextView mCommentCount;
-        @BindView(R.id.post_item_good_count) TextView mGoodCount;
+        @BindView(R.id.fragment_post_viewpager_item_text_comment_count) TextView mCommentCount;
+        @BindView(R.id.fragment_post_viewpager_item_text_good_count) TextView mGoodCount;
 
         public ViewHolder(View view){
             super(view);

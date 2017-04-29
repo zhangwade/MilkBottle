@@ -16,6 +16,7 @@ public interface BookContentContract {
     }
 
     interface Presenter extends BasePresenter{
+        void start();
         void setPageSize(int pageSize, Handler handler);
         void getPreviousPage();
         void getNextPage();

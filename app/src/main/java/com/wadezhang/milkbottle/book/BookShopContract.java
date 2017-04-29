@@ -16,6 +16,7 @@ public interface BookShopContract {
     }
 
     interface Presenter extends BasePresenter {
+        void start();
         void showBook();
     }
 }

@@ -6,5 +6,5 @@ package com.wadezhang.milkbottle;
 
 public interface BasePresenter {
 
-    void start();
+    //void start();
 }
