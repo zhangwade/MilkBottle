@@ -5,6 +5,7 @@ import com.wadezhang.milkbottle.theme.Theme;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by Administrator on 2017/4/28 0028.
@@ -16,6 +17,9 @@ public class Post extends BmobObject {
     private BmobFile photo;
     private String content;
     private User author;
+    private Integer commentCount;
+    private Integer likesCount;
+    private BmobRelation likes;
 
     public Theme getTheme() {
         return theme;
@@ -47,5 +51,29 @@ public class Post extends BmobObject {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public Integer getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public BmobRelation getLikes() {
+        return likes;
+    }
+
+    public void setLikes(BmobRelation likes) {
+        this.likes = likes;
     }
 }

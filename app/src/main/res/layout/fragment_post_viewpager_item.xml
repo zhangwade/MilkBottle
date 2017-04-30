@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content">
+<!--
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -20,10 +20,11 @@
             android:textColor="@color/textColorSecond"
             android:text="推荐了"/>
     </LinearLayout>
-
+-->
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:paddingTop="10dp"
         android:text="话题"
         style="@style/TextFirst"
         android:id="@+id/fragment_post_viewpager_item_text_theme" />
@@ -38,8 +39,8 @@
             style="@style/TextSecond"
             android:textColor="@color/highLight"
             android:text="+关注"/>
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView android:layout_width="45dp"
+            android:layout_height="45dp"
             android:id="@+id/fragment_post_viewpager_item_img_icon"
             android:src="@mipmap/ic_3d_rotation_black_24dp"
             android:scaleType="centerCrop"
@@ -58,10 +59,10 @@
         android:id="@+id/fragment_post_viewpager_item_text_author" />
 
     <ImageView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         android:id="@+id/fragment_post_viewpager_item_img_photo"
-        android:paddingTop="5dp"/>
+        android:paddingTop="10dp"/>
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,7 +87,7 @@
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_post_viewpager_item_text_good_count"
+            android:id="@+id/fragment_post_viewpager_item_text_likes_count"
             android:layout_alignParentRight="true"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
@@ -94,7 +95,7 @@
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/post_item_good_pic"
-            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_good_count"/>
+            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_likes_count"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"

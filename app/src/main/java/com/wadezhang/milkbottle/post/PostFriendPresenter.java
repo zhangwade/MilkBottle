@@ -25,13 +25,14 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
 
     private PostFriendContract.View mPostFriendView;
     private List<Post> mPostList;
-    private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
+    //private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
 
     private String lastTime; //查询数据的时间边界
     private int limit = 10; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private final int STATE_REFRESH = 0; //下拉刷新
     private final int STATE_MORE = 1; //上拉加载更多
+    private List<String> followIds; //当前用户的关注
 
     public PostFriendPresenter(PostFriendContract.View view){
         mPostFriendView = view;
@@ -40,6 +41,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
 
     @Override
     public void getPost(final int actionType){
+        /*
         BmobQuery<User> mFollowQuery = new BmobQuery<>();
         User mUser = new User();
         mUser.setObjectId("C0NeXXX3"); //TODO:做好注册登录后要更改这里
@@ -47,17 +49,29 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
         mFollowQuery.addQueryKeys("objectId");
         mFollowQuery.findObjects(new FindListener<User>() {
             @Override
-            public void done(List<User> list, BmobException e) {
+            public void done(List<User> list, BmobException e) { //查询当前用户的关注
                 if(e == null){
-                    List<String> followIds = new ArrayList<String>();
+                    followIds = new ArrayList<String>();
                     for(User user : list) followIds.add(user.getObjectId());
+                }else{
+                    Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
-        });
+        });    */
 
+        followIds = new ArrayList<String>(); //TODO:测试用
+        followIds.add("C3a12227"); //TODO:测试用
+        followIds.add("36mF1118"); //TODO:测试用
+
+        if(followIds.size() < 1) return; //没有任何关注
+        BmobQuery<User> innerQuery = new BmobQuery<>();
+        innerQuery.addWhereContainedIn("objectId", followIds);
         BmobQuery<Post> query = new BmobQuery<>();
+        query.addWhereMatchesQuery("author", "_User", innerQuery);
         // 按时间降序查询
         query.order("-createdAt");
+        query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
+        query.include("theme[name],author[icon|username]");
         // 如果是加载更多
         if (actionType == STATE_MORE) {
             // 处理时间查询
@@ -77,8 +91,6 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
         // 设置每页数据个数
         query.setLimit(limit);
         // 查找数据
-        if(isFirstReq == true) query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.findObjects(new FindListener<Post>() {
             @Override
             public void done(List<Post> list, BmobException e) {
@@ -104,7 +116,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
                 }
             }
         });
-        isFirstReq = false;
+        //isFirstReq = false;
     }
 
     @Override

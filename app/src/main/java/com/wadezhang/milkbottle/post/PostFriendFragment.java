@@ -47,7 +47,7 @@ public class PostFriendFragment extends BaseViewPagerFragment implements PostFri
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_post_viewpager_item, container, false);
+        View mView = inflater.inflate(R.layout.fragment_post_viewpager, container, false);
         ButterKnife.bind(this, mView);
         mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());

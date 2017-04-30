@@ -47,6 +47,8 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
             ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
             holder.mContent.setText(mPost.getContent());
             holder.mTime.setText(mPost.getCreatedAt());
+            holder.mCommentCount.setText(mPost.getCommentCount().toString());
+            holder.mLikesCount.setText(mPost.getLikesCount().toString());
         }
     }
 
@@ -57,16 +59,14 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.fragment_post_viewpager_item_text_recommender) TextView mRecommender;
         @BindView(R.id.fragment_post_viewpager_item_text_theme) TextView mTheme;
         @BindView(R.id.fragment_post_viewpager_item_img_icon) ImageView mIcon;
         @BindView(R.id.fragment_post_viewpager_item_text_author) TextView mAuthor;
         @BindView(R.id.fragment_post_viewpager_item_img_photo) ImageView mPhoto;
         @BindView(R.id.fragment_post_viewpager_item_text_content) TextView mContent;
         @BindView(R.id.fragment_post_viewpager_item_text_time) TextView mTime;
-        @BindView(R.id.fragment_post_viewpager_item_text_recommend_count) TextView mRecommendCount;
         @BindView(R.id.fragment_post_viewpager_item_text_comment_count) TextView mCommentCount;
-        @BindView(R.id.fragment_post_viewpager_item_text_good_count) TextView mGoodCount;
+        @BindView(R.id.fragment_post_viewpager_item_text_likes_count) TextView mLikesCount;
 
         public ViewHolder(View view){
             super(view);

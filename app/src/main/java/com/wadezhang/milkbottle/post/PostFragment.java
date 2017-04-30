@@ -82,6 +82,7 @@ public class PostFragment extends BaseFragment {
         mViewPagerFragmentList.add(mViewPagerFindFragment);
         mViewPager.setAdapter(new PostViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
+        new PostFriendPresenter((PostFriendFragment)mViewPagerFriendFragment);
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 

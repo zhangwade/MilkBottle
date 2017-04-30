@@ -24,7 +24,7 @@ public class BaseViewPagerFragment extends Fragment {
         BaseViewPagerFragment mBaseViewPagerFragment = new BaseViewPagerFragment();
         return mBaseViewPagerFragment;
     }
-
+/*
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -32,7 +32,7 @@ public class BaseViewPagerFragment extends Fragment {
         if (isVisibleToUser) {//当当前为显示页面时
             lazyFetchDataIfPrepared();
         }
-    }
+    }  */
 
     protected void lazyFetchDataIfPrepared() {// 用户可见fragment && 没有加载过数据 && 视图已经准备完毕
         if (getUserVisibleHint() && !hasFetchData && isViewPrepared) {
