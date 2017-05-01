@@ -36,8 +36,11 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             style="@style/TextSecond"
+            android:id="@+id/fragment_post_viewpager_item_text_follow"
             android:textColor="@color/highLight"
+            android:elevation="5dp"
             android:text="+关注"/>
         <ImageView android:layout_width="45dp"
             android:layout_height="45dp"
@@ -47,6 +50,7 @@
             android:layout_centerInParent="true"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -69,6 +73,7 @@
         android:padding="10dp"
         android:id="@+id/fragment_post_viewpager_item_text_content"
         style="@style/TextSecond"
+        android:maxLength="100"
         android:text="内容"/>
 
     <RelativeLayout android:layout_width="match_parent"
@@ -123,4 +128,8 @@
             android:id="@+id/post_item_forward_pic"
             android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_recommend_count"/>
     </RelativeLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.wadezhang.milkbottle.post;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.wadezhang.milkbottle.User;
 
@@ -14,18 +13,16 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by Administrator on 2017/4/28 0028.
+ * Created by Administrator on 2017/5/1 0001.
  */
 
-public class PostFriendPresenter implements PostFriendContract.Presenter {
+public class PostFindPresenter implements PostFindContract.Presenter {
 
-    private PostFriendContract.View mPostFriendView;
+    private PostFindContract.View mPostFindView;
     private List<Post> mPostList;
     //private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
 
@@ -37,9 +34,9 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
     private final int STATE_MORE = 1; //上拉加载更多
     private List<String> followIds = new ArrayList<String>();; //当前用户的关注
 
-    public PostFriendPresenter(PostFriendContract.View view){
-        mPostFriendView = view;
-        mPostFriendView.setPresenter(this);
+    public PostFindPresenter(PostFindContract.View view){
+        mPostFindView = view;
+        mPostFindView.setPresenter(this);
     }
 
     @Override
@@ -94,7 +91,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
                             followIds.add(user.getObjectId());
                         }
                     }
-                    followIds.add("C0NeXXX3"); //TODO:自己发的帖子也显示在“好友”栏里
+                    followIds.add("C0NeXXX3"); //TODO:自己发的帖子不显示在“发现”栏里
                     getPostFromFollow();
                 }else{
                     Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
@@ -114,7 +111,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
 
     public void getPostFromFollow(){
         BmobQuery<User> innerQuery = new BmobQuery<>();
-        innerQuery.addWhereContainedIn("objectId", followIds);
+        innerQuery.addWhereNotContainedIn("objectId", followIds);
         BmobQuery<Post> query = new BmobQuery<>();
         query.addWhereMatchesQuery("author", "_User", innerQuery);
         // 按时间降序查询
@@ -156,9 +153,9 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
                         curPage++;
                         showPost(mActionType);
                     } else if (mActionType == STATE_MORE) {
-                        mPostFriendView.showToast("到底了");
+                        mPostFindView.showToast("到底了");
                     } else if (mActionType == STATE_REFRESH) {
-                        mPostFriendView.showToast("右滑发现更多精彩");
+                        mPostFindView.showToast("没有数据");
                     }
                 }else{
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
@@ -169,7 +166,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
 
     @Override
     public void showPost(int actionType){
-        if(actionType == STATE_REFRESH) mPostFriendView.updateAdapter(mPostList, 0);
-            else mPostFriendView.updateAdapter(mPostList, 1);
+        if(actionType == STATE_REFRESH) mPostFindView.updateAdapter(mPostList, 0);
+        else mPostFindView.updateAdapter(mPostList, 1);
     }
 }

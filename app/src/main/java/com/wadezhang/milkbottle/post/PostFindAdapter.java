@@ -17,16 +17,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/4/28 0028.
+ * Created by Administrator on 2017/5/1 0001.
  */
 
-public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.ViewHolder> {
+public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHolder> {
 
     private Context mContext;
 
     private List<Post> mPostList;
 
-    public PostFriendAdapter(List<Post> postList){
+    public PostFindAdapter(List<Post> postList){
         mPostList = postList;
     }
 
@@ -40,7 +40,6 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         if(mPostList != null){
-            holder.mAddFollow.setVisibility(View.GONE);
             Post mPost = mPostList.get(position);
             holder.mTheme.setText(mPost.getTheme().getName());
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);
