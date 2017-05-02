@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class PostFindFragment extends BaseViewPagerFragment implements PostFindContract.View {
 
-    @BindView(R.id.fragment_post_viewpager_swipe_to_load_layout) SwipeToLoadLayout mSwipeToLoadLayout;
+    @BindView(R.id.fragment_post_viewpager_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
     @BindView(R.id.swipe_target) RecyclerView mRecyclerView;
 
     private PostFindAdapter mPostFindAdapter;

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/ic_3d_rotation_black_24dp"
-            android:id="@+id/activity_post_detail_button_back"/>
+            android:id="@+id/activity_post_detail_imgbtn_back"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,16 +29,20 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/ic_3d_rotation_black_24dp"/>
     </LinearLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
     <!--
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"> -->
 
-        <android.support.design.widget.CoordinatorLayout
+    <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+        android:layout_weight="1">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
@@ -95,10 +99,11 @@
                         android:layout_gravity="center"
                         android:text="话题"
                         style="@style/TextFirst"
-                        android:id="@+id/textView"
+                        android:id="@+id/activity_post_detail_text_theme"
                         android:padding="10dp"/>
                     <ImageView android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/activity_post_detail_img_author_icon"
                         android:src="@mipmap/ic_3d_rotation_black_24dp"
                         android:layout_gravity="center"/>
                     <TextView android:layout_width="wrap_content"
@@ -107,14 +112,16 @@
                         android:text="昵称"
                         style="@style/TextSecond"
                         android:textColor="@color/textColorSecond"
-                        android:id="@+id/textView2"
+                        android:id="@+id/activity_post_detail_text_author_name"
                         android:padding="10dp"/>
 
                     <ImageView android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_post_detail_img_photo"/>
 
                     <TextView android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/activity_post_detail_text_content"
                         android:padding="10dp"
                         style="@style/TextSecond"
                         android:text="内容"/>
@@ -178,7 +185,12 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/activity_post_detail_viewpager"/>
         </android.support.design.widget.CoordinatorLayout>
+
     <!-- </android.support.v4.widget.SwipeRefreshLayout> -->
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -186,20 +198,18 @@
         android:orientation="horizontal"
         android:background="?attr/navigationbarBackgroundColor"
         android:padding="10dp">
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/activity_post_detail_img_likes"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:background="@mipmap/ic_3d_rotation_black_24dp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_post_detail_edit_comment"
             android:layout_weight="1"
             style="@android:style/TextAppearance.Medium"
             android:textColor="?attr/navigationColor"
@@ -207,6 +217,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_post_detail_text_send"
             android:layout_gravity="center"
             style="@android:style/TextAppearance.Medium"
             android:textColor="?attr/navigationColor"

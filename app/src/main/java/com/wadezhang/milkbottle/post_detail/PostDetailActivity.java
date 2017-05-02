@@ -9,9 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.post.Post;
 
 import java.util.ArrayList;
 
@@ -27,12 +31,31 @@ public class PostDetailActivity extends BaseActivity {
     @BindView(R.id.activity_post_detail_tab) TabLayout mTabLayout;
     @BindView(R.id.activity_post_detail_viewpager) ViewPager mViewPager;
     @BindView(R.id.activity_post_detail_button_back) ImageButton mButtonBack;
+    @BindView(R.id.activity_post_detail_text_theme) TextView mTheme;
+    @BindView(R.id.activity_post_detail_img_author_icon) ImageView mAuthorIcon;
+    @BindView(R.id.activity_post_detail_text_author_name) TextView mAuthorName;
+    @BindView(R.id.activity_post_detail_img_photo) ImageView mPhoto;
+    @BindView(R.id.activity_post_detail_text_content) TextView mContent;
+
+    private String postObjectId;
+    private String themeObjectId;
+    private String authorObjectId;
 
     FragmentManager mFragmentManager;
     ArrayList<Fragment> mFragmentList;
 
-    public static void actionStart(Context context){
-        context.startActivity(new Intent(context, PostDetailActivity.class));
+    public static void actionStart(Context context, Post post, boolean isLikes){
+        Intent mIntent = new Intent(context, PostDetailActivity.class);
+        mIntent.putExtra("postObjectId", post.getObjectId());
+        mIntent.putExtra("themeObjectId", post.getTheme().getObjectId());
+        mIntent.putExtra("themeName", post.getTheme().getName());
+        mIntent.putExtra("authorObjectId", post.getAuthor().getObjectId());
+        mIntent.putExtra("authorIcon", post.getAuthor().getIcon().getFileUrl());
+        mIntent.putExtra("authorName", post.getAuthor().getUsername());
+        mIntent.putExtra("photo", post.getPhoto().getFileUrl());
+        mIntent.putExtra("content", post.getContent());
+        mIntent.putExtra("IsLikes", isLikes); //TODO:点赞的图案切换
+        context.startActivity(mIntent);
     }
 
     @Override
@@ -41,6 +64,7 @@ public class PostDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         ButterKnife.bind(this);
+        initPost();
         initViewPager();
         mTabLayout.setupWithViewPager(mViewPager);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
@@ -51,18 +75,29 @@ public class PostDetailActivity extends BaseActivity {
         });
     }
 
+    public void initPost(){
+        Intent mIntent = getIntent();
+        postObjectId = mIntent.getStringExtra("postObjectId");
+        themeObjectId = mIntent.getStringExtra("themeObjectId");
+        authorObjectId = mIntent.getStringExtra("authorObjectId");
+        mTheme.setText(mIntent.getStringExtra("themeName"));
+        ImageLoader.with(this, mIntent.getStringExtra("authorIcon"), mAuthorIcon);
+        mAuthorName.setText(mIntent.getStringExtra("authorName"));
+        ImageLoader.with(this, mIntent.getStringExtra("photo"), mPhoto);
+        mContent.setText(mIntent.getStringExtra("content"));
+    }
+
     public void initViewPager(){
         mFragmentManager = getSupportFragmentManager();
         mFragmentList = new ArrayList<Fragment>();
-        Fragment mPostDetailRecommendFragment = mFragmentManager.findFragmentByTag(PostDetailRecommendFragment.class.getName());
-        if(mPostDetailRecommendFragment == null) mPostDetailRecommendFragment = PostDetailRecommendFragment.newInstance();
         Fragment mPostDetailCommentFragment = mFragmentManager.findFragmentByTag(PostDetailCommentFragment.class.getName());
         if(mPostDetailCommentFragment == null) mPostDetailCommentFragment = PostDetailCommentFragment.newInstance();
-        Fragment mPostDetailGoodFragment = mFragmentManager.findFragmentByTag(PostDetailGoodFragment.class.getName());
-        if(mPostDetailGoodFragment == null) mPostDetailGoodFragment = PostDetailGoodFragment.newInstance();
-        mFragmentList.add(mPostDetailRecommendFragment);
+        Fragment mPostDetailGoodFragment = mFragmentManager.findFragmentByTag(PostDetailLikesFragment.class.getName());
+        if(mPostDetailGoodFragment == null) mPostDetailGoodFragment = PostDetailLikesFragment.newInstance();
         mFragmentList.add(mPostDetailCommentFragment);
         mFragmentList.add(mPostDetailGoodFragment);
         mViewPager.setAdapter(new PostDetailViewPagerAdapter(mFragmentManager, mFragmentList));
+        mViewPager.setCurrentItem(0);
+        new PostDetailCommentPresenter(postObjectId, (PostDetailCommentFragment)mPostDetailCommentFragment);
     }
 }

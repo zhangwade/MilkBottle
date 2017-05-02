@@ -65,7 +65,7 @@ public class PostFragment extends BaseFragment {
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostDetailActivity.actionStart(getActivity());
+                //PostDetailActivity.actionStart(getActivity());
             }
         });
         return mView;

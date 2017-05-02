@@ -12,11 +12,11 @@ import com.wadezhang.milkbottle.R;
  * Created by Administrator on 2017/4/16 0016.
  */
 
-public class PostDetailRecommendFragment extends BaseFragment {
+public class PostDetailLikesFragment extends BaseFragment {
 
-    public static PostDetailRecommendFragment newInstance() {
-        PostDetailRecommendFragment mPostDetailRecommendFragment = new PostDetailRecommendFragment();
-        return mPostDetailRecommendFragment;
+    public static PostDetailLikesFragment newInstance() {
+        PostDetailLikesFragment mPostDetailLikesFragment = new PostDetailLikesFragment();
+        return mPostDetailLikesFragment;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class PostDetailRecommendFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.activity_post_detail_viewpager, container, false);
+        View mView = inflater.inflate(R.layout.activity_post_detail_good_item, container, false);
         return mView;
     }
 }

@@ -120,7 +120,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
         // 按时间降序查询
         query.order("-createdAt");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
-        query.include("theme[name],author[icon|username]");
+        query.include("theme[objectId|name],author[objectId|icon|username]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询

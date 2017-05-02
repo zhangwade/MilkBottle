@@ -25,6 +25,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     private Context mContext;
 
     private List<Post> mPostList;
+    private boolean isLikes = false;
 
     public PostFriendAdapter(List<Post> postList){
         mPostList = postList;
@@ -34,7 +35,11 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if(mContext == null) mContext = parent.getContext();
         View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_post_viewpager_item, parent, false);
-        return new ViewHolder(mView);
+        ViewHolder mViewHolder = new ViewHolder(mView);
+        int position = mViewHolder.getAdapterPosition();
+        Post post = mPostList.get(position);
+        mViewHolder.mPost.setOnClickListener(new OnClickListenerToPostDetail(mContext, post, isLikes)); //TODO:isLikes要根据情况改变值
+        return mViewHolder;
     }
 
     @Override
@@ -60,6 +65,8 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
+        View mPost;
+
         @BindView(R.id.fragment_post_viewpager_item_text_theme) TextView mTheme;
         @BindView(R.id.fragment_post_viewpager_item_img_icon) ImageView mIcon;
         @BindView(R.id.fragment_post_viewpager_item_text_author) TextView mAuthor;
@@ -72,6 +79,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
 
         public ViewHolder(View view){
             super(view);
+            mPost = view;
             ButterKnife.bind(this, view);
         }
     }

@@ -31,15 +31,7 @@ public class PostDetailViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0 :
-                return "推荐";
-            case 1 :
-                return "评论";
-            case 2 :
-                return "赞";
-            default:
-                return "推荐";
-        }
+        if(position == 0) return "评论";
+            else return "赞";
     }
 }

@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class PostFriendFragment extends BaseViewPagerFragment implements PostFriendContract.View {
 
-    @BindView(R.id.fragment_post_viewpager_swipe_to_load_layout) SwipeToLoadLayout mSwipeToLoadLayout;
+    @BindView(R.id.fragment_post_viewpager_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
     @BindView(R.id.swipe_target) RecyclerView mRecyclerView;
 
     private PostFriendAdapter mPostFriendAdapter;
