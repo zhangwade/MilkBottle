@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 
 import java.util.List;
 
@@ -35,10 +36,15 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if(mContext == null) mContext = parent.getContext();
         View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_post_viewpager_item, parent, false);
-        ViewHolder mViewHolder = new ViewHolder(mView);
-        int position = mViewHolder.getAdapterPosition();
-        Post post = mPostList.get(position);
-        mViewHolder.mPost.setOnClickListener(new OnClickListenerToPostDetail(mContext, post, isLikes)); //TODO:isLikes要根据情况改变值
+        final ViewHolder mViewHolder = new ViewHolder(mView);
+        mViewHolder.mPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                PostDetailActivity.actionStart(mContext, post, isLikes);
+            }
+        }); //TODO:isLikes要根据情况改变值
         return mViewHolder;
     }
 
@@ -50,7 +56,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
             holder.mTheme.setText(mPost.getTheme().getName());
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);
             holder.mAuthor.setText(mPost.getAuthor().getUsername());
-            ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
+            if(mPost.getPhoto() != null) ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
             holder.mContent.setText(mPost.getContent());
             holder.mTime.setText(mPost.getCreatedAt());
             holder.mCommentCount.setText(mPost.getCommentCount().toString());

@@ -26,7 +26,7 @@ public class PostFindPresenter implements PostFindContract.Presenter {
     private List<Post> mPostList;
     //private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
 
-    private String lastTime; //查询数据的时间边界
+    private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
     private int limit = 10; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private int mActionType;

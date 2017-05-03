@@ -59,7 +59,7 @@ public class PostFragment extends BaseFragment {
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookContentActivity.actionStart(getActivity()); //TODO:修改
+                //BookContentActivity.actionStart(getActivity()); //TODO:修改
             }
         });
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {

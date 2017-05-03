@@ -12,9 +12,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.new_post.NewPostActivity;
 import com.wadezhang.milkbottle.post.Post;
 
 import java.util.ArrayList;
@@ -28,9 +32,11 @@ import butterknife.ButterKnife;
 
 public class PostDetailActivity extends BaseActivity {
 
+    @BindView(R.id.activity_post_detail_viewpager_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
+
     @BindView(R.id.activity_post_detail_tab) TabLayout mTabLayout;
     @BindView(R.id.activity_post_detail_viewpager) ViewPager mViewPager;
-    @BindView(R.id.activity_post_detail_button_back) ImageButton mButtonBack;
+    @BindView(R.id.activity_post_detail_imgbtn_back) ImageButton mButtonBack;
     @BindView(R.id.activity_post_detail_text_theme) TextView mTheme;
     @BindView(R.id.activity_post_detail_img_author_icon) ImageView mAuthorIcon;
     @BindView(R.id.activity_post_detail_text_author_name) TextView mAuthorName;
@@ -66,6 +72,8 @@ public class PostDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initPost();
         initViewPager();
+        mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
+        mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
         mTabLayout.setupWithViewPager(mViewPager);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,5 +107,25 @@ public class PostDetailActivity extends BaseActivity {
         mViewPager.setAdapter(new PostDetailViewPagerAdapter(mFragmentManager, mFragmentList));
         mViewPager.setCurrentItem(0);
         new PostDetailCommentPresenter(postObjectId, (PostDetailCommentFragment)mPostDetailCommentFragment);
+    }
+
+    public class RefreshListener implements OnRefreshListener {
+
+        @Override
+        public void onRefresh(){
+            PostDetailCommentFragment postDetailCommentFragment = (PostDetailCommentFragment)mFragmentManager.findFragmentByTag(PostDetailCommentFragment.class.getName());
+            postDetailCommentFragment.mPostDetailCommentPresenter.getComment(0);
+            mSwipeToLoadLayout.setRefreshing(false);
+        }
+    }
+
+    public class LoadMoreListener implements OnLoadMoreListener {
+
+        @Override
+        public void onLoadMore(){
+            PostDetailCommentFragment postDetailCommentFragment = (PostDetailCommentFragment)mFragmentManager.findFragmentByTag(PostDetailCommentFragment.class.getName());
+            postDetailCommentFragment.mPostDetailCommentPresenter.getComment(1);
+            mSwipeToLoadLayout.setLoadingMore(false);
+        }
     }
 }

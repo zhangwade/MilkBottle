@@ -39,12 +39,24 @@
         android:layout_height="match_parent"
         android:layout_weight="1"> -->
 
-    <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-        android:layout_weight="1">
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_post_detail_viewpager_swipetoloadlayout">
 
-            <android.support.design.widget.AppBarLayout
+    <com.wadezhang.milkbottle.RefreshHeaderView
+        android:id="@id/swipe_refresh_header"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="40dp" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!--
@@ -101,8 +113,9 @@
                         style="@style/TextFirst"
                         android:id="@+id/activity_post_detail_text_theme"
                         android:padding="10dp"/>
-                    <ImageView android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:scaleType="centerCrop"
                         android:id="@+id/activity_post_detail_img_author_icon"
                         android:src="@mipmap/ic_3d_rotation_black_24dp"
                         android:layout_gravity="center"/>
@@ -178,13 +191,20 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.view.ViewPager
+        <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/activity_post_detail_viewpager"/>
-        </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <com.wadezhang.milkbottle.LoadMoreFooterView
+        android:id="@id/swipe_load_more_footer"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="40dp" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
     <!-- </android.support.v4.widget.SwipeRefreshLayout> -->
 
@@ -197,7 +217,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="?attr/navigationbarBackgroundColor"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -211,7 +231,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/activity_post_detail_edit_comment"
             android:layout_weight="1"
-            style="@android:style/TextAppearance.Medium"
+            style="@style/TextSecond"
             android:textColor="?attr/navigationColor"
             android:hint="点此输入文字"/>
         <TextView
@@ -219,7 +239,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/activity_post_detail_text_send"
             android:layout_gravity="center"
-            style="@android:style/TextAppearance.Medium"
+            style="@style/TextSecond"
+            android:layout_margin="5dp"
             android:textColor="?attr/navigationColor"
             android:text="发送"/>
     </LinearLayout>

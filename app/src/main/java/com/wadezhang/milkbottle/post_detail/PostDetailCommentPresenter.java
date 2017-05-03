@@ -24,7 +24,7 @@ public class PostDetailCommentPresenter implements PostDetailCommentContract.Pre
     private List<Comment> mCommentList;
     private String mPostObjectId;
 
-    private String lastTime; //查询数据的时间边界
+    private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
     private int limit = 10; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private int mActionType;

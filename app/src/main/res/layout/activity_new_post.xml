@@ -12,62 +12,97 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/activity_new_post_text_cancel"
             style="@android:style/TextAppearance.Medium"
             android:text="取消"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/activity_new_post_text_title"
             android:layout_weight="1"
             android:gravity="center"
             style="@android:style/TextAppearance.Medium"
-            android:text="发帖"/>
+            android:text="编写内容"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/activity_new_post_text_send"
             style="@android:style/TextAppearance.Medium"
             android:text="发布"/>
     </LinearLayout>
 
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activity_new_post_linearlayout"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_new_post_text_theme_name"
             android:textSize="?attr/textSizeFirst"
+            android:textColor="@color/textColorFirst"
             android:text="话题"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_new_post_text_select_theme"
             android:textSize="?attr/textSizeFirst"
+            android:textColor="@color/accentColor"
             android:gravity="center"
             android:layout_weight="1"
             android:text="选择话题 +"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_new_post_text_change_theme"
             android:textSize="?attr/textSizeFirst"
             android:textColor="@color/textColorSecond"
             android:text="修改 >"/>
     </LinearLayout>
 
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activity_new_post_edit_content"
         android:minHeight="100dp"
         android:hint="输入文字"
         android:gravity="top"
         android:padding="10dp"
-        android:textSize="?attr/textSizeSecond"/>
+        android:textSize="?attr/textSizeSecond"
+        android:textColor="@color/textColorFirst"/>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:scaleType="center"
-        android:src="@mipmap/ic_3d_rotation_black_24dp"
-        android:background="@drawable/square_image_view"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/activity_new_post_img_photo"
+            android:layout_margin="10dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_3d_rotation_black_24dp"
+            android:background="@drawable/square_image_view"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_new_post_text_tips"
+            android:layout_gravity="center"
+            android:text="添加图片"
+            android:textSize="?attr/textSizeSecond"
+            android:textColor="@color/textColorSecond"/>
+    </LinearLayout>
+
 </LinearLayout>

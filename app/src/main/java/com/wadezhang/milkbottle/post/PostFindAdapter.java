@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
     private Context mContext;
 
     private List<Post> mPostList;
+    private boolean isLikes = false;
 
     public PostFindAdapter(List<Post> postList){
         mPostList = postList;
@@ -34,7 +36,16 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if(mContext == null) mContext = parent.getContext();
         View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_post_viewpager_item, parent, false);
-        return new ViewHolder(mView);
+        final ViewHolder mViewHolder = new ViewHolder(mView);
+        mViewHolder.mPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                PostDetailActivity.actionStart(mContext, post, isLikes);
+            }
+        }); //TODO:isLikes要根据情况改变值
+        return mViewHolder;
     }
 
     @Override
@@ -44,7 +55,7 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
             holder.mTheme.setText(mPost.getTheme().getName());
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);
             holder.mAuthor.setText(mPost.getAuthor().getUsername());
-            ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
+            if(mPost.getPhoto() != null) ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
             holder.mContent.setText(mPost.getContent());
             holder.mTime.setText(mPost.getCreatedAt());
             holder.mCommentCount.setText(mPost.getCommentCount().toString());
@@ -59,6 +70,8 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
+        View mPost;
+
         @BindView(R.id.fragment_post_viewpager_item_text_theme) TextView mTheme;
         @BindView(R.id.fragment_post_viewpager_item_img_icon) ImageView mIcon;
         @BindView(R.id.fragment_post_viewpager_item_text_author) TextView mAuthor;
@@ -71,6 +84,7 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
 
         public ViewHolder(View view){
             super(view);
+            mPost = view;
             ButterKnife.bind(this, view);
         }
     }

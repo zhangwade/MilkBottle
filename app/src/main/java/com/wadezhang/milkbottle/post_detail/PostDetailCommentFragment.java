@@ -27,13 +27,13 @@ import butterknife.ButterKnife;
 
 public class PostDetailCommentFragment extends BaseViewPagerFragment implements PostDetailCommentContract.View {
 
-    @BindView(R.id.activity_post_detail_viewpager_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
-    @BindView(R.id.swipe_target) RecyclerView mRecyclerView;
+    //@BindView(R.id.activity_post_detail_viewpager_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
+    @BindView(R.id.activity_post_detail_viewpager_recyclerview) RecyclerView mRecyclerView;
 
     private PostDetailCommentAdapter mPostDetailCommentAdapter;
     private List<Comment> mCommentList = new ArrayList<>();
 
-    private PostDetailCommentContract.Presenter mPostDetailCommentPresenter;
+    public PostDetailCommentContract.Presenter mPostDetailCommentPresenter;
 
     public static PostDetailCommentFragment newInstance() {
         PostDetailCommentFragment mPostDetailCommentFragment = new PostDetailCommentFragment();
@@ -50,8 +50,8 @@ public class PostDetailCommentFragment extends BaseViewPagerFragment implements 
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_post_detail_viewpager, container, false);
         ButterKnife.bind(this, mView);
-        mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
-        mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
+        //mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
+        //mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mPostDetailCommentAdapter = new PostDetailCommentAdapter(mCommentList);
@@ -63,12 +63,14 @@ public class PostDetailCommentFragment extends BaseViewPagerFragment implements 
 
     @Override
     public void lazyFetchData(){ //首次点开该页面拉取数据
+        /*
         mSwipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeToLoadLayout.setRefreshing(true);
             }
-        });
+        });  */
+        mPostDetailCommentPresenter.getComment(0);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class PostDetailCommentFragment extends BaseViewPagerFragment implements 
         mCommentList.addAll(postList);
         mPostDetailCommentAdapter.notifyDataSetChanged();
     }
-
+/*
     public class RefreshListener implements OnRefreshListener {
 
         @Override
@@ -104,5 +106,5 @@ public class PostDetailCommentFragment extends BaseViewPagerFragment implements 
             mPostDetailCommentPresenter.getComment(1);
             mSwipeToLoadLayout.setLoadingMore(false);
         }
-    }
+    }   */
 }
