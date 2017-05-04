@@ -58,7 +58,7 @@ public class PostDetailActivity extends BaseActivity {
         mIntent.putExtra("authorObjectId", post.getAuthor().getObjectId());
         mIntent.putExtra("authorIcon", post.getAuthor().getIcon().getFileUrl());
         mIntent.putExtra("authorName", post.getAuthor().getUsername());
-        mIntent.putExtra("photo", post.getPhoto().getFileUrl());
+        if(post.getPhoto() != null) mIntent.putExtra("photo", post.getPhoto().getFileUrl());
         mIntent.putExtra("content", post.getContent());
         mIntent.putExtra("IsLikes", isLikes); //TODO:点赞的图案切换
         context.startActivity(mIntent);
@@ -91,7 +91,10 @@ public class PostDetailActivity extends BaseActivity {
         mTheme.setText(mIntent.getStringExtra("themeName"));
         ImageLoader.with(this, mIntent.getStringExtra("authorIcon"), mAuthorIcon);
         mAuthorName.setText(mIntent.getStringExtra("authorName"));
-        ImageLoader.with(this, mIntent.getStringExtra("photo"), mPhoto);
+        if(mIntent.getStringExtra("photo") != null)
+            ImageLoader.with(this, mIntent.getStringExtra("photo"), mPhoto);
+        else
+            mPhoto.setVisibility(View.GONE);
         mContent.setText(mIntent.getStringExtra("content"));
     }
 

@@ -33,6 +33,11 @@
 
         <activity android:name=".book.BookContentActivity"/>
 
+        <activity android:name=".new_post.NewPostActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".watch_big_photo.WatchBigPhotoActivity"/>
+
     </application>
 
 </manifest>

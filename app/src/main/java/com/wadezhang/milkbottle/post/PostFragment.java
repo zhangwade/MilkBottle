@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.book.BookContentActivity;
+import com.wadezhang.milkbottle.new_post.NewPostActivity;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 import com.wadezhang.milkbottle.search.SearchActivity;
 
@@ -65,7 +66,7 @@ public class PostFragment extends BaseFragment {
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PostDetailActivity.actionStart(getActivity());
+                NewPostActivity.actionStart(getContext(), null, null);
             }
         });
         return mView;

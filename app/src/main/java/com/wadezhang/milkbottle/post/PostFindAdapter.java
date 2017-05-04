@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
+import com.wadezhang.milkbottle.watch_big_photo.WatchBigPhotoActivity;
 
 import java.util.List;
 
@@ -45,6 +46,15 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
                 PostDetailActivity.actionStart(mContext, post, isLikes);
             }
         }); //TODO:isLikes要根据情况改变值
+        mViewHolder.mPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                String photoUrl = post.getPhoto().getFileUrl();
+                WatchBigPhotoActivity.actionStart(mContext, photoUrl);
+            }
+        });
         return mViewHolder;
     }
 
@@ -55,7 +65,10 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
             holder.mTheme.setText(mPost.getTheme().getName());
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);
             holder.mAuthor.setText(mPost.getAuthor().getUsername());
-            if(mPost.getPhoto() != null) ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
+            if(mPost.getPhoto() != null)
+                ImageLoader.with(mContext, mPost.getPhoto().getFileUrl(), holder.mPhoto);
+            else
+                holder.mPhoto.setVisibility(View.GONE);
             holder.mContent.setText(mPost.getContent());
             holder.mTime.setText(mPost.getCreatedAt());
             holder.mCommentCount.setText(mPost.getCommentCount().toString());

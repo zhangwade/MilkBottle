@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:id="@+id/activity_new_post_text_send"
             style="@android:style/TextAppearance.Medium"
+            android:textColor="@color/activity_new_post_btn_send"
             android:text="发布"/>
     </LinearLayout>
 
@@ -71,38 +72,59 @@
         android:layout_width="match_parent"
         android:background="?attr/dividerColor"/>
 
-    <EditText
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_new_post_edit_content"
-        android:minHeight="100dp"
-        android:hint="输入文字"
-        android:gravity="top"
-        android:padding="10dp"
-        android:textSize="?attr/textSizeSecond"
-        android:textColor="@color/textColorFirst"/>
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/activity_new_post_img_photo"
-            android:layout_margin="10dp"
-            android:scaleType="center"
-            android:src="@mipmap/ic_3d_rotation_black_24dp"
-            android:background="@drawable/square_image_view"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_new_post_text_tips"
-            android:layout_gravity="center"
-            android:text="添加图片"
-            android:textSize="?attr/textSizeSecond"
-            android:textColor="@color/textColorSecond"/>
-    </LinearLayout>
+            android:orientation="vertical">
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_post_edit_content"
+                android:background="@null"
+                android:minHeight="100dp"
+                android:hint="输入文字"
+                android:gravity="top"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorFirst"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_post_text_wordcount"
+                android:text="0"
+                android:textColor="@color/highLight"
+                android:textSize="?attr/textSizeThird"
+                android:layout_gravity="right"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/activity_new_post_img_photo"
+                    android:layout_margin="10dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_3d_rotation_black_24dp"
+                    android:background="@drawable/square_image_view"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/activity_new_post_text_tips"
+                    android:layout_gravity="center"
+                    android:text="添加图片"
+                    android:textSize="?attr/textSizeSecond"
+                    android:textColor="@color/textColorSecond"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
