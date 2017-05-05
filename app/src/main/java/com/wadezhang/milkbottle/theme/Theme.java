@@ -15,6 +15,7 @@ public class Theme extends BmobObject {
     private String introduction;
     private BmobRelation followers;
     private User author;
+    private Integer postCount;
 
     public String getName() {
         return name;
@@ -46,5 +47,13 @@ public class Theme extends BmobObject {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Integer getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Integer postCount) {
+        this.postCount = postCount;
     }
 }

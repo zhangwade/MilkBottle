@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="?attr/navigationbarBackgroundColor">
+
+        <TextView android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"
+            android:text="创建话题"
+            android:id="@+id/fragment_theme_text_create_theme"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_theme_text_search"
+            android:layout_weight="1"
+            android:text="搜索话题"
+            android:background="@drawable/square_image_view"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:textSize="?attr/textSizeSecond"
+            android:textColor="@color/textColorSecond"
+            android:drawableLeft="@mipmap/search"/>
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="分类"
+            style="@android:style/TextAppearance.Medium"
+            android:id="@+id/fragment_theme_text_category"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_theme_recyclerview"
+        android:layout_weight="1"/>
+</LinearLayout>

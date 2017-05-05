@@ -16,5 +16,5 @@
     <color name="nightWindowBackground">#212121</color>
     <color name="nightNonWindowBackground">#424242</color>
     <color name="nightNavigationColor">#4DD0E1</color>
-    <color name="nightDividerColor">#212121</color>
+    <color name="nightDividerColor">#424242</color>
 </resources>
