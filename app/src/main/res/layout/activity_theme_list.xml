@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_theme_list_imgbtn_back"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_theme_list_text_theme_category"
+            android:text="话题类别"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/activity_theme_list_swipetoloadlayout">
+
+        <com.wadezhang.milkbottle.RefreshHeaderView
+            android:id="@id/swipe_refresh_header"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="40dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.wadezhang.milkbottle.LoadMoreFooterView
+            android:id="@id/swipe_load_more_footer"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="40dp" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+</LinearLayout>

@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.theme_category.ThemeListActivity;
 
 import java.util.List;
 
@@ -29,8 +31,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private List<Theme> mThemeList;
 
     public ThemeAdapter(List<Theme> themeList, int secondGroupPosition){
-        mThemeList = themeList;
         mSecondGroupPosition = secondGroupPosition;
+        mThemeList = themeList;
     }
 
     @Override
@@ -54,11 +56,13 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     static class ItemViewHolder extends RecyclerView.ViewHolder{
 
+        View mTheme;
         @BindView(R.id.fragment_theme_item_text_name) TextView mThemeName;
         @BindView(R.id.fragment_theme_item_text_postCount) TextView mPostCount;
 
         public ItemViewHolder(View view){
             super(view);
+            mTheme = view;
             ButterKnife.bind(this, view);
         }
     }
@@ -69,9 +73,26 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         View view;
         if(viewType == TYPE_GROUP_ITEM){
             view = LayoutInflater.from(mContext).inflate(R.layout.fragment_theme_group_item, parent, false);
-            return new GroupItemViewHolder(view);
+            final GroupItemViewHolder mGroupItemViewHolder = new GroupItemViewHolder(view);
+            mGroupItemViewHolder.mBtnMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mGroupItemViewHolder.getLayoutPosition();
+                    //Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                    ThemeListActivity.actionStart(mContext, null, (position == 0 ? 0 : 1) );
+                }
+            });
+            return mGroupItemViewHolder;
         }else if(viewType == TYPE_ITEM){
             view = LayoutInflater.from(mContext).inflate(R.layout.fragment_theme_item, parent, false);
+            final ItemViewHolder mItemViewHolder = new ItemViewHolder(view);
+            mItemViewHolder.mTheme.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mItemViewHolder.getAdapterPosition();
+                    Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show(); //TODO
+                }
+            });
             return new ItemViewHolder(view);
         }
         return null;
@@ -79,7 +100,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position){
-        if(mThemeList == null) return;
+        if(mThemeList.isEmpty()) return;
         if(holder instanceof  GroupItemViewHolder){
             if(position == 0) ((GroupItemViewHolder) holder).mGroupTitle.setText("热门话题");
                 else ((GroupItemViewHolder) holder).mGroupTitle.setText("最近更新的话题");
@@ -91,7 +112,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 theme = mThemeList.get(position - 2);
             }
             ((ItemViewHolder) holder).mThemeName.setText(theme.getName());
-            ((ItemViewHolder) holder).mPostCount.setText(theme.getPostCount()+" 个帖子");
+            ((ItemViewHolder) holder).mPostCount.setText(Integer.toString(theme.getPostCount())+" 个帖子");
         }
     }
 

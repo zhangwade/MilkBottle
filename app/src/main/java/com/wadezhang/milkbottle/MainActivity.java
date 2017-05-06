@@ -12,6 +12,7 @@ import com.wadezhang.milkbottle.me.MeFragment;
 import com.wadezhang.milkbottle.message.MessageFragment;
 import com.wadezhang.milkbottle.post.PostFragment;
 import com.wadezhang.milkbottle.theme.ThemeFragment;
+import com.wadezhang.milkbottle.theme.ThemePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,8 @@ public class MainActivity extends BaseActivity {
     android.support.v4.app.Fragment mShowingFragment, mReplaceFragment; //正在显示的Fragment，将要显示的Fragment
 
     private long clickTime = 0; // 第一次点击的时间
+
+    private ThemePresenter mThemePresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class MainActivity extends BaseActivity {
                         if(mReplaceFragment == null) mReplaceFragment = ThemeFragment.newInstance();
                         if(!mReplaceFragment.isAdded())
                             mFragmentTransaction.add(R.id.framelayout_root, mReplaceFragment, ThemeFragment.class.getName());
+                        if(mThemePresenter == null) mThemePresenter = new ThemePresenter((ThemeFragment)mReplaceFragment);
                         break;
                     case 2 :
                         mReplaceFragment = mFragmentManager.findFragmentByTag(MessageFragment.class.getName());

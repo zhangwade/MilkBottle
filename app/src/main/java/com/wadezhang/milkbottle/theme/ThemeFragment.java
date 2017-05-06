@@ -1,11 +1,15 @@
 package com.wadezhang.milkbottle.theme;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
@@ -26,11 +30,15 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View{
     @BindView(R.id.fragment_theme_text_search) TextView mSearch;
     @BindView(R.id.fragment_theme_text_category) TextView mCategory;
     @BindView(R.id.fragment_theme_recyclerview) RecyclerView mRecyclerView;
+    @BindView(R.id.fragment_theme_swipe_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ThemeAdapter mThemeAdapter;
-    private List<Theme> mPostList = new ArrayList<>();
-    private final int HOT_ITEM = 6;  //取 6 条热门话题
-    private final int NEWEST_ITEM = 30;  //取 30 条最新话题
+    private List<Theme> mThemeList = new ArrayList<>();
+    private int mHotItem = 6;  //取 6 条热门话题
+    private int mNewestItem = 30;  //取 30 条最新话题
+    private int mSecondGroupPosition;
+
+    View mView;
 
     private ThemeContract.Presenter mThemePresenter;
 
@@ -38,22 +46,69 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View{
         ThemeFragment mThemeFragment = new ThemeFragment();
         return mThemeFragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_theme, container, false);
+        if(mView == null) mView = inflater.inflate(R.layout.fragment_theme, container, false);
         ButterKnife.bind(this, mView);
-        mThemeAdapter = new ThemeAdapter(mPostList, HOT_ITEM + 1);
-        mRecyclerView.setAdapter(mThemeAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(new RefreshListener());
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         return mView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //autoRefresh();
+        mThemePresenter.start(mHotItem, mNewestItem);
     }
 
     @Override
     public void setPresenter(ThemeContract.Presenter presenter){
         mThemePresenter = presenter;
+    }
+
+    public void autoRefresh(){
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                mThemePresenter.start(mHotItem, mNewestItem);
+                if(mSwipeRefreshLayout.isRefreshing()) mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    public class RefreshListener implements SwipeRefreshLayout.OnRefreshListener{
+        @Override
+        public void onRefresh(){
+            mThemePresenter.start(mHotItem, mNewestItem);
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void updateAdapter(List<Theme> themeList, int secondGroupPosition){
+        mThemeList.clear();
+        mThemeList.addAll(themeList);
+        mSecondGroupPosition = secondGroupPosition;
+        if(mThemeAdapter == null){
+            mThemeAdapter = new ThemeAdapter(mThemeList, mSecondGroupPosition);
+            mRecyclerView.setAdapter(mThemeAdapter);
+        }else{
+            mThemeAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void showToast(String toast) {
+        Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
     }
 }

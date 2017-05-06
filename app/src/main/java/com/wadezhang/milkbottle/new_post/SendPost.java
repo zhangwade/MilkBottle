@@ -28,7 +28,7 @@ public class SendPost {
     private User mAuthor;
     private Handler mHandler;
 
-    public SendPost(Theme theme, String photoPath, String content, User author, Handler handler){
+    public SendPost(Theme theme, String photoPath, String content, User author, Handler handler){ //TODO:在对应的话题更新 帖子数 字段
         mTheme = theme;
         mPhotoPath = photoPath;
         mContent = content;

@@ -161,6 +161,7 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
                         mPostFriendView.showToast("右滑发现更多精彩");
                     }
                 }else{
+                    mPostFriendView.showToast("网络出了点小差~~");
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }

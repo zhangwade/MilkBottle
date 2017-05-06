@@ -38,6 +38,8 @@
 
         <activity android:name=".watch_big_photo.WatchBigPhotoActivity"/>
 
+        <activity android:name=".theme_category.ThemeListActivity"/>
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.wadezhang.milkbottle.theme;
 
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.theme_category.ThemeCategory;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -16,6 +17,7 @@ public class Theme extends BmobObject {
     private BmobRelation followers;
     private User author;
     private Integer postCount;
+    private ThemeCategory category;
 
     public String getName() {
         return name;
@@ -55,5 +57,13 @@ public class Theme extends BmobObject {
 
     public void setPostCount(Integer postCount) {
         this.postCount = postCount;
+    }
+
+    public ThemeCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ThemeCategory category) {
+        this.category = category;
     }
 }
