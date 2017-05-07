@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.theme_category.ThemeCategoryListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,12 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View{
         mSwipeRefreshLayout.setOnRefreshListener(new RefreshListener());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemeCategoryListActivity.actionStart(getContext());
+            }
+        });
         return mView;
     }
 

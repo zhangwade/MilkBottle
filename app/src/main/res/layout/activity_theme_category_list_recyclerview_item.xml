@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/square_image_view">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_theme_category_list_recyclerview_item_text_title"
+        android:text="类别"
+        android:textSize="?attr/textSizeSecond"
+        android:textColor="@color/accentColor"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_theme_category_list_recyclerview_item_text_subtitle"
+        android:text="简介"
+        android:layout_marginTop="5dp"
+        android:textSize="?attr/textSizeThird"
+        android:textColor="@color/textColorSecond"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

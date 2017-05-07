@@ -40,6 +40,10 @@
 
         <activity android:name=".theme_category.ThemeListActivity"/>
 
+        <activity android:name=".theme_category.ThemeCategoryListActivity"/>
+
+        <activity android:name=".theme_post_list.ThemePostListActivity"/>
+
     </application>
 
 </manifest>

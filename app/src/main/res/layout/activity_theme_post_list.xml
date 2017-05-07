@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_theme_post_list_imgbtn_back"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_theme_post_list_text_title"
+            android:text="话题"
+            style="@android:style/TextAppearance.Medium"
+            android:gravity="center"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_theme_post_list_imgbtn_detail"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextColor="@color/textColorFirst"
+        app:tabSelectedTextColor="@color/accentColor"
+        android:id="@+id/activity_theme_post_list_tablayout"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_theme_post_list_viewpager"
+        android:layout_weight="1"/>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_theme_post_list_text_newpost"
+            android:text="点此输入文字"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_theme_post_list_text_sendpost"
+            style="@android:style/TextAppearance.Medium"
+            android:text="发帖"/>
+    </LinearLayout>
+</LinearLayout>

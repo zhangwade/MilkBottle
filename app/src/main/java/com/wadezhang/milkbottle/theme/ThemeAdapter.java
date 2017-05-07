@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.theme_category.ThemeListActivity;
+import com.wadezhang.milkbottle.theme_post_list.ThemePostListActivity;
 
 import java.util.List;
 
@@ -90,10 +91,17 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     int position = mItemViewHolder.getAdapterPosition();
-                    Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show(); //TODO
+                    Theme theme = new Theme();
+                    if(position < mSecondGroupPosition){
+                        theme = mThemeList.get(position - 1);
+                    }else if(position > mSecondGroupPosition){
+                        theme = mThemeList.get(position - 2);
+                    }
+                    ThemePostListActivity.actionStart(mContext, theme);
+                    //Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show(); //TODO
                 }
             });
-            return new ItemViewHolder(view);
+            return mItemViewHolder;
         }
         return null;
     }

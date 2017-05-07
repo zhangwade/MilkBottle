@@ -1,8 +1,10 @@
-package com.wadezhang.milkbottle.post;
+package com.wadezhang.milkbottle.theme_post_list;
 
 import android.util.Log;
 
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.post.Post;
+import com.wadezhang.milkbottle.theme.Theme;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,12 +19,12 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by Administrator on 2017/5/1 0001.
+ * Created by Administrator on 2017/5/7 0007.
  */
 
-public class PostFindPresenter implements PostFindContract.Presenter {
+public class ThemePostListNewestPresenter implements ThemePostListNewestContract.Presenter {
 
-    private PostFindContract.View mPostFindView;
+    private ThemePostListNewestContract.View mThemePostListNewestView;
     private List<Post> mPostList;
     //private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
 
@@ -32,11 +34,14 @@ public class PostFindPresenter implements PostFindContract.Presenter {
     private int mActionType;
     private final int STATE_REFRESH = 0; //下拉刷新
     private final int STATE_MORE = 1; //上拉加载更多
-    private List<String> followIds = new ArrayList<String>();; //当前用户的关注
+    //private List<String> followIds = new ArrayList<String>();; //当前用户的关注
 
-    public PostFindPresenter(PostFindContract.View view){
-        mPostFindView = view;
-        mPostFindView.setPresenter(this);
+    private String mThemeId;
+
+    public ThemePostListNewestPresenter(ThemePostListNewestContract.View view, String themeId){
+        mThemePostListNewestView = view;
+        mThemeId = themeId;
+        mThemePostListNewestView.setPresenter(this);
     }
 
     @Override
@@ -76,45 +81,11 @@ public class PostFindPresenter implements PostFindContract.Presenter {
             }
         });   */
         mActionType = actionType;
-        BmobQuery<User> mFollowQuery = new BmobQuery<>();
-        User mUser = new User();
-        mUser.setObjectId("C0NeXXX3"); //TODO:做好注册登录后要更改这里
-        mFollowQuery.addWhereRelatedTo("follow", new BmobPointer(mUser));
-        mFollowQuery.addQueryKeys("objectId");
-        mFollowQuery.findObjects(new FindListener<User>() {
-            @Override
-            public void done(List<User> list, BmobException e) { //查询当前用户的关注
-                if(e == null){
-                    followIds.clear();
-                    if(!list.isEmpty()){
-                        for(User user : list){
-                            followIds.add(user.getObjectId());
-                        }
-                    }
-                    followIds.add("C0NeXXX3"); //TODO:自己发的帖子不显示在“发现”栏里
-                    getPostFromFollow();
-                }else{
-                    Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
-                }
-            }
-        });
-/*
-        followIds = new ArrayList<String>(); //TODO:测试用
-        followIds.add("C3a12227"); //TODO:测试用
-        followIds.add("36mF1118"); //TODO:测试用   */
-/*
-        if(followIds.isEmpty()){
-            mPostFriendView.showToast("没有任何关注");
-            return; //没有任何关注
-        }   */
-    }
-
-    public void getPostFromFollow(){
-        BmobQuery<User> innerQuery = new BmobQuery<>();
-        innerQuery.addWhereNotContainedIn("objectId", followIds);
+        Theme theme = new Theme();
+        theme.setObjectId(mThemeId);
         BmobQuery<Post> query = new BmobQuery<>();
-        query.addWhereMatchesQuery("author", "_User", innerQuery);
         // 按时间降序查询
+        query.addWhereEqualTo("theme", theme);
         query.order("-createdAt");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
         query.include("theme[objectId|name],author[objectId|icon|username]");
@@ -153,21 +124,30 @@ public class PostFindPresenter implements PostFindContract.Presenter {
                         curPage++;
                         showPost(mActionType);
                     } else if (mActionType == STATE_MORE) {
-                        mPostFindView.showToast("到底了");
+                        mThemePostListNewestView.showToast("到底了");
                     } else if (mActionType == STATE_REFRESH) {
-                        mPostFindView.showToast("暂时没有帖子哦~~");
+                        mThemePostListNewestView.showToast("暂时没有帖子哦~~");
                     }
                 }else{
-                    mPostFindView.showToast("网络出了点小差~~");
+                    mThemePostListNewestView.showToast("网络出了点小差~~");
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });
+/*
+        followIds = new ArrayList<String>(); //TODO:测试用
+        followIds.add("C3a12227"); //TODO:测试用
+        followIds.add("36mF1118"); //TODO:测试用   */
+/*
+        if(followIds.isEmpty()){
+            mPostFriendView.showToast("没有任何关注");
+            return; //没有任何关注
+        }   */
     }
 
     @Override
     public void showPost(int actionType){
-        if(actionType == STATE_REFRESH) mPostFindView.updateAdapter(mPostList, 0);
-        else mPostFindView.updateAdapter(mPostList, 1);
+        if(actionType == STATE_REFRESH) mThemePostListNewestView.updateAdapter(mPostList, 0);
+        else mThemePostListNewestView.updateAdapter(mPostList, 1);
     }
 }

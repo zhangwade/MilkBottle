@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.theme.Theme;
+import com.wadezhang.milkbottle.theme_post_list.ThemePostListActivity;
 
 import java.util.List;
 
@@ -47,7 +48,15 @@ public class ThemeListAdapter extends RecyclerView.Adapter<ThemeListAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null) mContext = parent.getContext();
         View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_theme_item, parent, false);
-        ViewHolder mViewHolder = new ViewHolder(mView);
+        final ViewHolder mViewHolder = new ViewHolder(mView);
+        mViewHolder.mTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Theme theme = mThemeList.get(position);
+                ThemePostListActivity.actionStart(mContext, theme);
+            }
+        });
         return mViewHolder;
     }
 
