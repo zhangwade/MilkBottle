@@ -44,6 +44,12 @@
 
         <activity android:name=".theme_post_list.ThemePostListActivity"/>
 
+        <activity android:name=".theme_post_list.ThemeDetailActivity"/>
+
+        <activity android:name=".new_theme.NewThemeActivity"/>
+
+        <activity android:name=".new_theme.SelectThemeCategoryActivity"/>
+
     </application>
 
 </manifest>

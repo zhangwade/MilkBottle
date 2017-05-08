@@ -7,11 +7,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.new_post.NewPostActivity;
 import com.wadezhang.milkbottle.theme.Theme;
 
 import java.util.ArrayList;
@@ -31,14 +34,15 @@ public class ThemePostListActivity extends BaseActivity {
     @BindView(R.id.activity_theme_post_list_text_title) TextView mTitle;
     @BindView(R.id.activity_theme_post_list_tablayout) TabLayout mTabLayout;
     @BindView(R.id.activity_theme_post_list_viewpager) ViewPager mViewPager;
-    @BindView(R.id.activity_theme_post_list_text_newpost) TextView mNewPost;
-    @BindView(R.id.activity_theme_post_list_text_sendpost) TextView mSendPost;
+    @BindView(R.id.activity_theme_post_list_linearlayout_input) LinearLayout mInput;
 
     String mThemeId;
     String mThemeName;
 
     FragmentManager mFragmentManager;
     List<Fragment> mFragmentList;
+
+    Context mContext;
 
     public static void actionStart(Context context, Theme theme){
         Intent intent = new Intent(context, ThemePostListActivity.class);
@@ -53,9 +57,28 @@ public class ThemePostListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_post_list);
         ButterKnife.bind(this);
+        mContext = this;
         init();
         initViewPager();
         mTabLayout.setupWithViewPager(mViewPager);
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mBtnDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemeDetailActivity.actionStart(mContext, mThemeId);
+            }
+        });
+        mInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewPostActivity.actionStart(mContext, mThemeId, mThemeName);
+            }
+        });
     }
 
     public void init(){

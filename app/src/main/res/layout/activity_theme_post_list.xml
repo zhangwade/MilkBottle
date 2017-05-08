@@ -22,6 +22,7 @@
             android:id="@+id/activity_theme_post_list_text_title"
             android:text="话题"
             style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"
             android:gravity="center"
             android:layout_weight="1"/>
         <ImageButton
@@ -51,21 +52,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activity_theme_post_list_linearlayout_input"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/activity_theme_post_list_text_newpost"
             android:text="点此输入文字"
             style="@android:style/TextAppearance.Medium"
+            android:textColor="@color/textColorSecond"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/activity_theme_post_list_text_sendpost"
             style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"
             android:text="发帖"/>
     </LinearLayout>
 </LinearLayout>

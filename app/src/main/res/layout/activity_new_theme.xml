@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_new_theme_imgbtn_back"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="创建话题"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="话题类别"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorSecond"
+                android:background="?attr/dividerColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_text_select_category"
+                android:text="点击选择类别"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@drawable/square_image_view"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorFirst"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="话题名"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorSecond"
+                android:background="?attr/dividerColor"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_edit_name"
+                android:background="@null"
+                android:hint="输入话题名（不超过 30 个字）"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorFirst"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_text_name_wordcount"
+                android:text="0"
+                android:textColor="@color/highLight"
+                android:textSize="?attr/textSizeThird"
+                android:layout_gravity="right"
+                android:padding="10dp"/>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_btn_nextstep"
+                android:text="下一步"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_second_tip"
+                android:text="话题描述"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorSecond"
+                android:background="?attr/dividerColor"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_edit_introduction"
+                android:background="@null"
+                android:minHeight="100dp"
+                android:hint="输入话题描述（不超过 100 个字）"
+                android:gravity="top"
+                android:padding="10dp"
+                android:textSize="?attr/textSizeSecond"
+                android:textColor="@color/textColorFirst"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_text_introduction_wordcount"
+                android:text="0"
+                android:textColor="@color/highLight"
+                android:textSize="?attr/textSizeThird"
+                android:layout_gravity="right"
+                android:padding="10dp"/>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_new_theme_btn_create"
+                android:text="创建"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
