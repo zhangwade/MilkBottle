@@ -1,5 +1,7 @@
 package com.wadezhang.milkbottle;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.KeyEvent;
@@ -31,6 +33,11 @@ public class MainActivity extends BaseActivity {
     private long clickTime = 0; // 第一次点击的时间
 
     private ThemePresenter mThemePresenter;
+
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

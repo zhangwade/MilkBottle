@@ -16,6 +16,7 @@ public class User extends BmobUser {
     private BmobRelation theme;
     private BmobRelation follow;
     private BmobRelation fans;
+    private String nickname;
 
     public Boolean getSex() {
         return sex;
@@ -63,5 +64,13 @@ public class User extends BmobUser {
 
     public void setFans(BmobRelation fans) {
         this.fans = fans;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
