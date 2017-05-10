@@ -81,7 +81,7 @@ public class ThemeDetailActivity extends BaseActivity {
                         mThemeCreatedAt.setText("创建时间: "+theme.getCreatedAt());
                         ImageLoader.with(mContext, theme.getAuthor().getIcon().getFileUrl(), mAuthorIcon);
                         mAuthorName.setText(theme.getAuthor().getUsername());
-                        mAuthorSex.setText((theme.getAuthor().getSex() ? "男" : "女"));
+                        mAuthorSex.setText(theme.getAuthor().getSex());
                     }else{
                         Toast.makeText(mContext, "话题不存在", Toast.LENGTH_SHORT).show();
                     }

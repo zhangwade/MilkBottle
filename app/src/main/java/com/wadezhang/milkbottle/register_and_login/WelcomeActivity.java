@@ -1,7 +1,9 @@
 package com.wadezhang.milkbottle.register_and_login;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -24,19 +26,35 @@ public class WelcomeActivity extends BaseActivity {
     @BindView(R.id.activity_welcome_text_login) TextView mBtnLogin;
     @BindView(R.id.activity_welcome_text_register) TextView mBtnRegister;
 
+    Context mContext;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "88948b7c6b14026453c55e34644c8b2c");
+        User.logOut(); //TODO
         User currentUser = BmobUser.getCurrentUser(User.class);
         if(currentUser != null){  //用户已登录，直接进入主界面
             MainActivity.actionStart(this);
             finish();
         }
-        //SystemClock.sleep(2000);
+        SystemClock.sleep(2000);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
+        mContext = this;
+        mBtnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.actionStart(mContext);
+            }
+        });
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.actionStart(mContext);
+            }
+        });
     }
 }

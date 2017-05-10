@@ -10,7 +10,7 @@ import cn.bmob.v3.datatype.BmobRelation;
 
 public class User extends BmobUser {
 
-    private Boolean sex;
+    private String sex;
     private String introduction;
     private BmobFile icon;
     private BmobRelation theme;
@@ -18,11 +18,11 @@ public class User extends BmobUser {
     private BmobRelation fans;
     private String nickname;
 
-    public Boolean getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
