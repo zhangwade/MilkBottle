@@ -12,28 +12,28 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.wadezhang.milkbottle.ActivityCollector;
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
- * Created by Administrator on 2017/5/10 0010.
+ * Created by Administrator on 2017/5/11 0011.
  */
 
-public class LoginActivity extends BaseActivity {
+public class ReLoginActivity extends BaseActivity {
 
     @BindView(R.id.activity_login_imgbtn_back) ImageButton mBtnBack;
     @BindView(R.id.activity_login_text_register) TextView mTurnToRegister;
@@ -51,6 +51,8 @@ public class LoginActivity extends BaseActivity {
 
     //private String defaultIconPath = "http://bmob-cdn-10919.b0.upaiyun.com/2017/04/30/a1902635402911b4806f3f7c8baac63b.jpg";
 
+    private long clickTime = 0; // 第一次点击的时间
+
     Context mContext;
 
     public static void actionStart(Context context){
@@ -67,19 +69,8 @@ public class LoginActivity extends BaseActivity {
         mContext = this;
         mBtnLoginConfirm.setEnabled(false);
         mShowOrHidePassword.setEnabled(false);
-        mBtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mTurnToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterActivity.actionStart(mContext);
-                finish();
-            }
-        });
+        mBtnBack.setVisibility(View.INVISIBLE);
+        mTurnToRegister.setVisibility(View.INVISIBLE);
         mForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,5 +206,36 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 是否触发按键为back键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else { // 如果不是back键正常响应
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+    /* 注意：重写onKeyDown()和onBackPressed()方法都能捕获Back的点击事件，
+    onKeyDown()兼容Android 1.0到Android 2.1，也是常规方法，Android 2.0开始又多出了
+    一种新的方法onBackPressed()，可以单独获取Back键的按下事件， 方法二的代码将两
+    种方法嵌套使用了，onBackPressed()方法会处理返回键的操作，不会向上传播，如果想
+    向上传播，则需要使用onKeyDown() */
+
+    private void exit() {
+        if ((System.currentTimeMillis() - clickTime) > 2000) {
+            Toast.makeText(this, "再按一次后退键退出程序", Toast.LENGTH_SHORT).show();
+            clickTime = System.currentTimeMillis();
+        } else {
+            ActivityCollector.finishAll();
+            android.os.Process.killProcess(android.os.Process.myPid()); //杀掉当前进程
+        }
     }
 }

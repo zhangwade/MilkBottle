@@ -59,7 +59,7 @@
         <activity android:name=".register_and_login.ForgetPasswordActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
 
     </application>
 

@@ -82,4 +82,8 @@
     <style name="TextThird">
         <item name="android:textSize">?attr/textSizeThird</item>
     </style>
+
+    <style name="WordCountOverflow">
+        <item name="android:textColor">@color/highLight</item>
+    </style>
 </resources>

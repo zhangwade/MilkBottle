@@ -1,5 +1,6 @@
 package com.wadezhang.milkbottle.register_and_login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -30,8 +31,9 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText);
+        setTheme(R.style.DayThemeSmallText); //TODO
         super.onCreate(savedInstanceState);
+        SystemClock.sleep(2000);
         Bmob.initialize(this, "88948b7c6b14026453c55e34644c8b2c");
         User.logOut(); //TODO
         User currentUser = BmobUser.getCurrentUser(User.class);
@@ -39,7 +41,6 @@ public class WelcomeActivity extends BaseActivity {
             MainActivity.actionStart(this);
             finish();
         }
-        SystemClock.sleep(2000);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
