@@ -24,7 +24,8 @@ public class GetCurrentUser {
             mAlertDialog.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    LoginActivity.actionStart(mContext);
+                    ActivityCollector.finishAll();
+                    LoginActivity.actionStart(mContext);  //TODO: mContext  可能 null
                 }
             });
             mAlertDialog.show();

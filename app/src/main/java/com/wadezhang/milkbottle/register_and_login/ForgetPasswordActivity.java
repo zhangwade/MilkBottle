@@ -105,7 +105,6 @@ public class ForgetPasswordActivity extends BaseActivity {
                             mAlertDialog.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    LoginActivity.actionStart(mContext);
                                     finish();
                                 }
                             });

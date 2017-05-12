@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 
@@ -180,7 +181,9 @@ public class RegisterActivity extends BaseActivity {
                 user.setEmail(mEditEmail.getText().toString());
                 user.setNickname(mEditEmail.getText().toString());
                 user.setSex("未知");
-                user.setIntroduction("无");
+                user.setIntroduction("");
+                user.setFollowCount(0);
+                user.setFansCount(0);
                 BmobFile icon = new BmobFile(new Date().toString()+".jpg", "", defaultIconPath);
                 user.setIcon(icon);
                 user.signUp(new SaveListener<User>() {
@@ -195,7 +198,9 @@ public class RegisterActivity extends BaseActivity {
                             mAlertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //ThemePostListActivity.actionStart(mContext, mExistedTheme);
+                                    MainActivity.actionStart(mContext);  //TODO
+                                    //EditPersonalInfoActivity
+                                    finish();
                                 }
                             });
                             mAlertDialog.show();

@@ -80,7 +80,7 @@ public class EditIntroductionActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(mEdit.getText().length() <= WORD_MAX_NUM && !mEdit.getText().equals(mOldIntroduction)){
+                if(mEdit.getText().length() <= WORD_MAX_NUM && !mEdit.getText().toString().equals(mOldIntroduction)){
                     mSave.setEnabled(true);
                 }else{
                     mSave.setEnabled(false);

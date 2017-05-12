@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.wadezhang.milkbottle.ActivityCollector;
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
@@ -191,7 +192,8 @@ public class ChangePasswordActivity extends BaseActivity{
                             mAlertDialog.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    finish();
+                                    ActivityCollector.finishAll();
+                                    LoginActivity.actionStart(mContext);
                                 }
                             });
                             mAlertDialog.show();

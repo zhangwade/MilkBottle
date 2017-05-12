@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 
@@ -190,7 +191,8 @@ public class LoginActivity extends BaseActivity {
                             mAlertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //ThemePostListActivity.actionStart(mContext, mExistedTheme);
+                                    MainActivity.actionStart(mContext);
+                                    finish();
                                 }
                             });
                             mAlertDialog.show();

@@ -161,7 +161,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/activity_edit_personal_info_text_introduction"
-                    android:text="无"
                     android:layout_marginLeft="10dp"
                     android:textSize="?attr/textSizeFirst"
                     android:textColor="@color/textColorSecond"

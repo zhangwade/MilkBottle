@@ -17,6 +17,8 @@ public class User extends BmobUser {
     private BmobRelation follow;
     private BmobRelation fans;
     private String nickname;
+    private Integer followCount;
+    private Integer fansCount;
 
     public String getSex() {
         return sex;
@@ -72,5 +74,21 @@ public class User extends BmobUser {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Integer getFollowCount() {
+        return followCount;
+    }
+
+    public void setFollowCount(Integer followCount) {
+        this.followCount = followCount;
+    }
+
+    public Integer getFansCount() {
+        return fansCount;
+    }
+
+    public void setFansCount(Integer fansCount) {
+        this.fansCount = fansCount;
     }
 }

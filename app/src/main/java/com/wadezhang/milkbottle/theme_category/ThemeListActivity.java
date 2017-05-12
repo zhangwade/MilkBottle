@@ -15,7 +15,9 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.theme.Theme;
 
 import java.text.ParseException;
@@ -28,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -39,6 +42,7 @@ public class ThemeListActivity extends BaseActivity {
 
     @BindView(R.id.activity_theme_list_imgbtn_back) ImageButton mBtnBack;
     @BindView(R.id.activity_theme_list_text_theme_category) TextView mTitle;
+    @BindView(R.id.activity_theme_list_text_my_follow_theme) TextView mMyFollowTheme;
     @BindView(R.id.activity_theme_list_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
     @BindView(R.id.swipe_target) RecyclerView mRecyclerView;
 
@@ -47,20 +51,22 @@ public class ThemeListActivity extends BaseActivity {
     private final int TYPE_HOT = 0;
     private final int TYPE_NEWEST = 1;
     private final int TYPE_CATEGORY = 2;
-    private int mType; //type: 0 是热门， 1 是最新， 2 是分类
+    private final int TYPE_MY_CREATE_THEME = 3;
+    private final int TYPE_MY_FOLLOW_THEME = 4;
+    private int mType; //type: 0 是热门， 1 是最新， 2 是分类， 3 是我的话题， 4 是我关注的话题
     private String mThemeCategoryId;
     private String mThemeCategoryTitle;
 
     private ThemeListAdapter mThemeListAdapter;
     private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
-    private int limit = 10; //每次查询限制数目
+    private int limit = 20; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private int mActionType; //下拉刷新 还是 上拉加载更多
     private final int STATE_REFRESH = 0; //下拉刷新
     private final int STATE_MORE = 1; //上拉加载更多
     private List<Theme> mThemeList = new ArrayList<>();
 
-    public static void actionStart(Context context, ThemeCategory themeCategory, int type){ //type: 0 是热门， 1 是最新， 2 是分类
+    public static void actionStart(Context context, ThemeCategory themeCategory, int type){ //type: 0 是热门， 1 是最新， 2 是分类， 3 是我创建的话题， 4 是我关注的话题
         Intent intent = new Intent(context, ThemeListActivity.class);
         intent.putExtra("type", type);
         if(themeCategory != null){
@@ -88,6 +94,12 @@ public class ThemeListActivity extends BaseActivity {
                 finish();
             }
         });
+        mMyFollowTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemeListActivity.actionStart(mContext, null, 4);
+            }
+        });
     }
 
     @Override
@@ -99,14 +111,22 @@ public class ThemeListActivity extends BaseActivity {
     public void init(){
         Intent mIntent = getIntent();
         mType = mIntent.getIntExtra("type", 2);
-        if(mType == 2){
+        if(mType == TYPE_CATEGORY){
             mThemeCategoryId = mIntent.getStringExtra("themeCategoryId");
             mThemeCategoryTitle = mIntent.getStringExtra("themeCategoryTitle");
             mTitle.setText(mThemeCategoryTitle);
-        }else if(mType == 0){
+            mMyFollowTheme.setVisibility(View.INVISIBLE);
+        }else if(mType == TYPE_HOT){
             mTitle.setText("热门话题");
-        }else if(mType == 1){
+            mMyFollowTheme.setVisibility(View.INVISIBLE);
+        }else if(mType == TYPE_NEWEST){
             mTitle.setText("最近更新的话题");
+            mMyFollowTheme.setVisibility(View.INVISIBLE);
+        }else if(mType == TYPE_MY_CREATE_THEME){
+            mTitle.setText("我的话题");
+        }else if(mType == TYPE_MY_FOLLOW_THEME){
+            mTitle.setText("我关注的话题");
+            mMyFollowTheme.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -148,6 +168,20 @@ public class ThemeListActivity extends BaseActivity {
             ThemeCategory themeCategory = new ThemeCategory();
             themeCategory.setObjectId(mThemeCategoryId);
             query.addWhereEqualTo("category", themeCategory);
+            query.order("-updatedAt");
+        }else if(mType == TYPE_MY_CREATE_THEME){
+            User user = GetCurrentUser.getCurrentUser(mContext);
+            if(user == null) return;
+            User mUser = new User();
+            mUser.setObjectId(user.getObjectId());
+            query.addWhereEqualTo("author", mUser);
+            query.order("-updatedAt");
+        }else if(mType == TYPE_MY_FOLLOW_THEME){
+            User user = GetCurrentUser.getCurrentUser(mContext);
+            if(user == null) return;
+            User mUser = new User();
+            mUser.setObjectId(user.getObjectId());
+            query.addWhereRelatedTo("theme", new BmobPointer(mUser));
             query.order("-updatedAt");
         }
         query.addQueryKeys("objectId,name,postCount");
@@ -191,7 +225,7 @@ public class ThemeListActivity extends BaseActivity {
                     }
                 }else{
                     Toast.makeText(mContext, "网络出了点小差~~", Toast.LENGTH_SHORT).show();
-                    Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.d(getClass().getSimpleName(), "bmob查询话题失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });

@@ -6,28 +6,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/navigationbarBackgroundColor"
         android:padding="10dp">
-
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_theme_list_imgbtn_back"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+            android:id="@+id/activity_my_post_imgbtn_back"
+            android:background="@mipmap/ic_3d_rotation_black_24dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_theme_list_text_theme_category"
-            android:text="话题类别"
+            android:layout_centerInParent="true"
             style="@android:style/TextAppearance.Medium"
-            android:layout_centerInParent="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/activity_theme_list_text_my_follow_theme"
-            android:text="我的关注"
-            android:layout_centerVertical="true"
-            android:textSize="?attr/textSizeSecond"
-            android:layout_alignParentRight="true"/>
+            android:textColor="?attr/navigationColor"
+            android:text="我的帖子"/>
     </RelativeLayout>
 
     <TextView android:layout_height="0.5dp"
@@ -35,11 +27,9 @@
         android:background="?attr/dividerColor"/>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/activity_theme_list_swipetoloadlayout">
+        android:id="@+id/activity_my_post_swipetoloadlayout">
 
         <com.wadezhang.milkbottle.RefreshHeaderView
             android:id="@id/swipe_refresh_header"

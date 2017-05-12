@@ -56,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/activity_edit_introduction_edit"
+            android:gravity="top"
             android:background="@null"
             android:minHeight="100dp"
             android:maxLength="30" />

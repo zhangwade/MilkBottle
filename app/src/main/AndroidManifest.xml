@@ -59,6 +59,20 @@
         <activity android:name=".register_and_login.ForgetPasswordActivity"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".register_and_login.EditPersonalInfoActivity"/>
+
+        <activity android:name=".register_and_login.EditNicknameActivity"/>
+
+        <activity android:name=".register_and_login.SelectSexActivity"/>
+
+        <activity android:name=".register_and_login.EditIntroductionActivity"/>
+
+        <activity android:name=".register_and_login.ChangePasswordActivity"/>
+
+        <activity android:name=".me.FollowOrFansListActivity"/>
+
+        <activity android:name=".me.MyPostActivity"/>
+
         <activity android:name=".MainActivity" />
 
     </application>
