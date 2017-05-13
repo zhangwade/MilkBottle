@@ -43,7 +43,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 Post post = mPostList.get(position);
-                PostDetailActivity.actionStart(mContext, post, isLikes);
+                PostDetailActivity.actionStart(mContext, post, null, isLikes);
             }
         }); //TODO:isLikes要根据情况改变值
         mViewHolder.mPhoto.setOnClickListener(new View.OnClickListener() {

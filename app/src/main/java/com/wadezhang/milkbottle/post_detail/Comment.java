@@ -11,18 +11,11 @@ import cn.bmob.v3.BmobObject;
 
 public class Comment extends BmobObject {
 
-    private Comment referenceComment;
     private Post post;
     private String content;
     private User author;
-
-    public Comment getReferenceComment() {
-        return referenceComment;
-    }
-
-    public void setReferenceComment(Comment referenceComment) {
-        this.referenceComment = referenceComment;
-    }
+    private User toWho;
+    private Integer isRead;
 
     public Post getPost() {
         return post;
@@ -46,5 +39,21 @@ public class Comment extends BmobObject {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public User getToWho() {
+        return toWho;
+    }
+
+    public void setToWho(User toWho) {
+        this.toWho = toWho;
+    }
+
+    public Integer getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(Integer isRead) {
+        this.isRead = isRead;
     }
 }

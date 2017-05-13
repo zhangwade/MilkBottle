@@ -61,6 +61,8 @@ public class ChangePasswordActivity extends BaseActivity{
         ButterKnife.bind(this);
         mContext = this;
         mSave.setEnabled(false);
+        mShowOrHideOldPassword.setEnabled(false);
+        mShowOrHideNewPassword.setEnabled(false);
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

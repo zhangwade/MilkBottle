@@ -66,6 +66,7 @@ public class MeFragment extends BaseFragment {
         ButterKnife.bind(this, mView);
         init();
         onClick();
+        mSwipeRefreshLayout.setOnRefreshListener(new RefreshListener());
         return mView;
     }
 

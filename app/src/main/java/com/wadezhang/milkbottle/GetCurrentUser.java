@@ -25,7 +25,7 @@ public class GetCurrentUser {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     ActivityCollector.finishAll();
-                    LoginActivity.actionStart(mContext);  //TODO: mContext  可能 null
+                    LoginActivity.actionStart(mContext);
                 }
             });
             mAlertDialog.show();

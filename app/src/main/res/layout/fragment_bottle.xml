@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="瓶子"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        style="@android:style/TextAppearance.Medium" />
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_bottle_swiptoloadlayout">
+
+        <com.wadezhang.milkbottle.RefreshHeaderView
+            android:id="@id/swipe_refresh_header"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="40dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.wadezhang.milkbottle.LoadMoreFooterView
+            android:id="@id/swipe_load_more_footer"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="40dp" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+</LinearLayout>

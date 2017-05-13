@@ -222,7 +222,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_post_detail_img_likes"
+            android:id="@+id/activity_post_detail_imgbtn_likes"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:background="@mipmap/ic_3d_rotation_black_24dp"/>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_message_text_search_user"
+            android:text="添加好友"
+            android:layout_centerVertical="true"
+            android:textSize="?attr/textSizeSecond" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息"
+            android:layout_centerInParent="true"
+            style="@android:style/TextAppearance.Medium" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_message_swiperefreshlayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_message_comment_item"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="    评论"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_message_img_comment_tips"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:src="@mipmap/search"/>
+            </LinearLayout>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_message_likes_item"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="    赞"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_message_img_likes_tips"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:src="@mipmap/search"/>
+            </LinearLayout>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_message_fans_item"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="    新粉丝"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_message_img_fans_tips"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:src="@mipmap/search"/>
+            </LinearLayout>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_message_wechat_item"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="    私信"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_message_img_wechat_tips"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:src="@mipmap/search"/>
+            </LinearLayout>
+
+            <TextView android:layout_height="0.5dp"
+                android:layout_width="match_parent"
+                android:background="?attr/dividerColor"/>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+</LinearLayout>

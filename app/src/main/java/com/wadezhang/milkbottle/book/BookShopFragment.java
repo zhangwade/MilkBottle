@@ -51,7 +51,7 @@ public class BookShopFragment extends BaseFragment implements BookShopContract.V
         ButterKnife.bind(this, mView);
         mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(), 3);//TODO: context 可能有问题
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mBookShopAdapter = new BookShopAdapter(mBookList);
         mRecyclerView.setAdapter(mBookShopAdapter);

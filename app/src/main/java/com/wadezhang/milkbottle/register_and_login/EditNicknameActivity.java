@@ -132,7 +132,7 @@ public class EditNicknameActivity extends BaseActivity {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 //返回null表示接收输入的字符,返回空字符串表示不接受输入的字符
-                if (source.equals("-") || source.toString().matches("[\\u4e00-\\u9fa5]") || source.toString().matches("\\w")) //TODO: 不能连续输入 2 个中文
+                if (source.equals("-") || source.toString().matches("[\\u4e00-\\u9fa5]+") || source.toString().matches("\\w+")) //TODO: 不能连续输入 2 个中文
                     return null;
                 else
                     return "";

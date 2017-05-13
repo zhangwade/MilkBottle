@@ -65,4 +65,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_book_viewpager"
         android:layout_weight="1"/>
+
 </LinearLayout>

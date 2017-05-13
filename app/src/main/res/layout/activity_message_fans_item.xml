@@ -7,31 +7,24 @@
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_margin="10dp">
 
         <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@mipmap/ic_3d_rotation_black_24dp"
+            android:id="@+id/activity_message_fans_item_img_user_icon"
+            android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp" />
-        <LinearLayout
+            android:src="@mipmap/ic_3d_rotation_black_24dp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昵称" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="2017-4-16 10:00:00" />
-
-        </LinearLayout>
+            android:id="@+id/activity_message_fans_item_text_user_name"
+            android:textSize="?attr/textSizeFirst"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="昵称" />
     </LinearLayout>
 
     <TextView android:layout_height="0.5dp"
