@@ -13,6 +13,7 @@ import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.post_detail.Comment;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
+import com.wadezhang.milkbottle.watch_big_photo.WatchBigPhotoActivity;
 
 import java.util.List;
 
@@ -44,6 +45,14 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
                 int position = mViewHolder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
                 PostDetailActivity.actionStart(mContext, null, comment.getPost().getObjectId(), false);
+            }
+        });
+        mViewHolder.mAuthorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Comment comment = mCommentList.get(position);
+                //TODO  用户详情页
             }
         });
         return mViewHolder;
