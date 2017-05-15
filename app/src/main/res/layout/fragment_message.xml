@@ -23,6 +23,10 @@
             style="@android:style/TextAppearance.Medium" />
     </RelativeLayout>
 
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="    评论"
+                    style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
 
@@ -74,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="    赞"
+                    style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
 
@@ -103,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="    新粉丝"
+                    style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
 
@@ -132,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="    私信"
+                    style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
 
@@ -150,9 +158,4 @@
                 android:background="?attr/dividerColor"/>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <TextView android:layout_height="0.5dp"
-        android:layout_width="match_parent"
-        android:background="?attr/dividerColor"/>
-
 </LinearLayout>

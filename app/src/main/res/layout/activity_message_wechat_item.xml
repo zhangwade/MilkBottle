@@ -16,12 +16,13 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:id="@+id/activity_message_comment_item_img_author_icon"
+                android:id="@+id/activity_message_wechat_item_img_from_icon"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_3d_rotation_black_24dp" />
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:id="@+id/activity_message_wechat_item_img_tips"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/search"/>
         </FrameLayout>
@@ -35,13 +36,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/activity_message_comment_item_text_author_name"
-                android:textSize="?attr/textSizeSecond"
+                android:id="@+id/activity_message_wechat_item_text_from_name"
+                android:textSize="?attr/textSizeFirst"
                 android:text="昵称" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/activity_message_comment_item_text_content"
+                android:id="@+id/activity_message_wechat_item_text_from_content"
                 android:layout_marginTop="10dp"
                 android:textSize="?attr/textSizeSecond"
                 android:text="内容" />
@@ -50,9 +51,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_message_comment_item_text_time"
-            android:layout_marginTop="10dp"
+            android:id="@+id/activity_message_wechat_item_text_time"
             android:textSize="?attr/textSizeThird"
+            android:layout_marginLeft="10dp"
             android:text="2017-4-16" />
     </LinearLayout>
 

@@ -34,6 +34,7 @@
         <activity android:name=".book.BookContentActivity"/>
 
         <activity android:name=".new_post.NewPostActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".watch_big_photo.WatchBigPhotoActivity"/>
@@ -75,7 +76,23 @@
 
         <activity android:name=".bottle.EssayDetailActivity"/>
 
+        <activity android:name=".message.MessageCommentActivity"/>
+
+        <activity android:name=".message.MessageLikesActivity"/>
+
+        <activity android:name=".message.MessageFansActivity"/>
+        
+        <activity android:name=".new_post.SelectThemeByCategoryActivity"/>
+
+        <activity android:name=".new_post.SelectThemeActivity"/>
+
         <activity android:name=".MainActivity" />
+
+        <activity
+            android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
+            android:theme="@style/ImagePickerThemeFullScreen"/>
+
+        <service android:name=".message.CheckNewMessageService"/>
 
     </application>
 

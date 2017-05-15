@@ -124,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/fragment_me_text_post"
                     android:text="    我的帖子"
+                    style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
@@ -137,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/fragment_me_text_theme"
                     android:text="    我的话题"
+                    style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
@@ -155,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/fragment_me_text_edit_info"
                     android:text="    编辑资料"
+                    style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
@@ -168,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/fragment_me_text_settings"
                     android:text="    设置"
+                    style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
                     android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />

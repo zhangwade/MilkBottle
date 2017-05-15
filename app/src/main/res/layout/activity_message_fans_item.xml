@@ -38,6 +38,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="?attr/textSizeThird"
+                android:textColor="@color/textColorSecond"
                 android:text="2017-4-16 10:00:00" />
         </LinearLayout>
     </LinearLayout>

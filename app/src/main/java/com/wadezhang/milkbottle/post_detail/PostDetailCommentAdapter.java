@@ -49,7 +49,7 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
             ImageLoader.with(mContext, mComment.getAuthor().getIcon().getFileUrl(), holder.mAuthorIcon);
             holder.mAuthorName.setText(mComment.getAuthor().getUsername());
             holder.mTime.setText(mComment.getCreatedAt());
-            String mReferenceCommentAuthorName = mComment.getReferenceComment().getAuthor().getUsername();
+            String mReferenceCommentAuthorName = mComment.getToWho().getNickname();
             if(mReferenceCommentAuthorName == null){
                 holder.mContent.setText(mComment.getContent());
             }else{

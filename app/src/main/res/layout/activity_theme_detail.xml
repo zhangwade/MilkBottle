@@ -60,7 +60,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textSize="?attr/textSizeFirst"
-        android:textColor="@color/textColorFirst"
+        android:textColor="@color/textColorSecond"
         android:text="介绍"/>
 
     <TextView
@@ -70,7 +70,7 @@
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textSize="?attr/textSizeSecond"
+        android:textSize="?attr/textSizeThird"
         android:textColor="@color/textColorSecond"
         android:text="帖子总数: 0"/>
 
@@ -81,7 +81,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:textSize="?attr/textSizeSecond"
+                android:textSize="?attr/textSizeThird"
                 android:textColor="@color/textColorSecond"
                 android:text="创建时间: 2017.05.08"/>
 
@@ -140,9 +140,10 @@
         android:background="?attr/dividerColor"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/activity_theme_detail_btn_addfollow"
+        android:layout_gravity="center"
         android:text="关注"/>
 
         </LinearLayout>

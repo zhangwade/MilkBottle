@@ -23,6 +23,6 @@ public class OnClickListenerToPostDetail implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        PostDetailActivity.actionStart(mContext, mPost, mIsLikes);
+        PostDetailActivity.actionStart(mContext, mPost, null, mIsLikes);
     }
 }

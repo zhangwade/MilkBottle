@@ -1,17 +1,24 @@
 package com.wadezhang.milkbottle;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.lzy.imagepicker.ImagePicker;
 import com.wadezhang.milkbottle.book.BookFragment;
 import com.wadezhang.milkbottle.bottle.BottleFragment;
 import com.wadezhang.milkbottle.me.MeFragment;
+import com.wadezhang.milkbottle.message.CheckNewMessageService;
 import com.wadezhang.milkbottle.message.MessageFragment;
 import com.wadezhang.milkbottle.post.PostFragment;
 import com.wadezhang.milkbottle.theme.ThemeFragment;
@@ -35,6 +42,13 @@ public class MainActivity extends BaseActivity {
 
     private ThemePresenter mThemePresenter;
 
+    BadgeItem badgeItem;
+
+    Context mContext;
+
+    private IntentFilter intentFilter;
+    private NewMessageReceiver newMessageReceiver;
+
     public static void actionStart(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -48,22 +62,40 @@ public class MainActivity extends BaseActivity {
         //SystemClock.sleep(2000);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mContext = this;
+        Intent intent = new Intent(this, CheckNewMessageService.class);
+        startService(intent);
         if(savedInstanceState == null){
             setDefaultFragment();
         }
+        initImagePicker();
         initBottomNavigationBar();
     }
 
+    public void initImagePicker(){
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new ImagePickerLoader());
+        imagePicker.setShowCamera(true);
+        imagePicker.setSelectLimit(1);
+    }
+
     private void initBottomNavigationBar(){
+        badgeItem = new BadgeItem()
+                .setBackgroundColorResource(R.color.highLight)
+                .hide();
         mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_1))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_2))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3).setBadgeItem(badgeItem))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_4))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_5))
                 .setFirstSelectedPosition(0)
                 .initialise();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.wadezhang.milkbottle.NEW_MESSAGE");
+        newMessageReceiver = new NewMessageReceiver(badgeItem);
+        registerReceiver(newMessageReceiver, intentFilter);
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
             @Override
             public void onTabSelected(int position){//TODO:当重复点击同一Tab时，隐藏再显示可能会有跳转的画面
@@ -87,6 +119,7 @@ public class MainActivity extends BaseActivity {
                         if(mThemePresenter == null) mThemePresenter = new ThemePresenter((ThemeFragment)mReplaceFragment);
                         break;
                     case 2 :
+                        if(!badgeItem.isHidden()) badgeItem.hide();
                         mReplaceFragment = mFragmentManager.findFragmentByTag(MessageFragment.class.getName());
                         if(mReplaceFragment == null) mReplaceFragment = MessageFragment.newInstance();
                         if(!mReplaceFragment.isAdded())
@@ -120,10 +153,34 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    public class NewMessageReceiver extends BroadcastReceiver{
+
+        BadgeItem mBadgeItem;
+
+        public NewMessageReceiver(BadgeItem badgeItem){
+            mBadgeItem = badgeItem;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent){
+            if(mBadgeItem.isHidden()) mBadgeItem.show();
+            Toast.makeText(mContext, "收到 New Message 广播", Toast.LENGTH_SHORT).show();
+            Log.d(getClass().getSimpleName(), "收到 New Message 广播");
+        }
+    }
+
     public void setDefaultFragment(){
         android.support.v4.app.FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mShowingFragment = PostFragment.newInstance();
         mFragmentTransaction.add(R.id.framelayout_root, mShowingFragment, PostFragment.class.getName()).commit();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Intent intent = new Intent(this, CheckNewMessageService.class);
+        stopService(intent);
+        unregisterReceiver(newMessageReceiver);
     }
 
     @Override

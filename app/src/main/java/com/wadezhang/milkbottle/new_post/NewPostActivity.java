@@ -1,9 +1,11 @@
 package com.wadezhang.milkbottle.new_post;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,18 +15,25 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.nanchen.compresshelper.CompressHelper;
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.theme.Theme;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,15 +56,21 @@ public class NewPostActivity extends BaseActivity {
     @BindView(R.id.activity_new_post_text_change_theme) TextView mChangeTheme;
     @BindView(R.id.activity_new_post_edit_content) EditText mEditContent;
     @BindView(R.id.activity_new_post_img_photo) ImageView mPhoto;
+    @BindView(R.id.activity_new_post_imgbtn_delete_photo) ImageButton mBtnDeletePhoto;
     @BindView(R.id.activity_new_post_text_tips) TextView mTips;
     @BindView(R.id.activity_new_post_linearlayout) LinearLayout mLinearLayout;
     @BindView(R.id.activity_new_post_text_wordcount) TextView mWordCount;
 
     Context mContext;
 
+    private final int IMAGE_PICKER = 99;
+
     private String themeId;
     private String themeName;
     private String photoPath; //TODO:图片路径
+
+    private IntentFilter intentFilter;
+    private SelectThemeReceiver selectThemeReceiver;
 
     public static void actionStart(Context context, String themeId, String themeName){
         Intent mIntent = new Intent(context, NewPostActivity.class);
@@ -76,6 +91,8 @@ public class NewPostActivity extends BaseActivity {
         sendBtnOnClick();
         selectThemeOnClick();
         editContentOnChange();
+        selectPhotoOnClick();
+        deletePhotoOnClick();
     }
 
     public void init(){
@@ -88,9 +105,27 @@ public class NewPostActivity extends BaseActivity {
         }else{
             mThemeName.setVisibility(View.INVISIBLE);
             mChangeTheme.setVisibility(View.INVISIBLE);
+            intentFilter = new IntentFilter();
+            intentFilter.addAction("com.wadezhang.milkbottle.select_theme_category");
+            selectThemeReceiver = new SelectThemeReceiver();
+            registerReceiver(selectThemeReceiver, intentFilter);
         }
         mSend.setEnabled(false);
         mWordCount.setVisibility(View.INVISIBLE);
+        mBtnDeletePhoto.setVisibility(View.INVISIBLE);
+    }
+
+    public class SelectThemeReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent){
+            themeId = intent.getStringExtra("themeId");
+            themeName = intent.getStringExtra("themeName");
+            if(mThemeName.getVisibility() == View.INVISIBLE) mThemeName.setVisibility(View.VISIBLE);
+            mThemeName.setText(themeName);
+            if(mSelectTheme.getVisibility() == View.VISIBLE) mSelectTheme.setVisibility(View.INVISIBLE);
+            if(mChangeTheme.getVisibility() == View.INVISIBLE) mChangeTheme.setVisibility(View.VISIBLE);
+        }
     }
 
     public void cancelBtnOnClick(){
@@ -120,7 +155,7 @@ public class NewPostActivity extends BaseActivity {
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                themeId = "zQ6F222e";
+                themeId = "zQ6F222e"; //TODO
                 if(themeId == null){
                     AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
                     mAlertDialog.setTitle("还没有选择话题");
@@ -143,6 +178,9 @@ public class NewPostActivity extends BaseActivity {
                     mProgressDialog.setMessage("正在发布...");
                     mProgressDialog.setCancelable(false);
                     mProgressDialog.show();
+                    File oldFile = new File(photoPath);
+                    File newFile = CompressHelper.getDefault(mContext).compressToFile(oldFile);
+                    photoPath = newFile.getPath();
                     Theme theme = new Theme();
                     theme.setObjectId(themeId); //TODO:设置话题
                     User author = new User();
@@ -170,10 +208,10 @@ public class NewPostActivity extends BaseActivity {
     }
 
     public void selectThemeOnClick(){
-        mSelectTheme.setOnClickListener(new View.OnClickListener() {
+        mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivityForResult(, 0);
+                SelectThemeByCategoryActivity.actionStart(mContext);
             }
         });
     }
@@ -210,8 +248,30 @@ public class NewPostActivity extends BaseActivity {
         });
     }
 
+    public void selectPhotoOnClick(){
+        mPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ImageGridActivity.class);
+                startActivityForResult(intent, IMAGE_PICKER);
+            }
+        });
+    }
+
+    public void deletePhotoOnClick(){
+        mBtnDeletePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBtnDeletePhoto.setVisibility(View.INVISIBLE);
+                mPhoto.setImageResource(R.mipmap.ic_3d_rotation_black_24dp);
+                photoPath = null;
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        /*
         switch(requestCode){
             case 0 : //选择话题 返回结果
                 if(resultCode == RESULT_OK){
@@ -224,6 +284,22 @@ public class NewPostActivity extends BaseActivity {
                 }
                 break;
             default:
+        }   */
+        if(resultCode == ImagePicker.RESULT_CODE_ITEMS){
+            if(data != null && requestCode == IMAGE_PICKER){
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                photoPath = images.get(0).path;
+                ImageLoader.with(mContext, photoPath, mPhoto);
+                mBtnDeletePhoto.setVisibility(View.VISIBLE);
+            }else{
+
+            }
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(selectThemeReceiver);
     }
 }

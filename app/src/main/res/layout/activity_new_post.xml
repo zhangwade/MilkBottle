@@ -47,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_new_post_text_theme_name"
+            android:layout_marginRight="10dp"
             android:textSize="?attr/textSizeFirst"
             android:textColor="@color/textColorFirst"
             android:text="话题"/>
@@ -108,14 +109,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/activity_new_post_img_photo"
-                    android:layout_margin="10dp"
-                    android:scaleType="center"
-                    android:src="@mipmap/ic_3d_rotation_black_24dp"
-                    android:background="@drawable/square_image_view"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/activity_new_post_img_photo"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_3d_rotation_black_24dp"
+                        android:background="@drawable/square_image_view"/>
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/activity_new_post_imgbtn_delete_photo"
+                        android:layout_gravity="right"
+                        android:src="@mipmap/search"/>
+                </FrameLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
