@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.theme.Theme;
 
 import butterknife.BindView;
@@ -38,10 +40,12 @@ public class ThemeDetailActivity extends BaseActivity {
     @BindView(R.id.activity_theme_detail_text_author_name) TextView mAuthorName;
     @BindView(R.id.activity_theme_detail_text_author_sex) TextView mAuthorSex;
     @BindView(R.id.activity_theme_detail_btn_addfollow) Button mBtnAddFollow; // TODO:判断是否已经关注
+    @BindView(R.id.activity_theme_detail_author_item) LinearLayout mAuthorItem;
 
     String mThemeId;
 
     Context mContext;
+    private String mAuthorId;
 
     public static void actionStart(Context context, String themeId){
         Intent intent = new Intent(context, ThemeDetailActivity.class);
@@ -63,13 +67,19 @@ public class ThemeDetailActivity extends BaseActivity {
                 finish();
             }
         });
+        mAuthorItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDetailActivity.actionStart(mContext, mAuthorId);
+            }
+        });
     }
 
     public void init(){
         Intent mIntent = getIntent();
         mThemeId = mIntent.getStringExtra("themeId");
         BmobQuery<Theme> query = new BmobQuery<>();
-        query.include("author[objectId|icon|username|sex]");
+        query.include("author[objectId|icon|nickname|sex]");
         query.getObject(mThemeId, new QueryListener<Theme>() {
             @Override
             public void done(Theme theme, BmobException e) {
@@ -80,7 +90,8 @@ public class ThemeDetailActivity extends BaseActivity {
                         mThemePostCount.setText("帖子总数: "+theme.getPostCount().toString());
                         mThemeCreatedAt.setText("创建时间: "+theme.getCreatedAt());
                         ImageLoader.with(mContext, theme.getAuthor().getIcon().getFileUrl(), mAuthorIcon);
-                        mAuthorName.setText(theme.getAuthor().getUsername());
+                        mAuthorId = theme.getAuthor().getObjectId();
+                        mAuthorName.setText(theme.getAuthor().getNickname());
                         mAuthorSex.setText(theme.getAuthor().getSex());
                     }else{
                         Toast.makeText(mContext, "话题不存在", Toast.LENGTH_SHORT).show();

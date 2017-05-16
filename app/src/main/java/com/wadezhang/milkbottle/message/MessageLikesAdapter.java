@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 
 import java.util.List;
@@ -47,7 +48,9 @@ public class MessageLikesAdapter extends RecyclerView.Adapter<MessageLikesAdapte
         mViewHolder.mAuthorIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO  用户详情页
+                int position = mViewHolder.getAdapterPosition();
+                Likes likes = mLikesList.get(position);
+                UserDetailActivity.actionStart(mContext, likes.getFrom().getObjectId());
             }
         });
         return mViewHolder;

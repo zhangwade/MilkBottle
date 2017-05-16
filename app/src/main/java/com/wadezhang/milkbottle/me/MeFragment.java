@@ -130,7 +130,7 @@ public class MeFragment extends BaseFragment {
         mTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ThemeListActivity.actionStart(getContext(), null, 3);
+                ThemeListActivity.actionStart(getContext(), null, 3, null);
             }
         });
         mEditInfo.setOnClickListener(new View.OnClickListener() {

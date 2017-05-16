@@ -57,6 +57,8 @@ public class ThemeListActivity extends BaseActivity {
     private String mThemeCategoryId;
     private String mThemeCategoryTitle;
 
+    private String mUserId;
+
     private ThemeListAdapter mThemeListAdapter;
     private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
     private int limit = 20; //每次查询限制数目
@@ -66,13 +68,14 @@ public class ThemeListActivity extends BaseActivity {
     private final int STATE_MORE = 1; //上拉加载更多
     private List<Theme> mThemeList = new ArrayList<>();
 
-    public static void actionStart(Context context, ThemeCategory themeCategory, int type){ //type: 0 是热门， 1 是最新， 2 是分类， 3 是我创建的话题， 4 是我关注的话题
+    public static void actionStart(Context context, ThemeCategory themeCategory, int type, String userId){ //type: 0 是热门， 1 是最新， 2 是分类， 3 是我创建的话题， 4 是我关注的话题
         Intent intent = new Intent(context, ThemeListActivity.class);
         intent.putExtra("type", type);
         if(themeCategory != null){
             intent.putExtra("themeCategoryId", themeCategory.getObjectId());
             intent.putExtra("themeCategoryTitle", themeCategory.getTitle());
         }
+        if(userId != null) intent.putExtra("userId", userId);
         context.startActivity(intent);
     }
 
@@ -97,7 +100,7 @@ public class ThemeListActivity extends BaseActivity {
         mMyFollowTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ThemeListActivity.actionStart(mContext, null, 4);
+                ThemeListActivity.actionStart(mContext, null, 4, mUserId);
             }
         });
     }
@@ -123,9 +126,11 @@ public class ThemeListActivity extends BaseActivity {
             mTitle.setText("最近更新的话题");
             mMyFollowTheme.setVisibility(View.INVISIBLE);
         }else if(mType == TYPE_MY_CREATE_THEME){
-            mTitle.setText("我的话题");
+            mTitle.setText("创建的话题");
+            mUserId = mIntent.getStringExtra("userId");
         }else if(mType == TYPE_MY_FOLLOW_THEME){
-            mTitle.setText("我关注的话题");
+            mTitle.setText("关注的话题");
+            mUserId = mIntent.getStringExtra("userId");
             mMyFollowTheme.setVisibility(View.INVISIBLE);
         }
     }
@@ -170,17 +175,13 @@ public class ThemeListActivity extends BaseActivity {
             query.addWhereEqualTo("category", themeCategory);
             query.order("-updatedAt");
         }else if(mType == TYPE_MY_CREATE_THEME){
-            User user = GetCurrentUser.getCurrentUser(mContext);
-            if(user == null) return;
             User mUser = new User();
-            mUser.setObjectId(user.getObjectId());
+            mUser.setObjectId(mUserId);
             query.addWhereEqualTo("author", mUser);
             query.order("-updatedAt");
         }else if(mType == TYPE_MY_FOLLOW_THEME){
-            User user = GetCurrentUser.getCurrentUser(mContext);
-            if(user == null) return;
             User mUser = new User();
-            mUser.setObjectId(user.getObjectId());
+            mUser.setObjectId(mUserId);
             query.addWhereRelatedTo("theme", new BmobPointer(mUser));
             query.order("-updatedAt");
         }

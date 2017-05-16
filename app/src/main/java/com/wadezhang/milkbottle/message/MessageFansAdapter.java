@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MessageFansAdapter extends RecyclerView.Adapter<MessageFansAdapter.
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 Fans fans = mFansList.get(position);
-                //TODO  用户详情页
+                UserDetailActivity.actionStart(mContext, fans.getFrom().getObjectId());
             }
         });
         return mViewHolder;

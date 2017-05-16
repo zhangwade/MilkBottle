@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 import com.wadezhang.milkbottle.watch_big_photo.WatchBigPhotoActivity;
@@ -56,6 +57,14 @@ public class ThemePostListHotAdapter extends RecyclerView.Adapter<ThemePostListH
                 WatchBigPhotoActivity.actionStart(mContext, photoUrl);
             }
         });
+        mViewHolder.mIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                UserDetailActivity.actionStart(mContext, post.getAuthor().getObjectId());
+            }
+        });
         return mViewHolder;
     }
 
@@ -64,7 +73,7 @@ public class ThemePostListHotAdapter extends RecyclerView.Adapter<ThemePostListH
         if(mPostList != null){
             holder.mAddFollow.setVisibility(View.GONE);
             Post mPost = mPostList.get(position);
-            holder.mTheme.setText(mPost.getTheme().getName());
+            holder.mTheme.setVisibility(View.GONE);
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);
             holder.mAuthor.setText(mPost.getAuthor().getUsername());
             if(mPost.getPhoto() != null)

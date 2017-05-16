@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.post_detail.Comment;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
 import com.wadezhang.milkbottle.watch_big_photo.WatchBigPhotoActivity;
@@ -52,7 +53,7 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
-                //TODO  用户详情页
+                UserDetailActivity.actionStart(mContext, comment.getAuthor().getObjectId());
             }
         });
         return mViewHolder;

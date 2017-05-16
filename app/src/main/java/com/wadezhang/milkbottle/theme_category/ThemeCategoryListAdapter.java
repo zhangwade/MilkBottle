@@ -52,7 +52,7 @@ public class ThemeCategoryListAdapter extends RecyclerView.Adapter<ThemeCategory
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 ThemeCategory themeCategory = mThemeCategoryList.get(position);
-                ThemeListActivity.actionStart(mContext, themeCategory, 2);
+                ThemeListActivity.actionStart(mContext, themeCategory, 2, null);
             }
         });
         return mViewHolder;

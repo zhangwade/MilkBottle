@@ -85,7 +85,7 @@ public class ThemePostListHotPresenter implements ThemePostListHotContract.Prese
         query.addWhereEqualTo("theme", theme);
         query.order("-likesCount");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
-        query.include("theme[objectId|name],author[objectId|icon|username]");
+        query.include("author[objectId|icon|username]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询

@@ -86,6 +86,13 @@
 
         <activity android:name=".new_post.SelectThemeActivity"/>
 
+        <activity android:name=".post_detail.PostDetailLikesActivity"/>
+
+        <activity android:name=".post_detail.WriteCommentActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".me.UserDetailActivity"/>
+
         <activity android:name=".MainActivity" />
 
         <activity

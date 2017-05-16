@@ -1,6 +1,7 @@
 package com.wadezhang.milkbottle.post_detail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -13,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.User;
 
 import java.util.List;
 
@@ -39,7 +42,16 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if(mContext == null) mContext = parent.getContext();
         View mView = LayoutInflater.from(mContext).inflate(R.layout.activity_post_detail_comment_item, parent, false);
-        return new ViewHolder(mView);
+        final ViewHolder mViewHolder = new ViewHolder(mView);
+        mViewHolder.mComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Comment comment = mCommentList.get(position);
+                WriteCommentActivity.actionStart(mContext, 1, comment.getPost().getObjectId(), comment.getAuthor().getObjectId(), comment.getAuthor().getNickname());
+            }
+        });
+        return mViewHolder;
     }
 
     @Override
@@ -47,21 +59,23 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
         if(mCommentList != null){
             Comment mComment = mCommentList.get(position);
             ImageLoader.with(mContext, mComment.getAuthor().getIcon().getFileUrl(), holder.mAuthorIcon);
-            holder.mAuthorName.setText(mComment.getAuthor().getUsername());
+            holder.mAuthorName.setText(mComment.getAuthor().getNickname());
             holder.mTime.setText(mComment.getCreatedAt());
-            String mReferenceCommentAuthorName = mComment.getToWho().getNickname();
-            if(mReferenceCommentAuthorName == null){
+            if(mComment.getToWho() == null){
                 holder.mContent.setText(mComment.getContent());
             }else{
-                holder.mContent.setText("回复 "+mReferenceCommentAuthorName+" :"+mComment.getContent());
-                int length = mReferenceCommentAuthorName.length()+5;
+                String toWhoNickname = mComment.getToWho().getNickname();
+                holder.mContent.setText("回复 "+toWhoNickname+" : "+mComment.getContent());
+                int length = toWhoNickname.length() + 6;
                 Spannable spannable = new SpannableString(holder.mContent.getText());
                 spannable.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.textColorSecond)), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 holder.mContent.setText(spannable);
             }
-            String mPostAuthorId = "C0NeXXX3"; //TODO:做好注册登录后要修改这里
-            boolean isPostAuthor = ( mComment.getPost().getAuthor().getObjectId() == mPostAuthorId );
-            boolean isCommentAuthor = ( mComment.getAuthor().getObjectId() == mPostAuthorId );
+            User user = GetCurrentUser.getCurrentUser(mContext);
+            if(user == null) return;
+            String mUserId = user.getObjectId();
+            boolean isPostAuthor = ( mComment.getPost().getAuthor().getObjectId().equals(mUserId) );
+            boolean isCommentAuthor = ( mComment.getAuthor().getObjectId().equals(mUserId) );
             if(!isPostAuthor && !isCommentAuthor) holder.mDelete.setVisibility(View.INVISIBLE);
         }
     }
@@ -79,9 +93,12 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
         @BindView(R.id.activity_post_detail_comment_item_text_content) TextView mContent;
         @BindView(R.id.activity_post_detail_comment_item_imgbtn_delete) TextView mDelete;
 
+        View mComment;
+
         public ViewHolder(View view){
             super(view);
             ButterKnife.bind(this, view);
+            mComment = view;
         }
     }
 }

@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
+import com.wadezhang.milkbottle.theme_post_list.ThemeDetailActivity;
 import com.wadezhang.milkbottle.watch_big_photo.WatchBigPhotoActivity;
 
 import java.util.List;
@@ -53,6 +55,22 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
                 Post post = mPostList.get(position);
                 String photoUrl = post.getPhoto().getFileUrl();
                 WatchBigPhotoActivity.actionStart(mContext, photoUrl);
+            }
+        });
+        mViewHolder.mTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                ThemeDetailActivity.actionStart(mContext, post.getTheme().getObjectId());
+            }
+        });
+        mViewHolder.mIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Post post = mPostList.get(position);
+                UserDetailActivity.actionStart(mContext, post.getAuthor().getObjectId());
             }
         });
         return mViewHolder;

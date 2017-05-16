@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?attr/navigationbarBackgroundColor"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_write_comment_text_cancel"
+            android:text="取消"
+            android:layout_gravity="center_vertical"
+            style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            style="@android:style/TextAppearance.Medium"
+            android:textColor="?attr/navigationColor"
+            android:text="发评论"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_write_comment_text_send"
+            android:text="发送"
+            android:layout_gravity="center_vertical"
+            android:textSize="?attr/textSizeSecond"
+            android:textColor="@color/activity_new_post_btn_send"/>
+    </LinearLayout>
+
+    <TextView android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?attr/dividerColor"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_write_comment_textinputlayout"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            app:counterEnabled="true"
+            app:counterTextAppearance="@color/textColorFirst"
+            app:counterMaxLength="500"
+            app:counterOverflowTextAppearance="@color/highLight">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_write_comment_edit"
+                android:background="@null"
+                android:textSize="?attr/textSizeSecond"
+                android:minHeight="200dp"
+                android:maxLength="500"
+                android:gravity="top" />
+        </android.support.design.widget.TextInputLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

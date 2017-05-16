@@ -17,14 +17,14 @@
             android:layout_weight="1"
             android:text="热门话题"
             android:textSize="?attr/textSizeSecond"
-            android:textColor="@color/textColorFirst"/>
+            android:textColor="@color/textColorSecond"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_theme_group_item_text_more"
             android:text="更多>"
             android:textSize="?attr/textSizeSecond"
-            android:textColor="@color/textColorFirst"/>
+            android:textColor="@color/textColorSecond"/>
     </LinearLayout>
 
     <TextView android:layout_height="0.5dp"

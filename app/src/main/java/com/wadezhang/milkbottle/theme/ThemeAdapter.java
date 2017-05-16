@@ -80,7 +80,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 public void onClick(View v) {
                     int position = mGroupItemViewHolder.getLayoutPosition();
                     //Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show();
-                    ThemeListActivity.actionStart(mContext, null, (position == 0 ? 0 : 1) );
+                    ThemeListActivity.actionStart(mContext, null, (position == 0 ? 0 : 1), null);
                 }
             });
             return mGroupItemViewHolder;
