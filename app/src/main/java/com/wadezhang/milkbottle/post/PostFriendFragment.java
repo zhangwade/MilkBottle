@@ -53,7 +53,7 @@ public class PostFriendFragment extends BaseViewPagerFragment implements PostFri
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mPostFriendAdapter = new PostFriendAdapter(mPostList);
+        mPostFriendAdapter = new PostFriendAdapter(mPostList, 1);
         mRecyclerView.setAdapter(mPostFriendAdapter);
         isViewPrepared = true;
         lazyFetchDataIfPrepared();

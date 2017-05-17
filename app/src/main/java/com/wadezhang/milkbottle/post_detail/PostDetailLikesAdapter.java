@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class PostDetailLikesAdapter extends RecyclerView.Adapter<PostDetailLikes
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 User user = mLikesList.get(position);
-                //TODO
+                UserDetailActivity.actionStart(mContext, user.getObjectId());
             }
         });
         return mViewHolder;

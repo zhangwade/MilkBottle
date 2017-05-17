@@ -45,7 +45,7 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
-                PostDetailActivity.actionStart(mContext, null, comment.getPost().getObjectId(), false);
+                PostDetailActivity.actionStart(mContext, null, comment.getPost().getObjectId());
             }
         });
         mViewHolder.mAuthorIcon.setOnClickListener(new View.OnClickListener() {

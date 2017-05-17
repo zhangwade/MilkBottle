@@ -75,7 +75,7 @@ public class UserDetailActivity extends BaseActivity {
     private int themeCount = 0;
 
     public static void actionStart(Context context, String userId){
-        Intent intent = new Intent(context, MyPostActivity.class);
+        Intent intent = new Intent(context, UserDetailActivity.class);
         intent.putExtra("userId", userId);
         context.startActivity(intent);
     }
@@ -90,7 +90,7 @@ public class UserDetailActivity extends BaseActivity {
         init();
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mPostAdapter = new PostFriendAdapter(mPostList);
+        mPostAdapter = new PostFriendAdapter(mPostList, 0);
         mPostRecyclerView.setAdapter(mPostAdapter);
         mPostRecyclerView.addOnScrollListener(new LoadMoreListener());
         getPost(STATE_REFRESH);
@@ -202,7 +202,7 @@ public class UserDetailActivity extends BaseActivity {
         query.addWhereEqualTo("author", mUser);
         query.order("-createdAt");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
-        query.include("theme[objectId|name],author[objectId|icon|username]");
+        query.include("theme[objectId|name],author[objectId|icon|nickname]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询

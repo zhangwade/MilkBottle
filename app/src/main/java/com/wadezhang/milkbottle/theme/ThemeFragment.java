@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.new_theme.NewThemeActivity;
+import com.wadezhang.milkbottle.search.SearchThemeActivity;
 import com.wadezhang.milkbottle.theme_category.ThemeCategoryListActivity;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View{
         mSwipeRefreshLayout.setOnRefreshListener(new RefreshListener());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        autoRefresh();
         mCreateTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,14 +76,13 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View{
                 ThemeCategoryListActivity.actionStart(getContext());
             }
         });
+        mSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchThemeActivity.actionStart(getContext(), 1);
+            }
+        });
         return mView;
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        //autoRefresh();
-        mThemePresenter.start(mHotItem, mNewestItem);
     }
 
     @Override

@@ -14,7 +14,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"
+            android:background="@mipmap/btn_back"
             android:id="@+id/activity_post_detail_imgbtn_back"/>
         <TextView
             android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/activity_post_detail_text_likes_count"
-                        android:text="233"
+                        android:text="0"
                         android:textSize="?attr/textSizeSecond"
                         android:textColor="@color/textColorSecond"
                         android:layout_marginRight="10dp"
@@ -142,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/activity_post_detail_text_comment_count"
-                    android:text="233"
+                    android:text="0"
                     android:textSize="?attr/textSizeSecond"
                     android:textColor="@color/textColorSecond"
                     android:layout_marginLeft="10dp"/>
@@ -173,6 +173,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activity_post_detail_write_comment"
         android:orientation="horizontal"
         android:background="?attr/navigationbarBackgroundColor"
         android:padding="10dp">
@@ -180,17 +181,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_post_detail_text_write_comment"
             android:layout_weight="1"
             android:layout_gravity="center"
             style="@android:style/TextAppearance.Medium"
             android:text="点此输入文字"/>
-        <ImageButton
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_post_detail_imgbtn_likes"
-            android:layout_gravity="center"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+            style="@android:style/TextAppearance.Medium"
+            android:text="发送"/>
     </LinearLayout>
 
 </LinearLayout>

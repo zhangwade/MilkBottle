@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,11 +10,19 @@
         android:padding="10dp"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_search_imgbtn_back"
+            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_search_edit"
             android:drawableLeft="@mipmap/search"
             android:background="@color/dayDividerColor"
+            android:maxLines="1"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:hint="搜索话题/昵称/ID"
             style="@android:style/TextAppearance.Medium"
@@ -23,22 +30,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_search_text_search"
             android:gravity="center"
+            android:textColor="@color/activity_new_post_btn_send"
             style="@android:style/TextAppearance.Medium"
-            android:id="@+id/activity_search_text_cancel"
-            android:text="取消"/>
+            android:text="搜索"/>
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabTextColor="@color/textColorFirst"
-        app:tabSelectedTextColor="@color/accentColor"
-        android:id="@+id/activity_search_tab"/>
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/activity_search_viewpager"/>
+        android:layout_height="match_parent"
+        android:id="@+id/activity_search_recyclerview"/>
 </LinearLayout>

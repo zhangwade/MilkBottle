@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post_detail.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -29,6 +32,8 @@ public class CheckNewMessageService extends Service {
 
     private final int READ_NO = 0;
     private final int READ_YES = 1;
+
+    private List<Post> myPostList = new ArrayList<>();; //我的所有帖子的 Id
 
     User mUser;
 
@@ -43,7 +48,7 @@ public class CheckNewMessageService extends Service {
         if(user == null) stopSelf();
         mUser = new User();
         mUser.setObjectId(user.getObjectId());
-        checkComment();
+        getMyPostIds();
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         int time = 15 * 60 * 1000;  //间隔 15 分钟
         long triggerAtTime = SystemClock.elapsedRealtime() + time;
@@ -53,9 +58,36 @@ public class CheckNewMessageService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    public void getMyPostIds(){
+        BmobQuery<Post> mMyPostQuery = new BmobQuery<>();
+        mMyPostQuery.addWhereEqualTo("author", mUser);
+        mMyPostQuery.addQueryKeys("objectId");
+        mMyPostQuery.findObjects(new FindListener<Post>() {
+            @Override
+            public void done(List<Post> list, BmobException e) { //查询当前用户的关注
+                if(e == null){
+                    myPostList.clear();
+                    if(!list.isEmpty()){
+                        myPostList = list;
+                    }
+                    checkComment();
+                }else{
+                    Log.d(getClass().getSimpleName(), "bmob查询myPostIds失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
     public void checkComment(){
+        BmobQuery<Comment> q1 = new BmobQuery<>();
+        q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
+        BmobQuery<Comment> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("toWho", mUser);
+        List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
+        queries.add(q1);
+        queries.add(q2);
         BmobQuery<Comment> commentBmobQuery = new BmobQuery<>();
-        commentBmobQuery.addWhereEqualTo("toWho", mUser);
+        commentBmobQuery.or(queries);
         commentBmobQuery.addWhereEqualTo("isRead", READ_NO);
         commentBmobQuery.addQueryKeys("objectId");
         commentBmobQuery.findObjects(new FindListener<Comment>() {

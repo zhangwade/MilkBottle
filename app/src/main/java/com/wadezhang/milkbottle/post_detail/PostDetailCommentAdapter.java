@@ -18,6 +18,7 @@ import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 
 import java.util.List;
 
@@ -49,6 +50,14 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
                 int position = mViewHolder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
                 WriteCommentActivity.actionStart(mContext, 1, comment.getPost().getObjectId(), comment.getAuthor().getObjectId(), comment.getAuthor().getNickname());
+            }
+        });
+        mViewHolder.mAuthorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Comment comment = mCommentList.get(position);
+                UserDetailActivity.actionStart(mContext, comment.getAuthor().getObjectId());
             }
         });
         return mViewHolder;

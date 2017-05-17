@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.SwipyAppBarScrollListener;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 import com.wadezhang.milkbottle.new_post.NewPostActivity;
 import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.theme.Theme;
@@ -70,8 +72,7 @@ public class PostDetailActivity extends BaseActivity {
     @BindView(R.id.activity_post_detail_text_likes_count) TextView mLikesCount;
     @BindView(R.id.activity_post_detail_text_comment_count) TextView mCommentCount;
     @BindView(R.id.activity_post_detail_comment_recyclerview) RecyclerView mCommentRecyclerView;
-    @BindView(R.id.activity_post_detail_imgbtn_likes) ImageButton mLikes; //TODO
-    @BindView(R.id.activity_post_detail_text_write_comment) TextView mWriteComment;
+    @BindView(R.id.activity_post_detail_write_comment) LinearLayout mWriteComment;
 
     Context mContext;
 
@@ -94,7 +95,7 @@ public class PostDetailActivity extends BaseActivity {
     private IntentFilter intentFilter;
     private SendCommentReceiver sendCommentReceiver;
 
-    public static void actionStart(Context context, Post post, String postId, boolean isLikes){
+    public static void actionStart(Context context, Post post, String postId){
         Intent mIntent = new Intent(context, PostDetailActivity.class);
         if(post != null){
             mIntent.putExtra("postObjectId", post.getObjectId());
@@ -102,10 +103,11 @@ public class PostDetailActivity extends BaseActivity {
             mIntent.putExtra("themeName", post.getTheme().getName());
             mIntent.putExtra("authorObjectId", post.getAuthor().getObjectId());
             mIntent.putExtra("authorIcon", post.getAuthor().getIcon().getFileUrl());
-            mIntent.putExtra("authorName", post.getAuthor().getUsername());
+            mIntent.putExtra("authorName", post.getAuthor().getNickname());
             if(post.getPhoto() != null) mIntent.putExtra("photo", post.getPhoto().getFileUrl());
             mIntent.putExtra("content", post.getContent());
-            mIntent.putExtra("isLikes", isLikes); //TODO:点赞的图案切换
+            mIntent.putExtra("likesCount", post.getLikesCount().toString());
+            mIntent.putExtra("commentCount", post.getCommentCount().toString());
         }else{
             mIntent.putExtra("postId", postId);
         }
@@ -197,7 +199,8 @@ public class PostDetailActivity extends BaseActivity {
                 mPhoto.setVisibility(View.GONE);
             }
             mContent.setText(mIntent.getStringExtra("content"));
-            //mLikes  TODO
+            mCommentCount.setText(mIntent.getStringExtra("commentCount"));
+            mLikesCount.setText(mIntent.getStringExtra("likesCount"));
         }else{
             postObjectId = mIntent.getStringExtra("postId");
             BmobQuery<Post> query = new BmobQuery<>();
@@ -220,7 +223,6 @@ public class PostDetailActivity extends BaseActivity {
                             mPhoto.setVisibility(View.GONE);
                         }
                         mContent.setText(post.getContent());
-                        //mLikes  TODO
                     }
                 }
             });
@@ -318,6 +320,12 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 WriteCommentActivity.actionStart(mContext, 0, postObjectId, null, null);
+            }
+        });
+        mAuthorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDetailActivity.actionStart(mContext, authorObjectId);
             }
         });
     }

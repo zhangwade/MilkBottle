@@ -198,8 +198,7 @@ public class RegisterActivity extends BaseActivity {
                             mAlertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.actionStart(mContext);  //TODO
-                                    //EditPersonalInfoActivity
+                                    EditPersonalInfoActivity.actionStart(mContext, 0);
                                     finish();
                                 }
                             });

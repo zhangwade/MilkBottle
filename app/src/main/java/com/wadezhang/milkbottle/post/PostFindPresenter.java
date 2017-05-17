@@ -1,7 +1,9 @@
 package com.wadezhang.milkbottle.post;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.User;
 
 import java.text.ParseException;
@@ -34,7 +36,10 @@ public class PostFindPresenter implements PostFindContract.Presenter {
     private final int STATE_MORE = 1; //上拉加载更多
     private List<String> followIds = new ArrayList<String>();; //当前用户的关注
 
-    public PostFindPresenter(PostFindContract.View view){
+    Context mContext;
+
+    public PostFindPresenter(PostFindContract.View view, Context context){
+        mContext = context;
         mPostFindView = view;
         mPostFindView.setPresenter(this);
     }
@@ -76,9 +81,11 @@ public class PostFindPresenter implements PostFindContract.Presenter {
             }
         });   */
         mActionType = actionType;
+        final User user = GetCurrentUser.getCurrentUser(mContext);
+        if(user == null)return;
         BmobQuery<User> mFollowQuery = new BmobQuery<>();
         User mUser = new User();
-        mUser.setObjectId("C0NeXXX3"); //TODO:做好注册登录后要更改这里
+        mUser.setObjectId(user.getObjectId());
         mFollowQuery.addWhereRelatedTo("follow", new BmobPointer(mUser));
         mFollowQuery.addQueryKeys("objectId");
         mFollowQuery.findObjects(new FindListener<User>() {
@@ -91,7 +98,7 @@ public class PostFindPresenter implements PostFindContract.Presenter {
                             followIds.add(user.getObjectId());
                         }
                     }
-                    followIds.add("C0NeXXX3"); //TODO:自己发的帖子不显示在“发现”栏里
+                    followIds.add(user.getObjectId()); //自己发的帖子不显示在“发现”栏里
                     getPostFromFollow();
                 }else{
                     Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
@@ -117,7 +124,7 @@ public class PostFindPresenter implements PostFindContract.Presenter {
         // 按时间降序查询
         query.order("-createdAt");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
-        query.include("theme[objectId|name],author[objectId|icon|username]");
+        query.include("theme[objectId|name],author[objectId|icon|nickname]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询

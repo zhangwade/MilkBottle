@@ -89,8 +89,11 @@ public class ThemeListActivity extends BaseActivity {
         init();
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mThemeListAdapter = new ThemeListAdapter(mThemeList);
+        mRecyclerView.setAdapter(mThemeListAdapter);
         mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
+        autoRefresh();
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +106,6 @@ public class ThemeListActivity extends BaseActivity {
                 ThemeListActivity.actionStart(mContext, null, 4, mUserId);
             }
         });
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        autoRefresh();
     }
 
     public void init(){
@@ -235,11 +232,6 @@ public class ThemeListActivity extends BaseActivity {
     public void updateThemeList(int actionType, List<Theme> list){
         if(actionType == STATE_REFRESH) mThemeList.clear();
         mThemeList.addAll(list);
-        if(mThemeListAdapter == null){
-            mThemeListAdapter = new ThemeListAdapter(mThemeList);
-            mRecyclerView.setAdapter(mThemeListAdapter);
-        } else{
-            mThemeListAdapter.notifyDataSetChanged();
-        }
+        mThemeListAdapter.notifyDataSetChanged();
     }
 }

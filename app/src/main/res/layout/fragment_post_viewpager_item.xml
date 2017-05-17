@@ -41,7 +41,7 @@
             android:id="@+id/fragment_post_viewpager_item_text_follow"
             android:textColor="@color/highLight"
             android:elevation="5dp"
-            android:text="+关注"/>
+            android:text="+ 关注"/>
         <ImageView android:layout_width="45dp"
             android:layout_height="45dp"
             android:id="@+id/fragment_post_viewpager_item_img_icon"
@@ -90,43 +90,29 @@
             android:textColor="@color/textColorSecond"
             android:text="3-31"/>
 
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragment_post_viewpager_item_text_likes_count"
-            android:layout_alignParentRight="true"
-            style="@style/TextThird"
-            android:textColor="@color/textColorSecond"
-            android:text="3"/>
-        <ImageButton android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_item_good_pic"
-            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_likes_count"/>
+        <ImageButton android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/fragment_post_viewpager_item_imgbtn_likes"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerCrop"
+            android:background="@mipmap/non_likes"
+            android:layout_alignParentRight="true"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:id="@+id/fragment_post_viewpager_item_text_comment_count"
-            android:layout_toLeftOf="@id/post_item_good_pic"
+            android:layout_toLeftOf="@+id/fragment_post_viewpager_item_imgbtn_likes"
             style="@style/TextThird"
             android:textColor="@color/textColorSecond"
-            android:text="3"/>
+            android:text="0"/>
         <ImageButton android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/post_item_comment_pic"
-            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_comment_count"/>
-
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:id="@+id/fragment_post_viewpager_item_text_recommend_count"
-            android:layout_toLeftOf="@id/post_item_comment_pic"
-            style="@style/TextThird"
-            android:textColor="@color/textColorSecond"
-            android:text="3"/>
-        <ImageButton android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_item_forward_pic"
-            android:layout_toLeftOf="@id/fragment_post_viewpager_item_text_recommend_count"/>
+            android:scaleType="centerCrop"
+            android:background="@mipmap/comment"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/fragment_post_viewpager_item_text_comment_count"/>
     </RelativeLayout>
 
     <TextView android:layout_height="0.5dp"

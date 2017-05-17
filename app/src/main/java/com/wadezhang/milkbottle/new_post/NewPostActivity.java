@@ -106,7 +106,7 @@ public class NewPostActivity extends BaseActivity {
             mThemeName.setVisibility(View.INVISIBLE);
             mChangeTheme.setVisibility(View.INVISIBLE);
             intentFilter = new IntentFilter();
-            intentFilter.addAction("com.wadezhang.milkbottle.select_theme_category");
+            intentFilter.addAction("com.wadezhang.milkbottle.NEW_POST_SELECT_THEME");
             selectThemeReceiver = new SelectThemeReceiver();
             registerReceiver(selectThemeReceiver, intentFilter);
         }

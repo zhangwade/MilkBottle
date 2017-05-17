@@ -1,6 +1,5 @@
 package com.wadezhang.milkbottle.post;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +12,7 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.R;
-import com.wadezhang.milkbottle.book.BookContentActivity;
 import com.wadezhang.milkbottle.new_post.NewPostActivity;
-import com.wadezhang.milkbottle.post_detail.PostDetailActivity;
-import com.wadezhang.milkbottle.search.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -83,8 +79,8 @@ public class PostFragment extends BaseFragment {
         mViewPagerFragmentList.add(mViewPagerFindFragment);
         mViewPager.setAdapter(new PostViewPagerAdapter(mFragmentManager, mViewPagerFragmentList));
         mViewPager.setCurrentItem(0);
-        new PostFriendPresenter((PostFriendFragment)mViewPagerFriendFragment);
-        new PostFindPresenter((PostFindFragment)mViewPagerFindFragment);
+        new PostFriendPresenter((PostFriendFragment)mViewPagerFriendFragment, getContext());
+        new PostFindPresenter((PostFindFragment)mViewPagerFindFragment, getContext());
         mViewPager.addOnPageChangeListener(new onPageChangeListener());
     }
 

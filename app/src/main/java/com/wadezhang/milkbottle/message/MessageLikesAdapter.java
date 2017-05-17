@@ -42,7 +42,7 @@ public class MessageLikesAdapter extends RecyclerView.Adapter<MessageLikesAdapte
             public void onClick(View v) {
                 int position = mViewHolder.getAdapterPosition();
                 Likes likes = mLikesList.get(position);
-                PostDetailActivity.actionStart(mContext, null, likes.getPost().getObjectId(), false);
+                PostDetailActivity.actionStart(mContext, null, likes.getPost().getObjectId());
             }
         });
         mViewHolder.mAuthorIcon.setOnClickListener(new View.OnClickListener() {

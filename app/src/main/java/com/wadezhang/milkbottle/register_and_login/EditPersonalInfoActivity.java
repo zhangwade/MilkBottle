@@ -3,6 +3,7 @@ package com.wadezhang.milkbottle.register_and_login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.GetCurrentUser;
+import com.wadezhang.milkbottle.ImageLoader;
+import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 
@@ -43,12 +46,13 @@ public class EditPersonalInfoActivity extends BaseActivity {
     private final int RETURN_SEX = 2;
     private final int RETURN_INTRODUCTION = 3;
 
-    public static void actionStart(Context context){
+    private int mType;
+    private final int TYPE_AFTER_REGISTER = 0;
+    private final int TYPE_NORMAL = 1;
+
+    public static void actionStart(Context context, int type){
         Intent intent = new Intent(context, EditPersonalInfoActivity.class);
-        //intent.putExtra("icon", user.getIcon().getFileUrl());
-        //intent.putExtra("nickname", user.getNickname());
-        //intent.putExtra("sex", user.getSex());
-        //intent.putExtra("introduction", user.getIntroduction());
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -63,6 +67,7 @@ public class EditPersonalInfoActivity extends BaseActivity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mType == TYPE_AFTER_REGISTER) MainActivity.actionStart(mContext);
                 finish();
             }
         });
@@ -100,9 +105,11 @@ public class EditPersonalInfoActivity extends BaseActivity {
     }
 
     public void init(){
-        if(GetCurrentUser.getCurrentUser(mContext) == null) return;
+        User user = GetCurrentUser.getCurrentUser(mContext);
+        if( user == null) return;
         Intent mIntent = getIntent();
-        //mImgIcon TODO
+        mType = mIntent.getIntExtra("type", 0);
+        ImageLoader.with(mContext, user.getIcon().getFileUrl(), mImgIcon);
         mTextNickname.setText((String) BmobUser.getObjectByKey("nickname"));
         mTextSex.setText((String) BmobUser.getObjectByKey("sex"));
         if(BmobUser.getObjectByKey("introduction") != null)
@@ -131,5 +138,31 @@ public class EditPersonalInfoActivity extends BaseActivity {
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 是否触发按键为back键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else { // 如果不是back键正常响应
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+    /* 注意：重写onKeyDown()和onBackPressed()方法都能捕获Back的点击事件，
+    onKeyDown()兼容Android 1.0到Android 2.1，也是常规方法，Android 2.0开始又多出了
+    一种新的方法onBackPressed()，可以单独获取Back键的按下事件， 方法二的代码将两
+    种方法嵌套使用了，onBackPressed()方法会处理返回键的操作，不会向上传播，如果想
+    向上传播，则需要使用onKeyDown() */
+
+    private void exit() {
+        if(mType == TYPE_AFTER_REGISTER) MainActivity.actionStart(mContext);
+        finish();
     }
 }

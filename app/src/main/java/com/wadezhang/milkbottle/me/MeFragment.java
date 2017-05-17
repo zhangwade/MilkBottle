@@ -136,7 +136,7 @@ public class MeFragment extends BaseFragment {
         mEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditPersonalInfoActivity.actionStart(getContext());
+                EditPersonalInfoActivity.actionStart(getContext(), 1);
             }
         });
         mSettings.setOnClickListener(new View.OnClickListener() {

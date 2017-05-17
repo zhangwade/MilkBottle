@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".search.SearchUserActivity"/>
+
+        <activity android:name=".search.SearchThemeActivity"/>
 
         <activity android:name=".post_detail.PostDetailActivity"/>
 

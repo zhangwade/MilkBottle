@@ -59,7 +59,7 @@
         android:id="@+id/activity_theme_detail_text_theme_introduction"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textSize="?attr/textSizeFirst"
+        android:textSize="?attr/textSizeSecond"
         android:textColor="@color/textColorSecond"
         android:text="介绍"/>
 

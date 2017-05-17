@@ -16,6 +16,7 @@ import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.post_detail.Comment;
+import com.wadezhang.milkbottle.search.SearchUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +170,7 @@ public class MessageFragment extends BaseFragment {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SearchUserActivity.actionStart(getContext());
             }
         });
         mComment.setOnClickListener(new View.OnClickListener() {

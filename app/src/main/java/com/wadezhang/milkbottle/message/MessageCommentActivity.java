@@ -18,6 +18,7 @@ import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post_detail.Comment;
 
 import java.text.ParseException;
@@ -53,6 +54,9 @@ public class MessageCommentActivity extends BaseActivity {
 
     private List<Comment> mCommentList = new ArrayList<>();
     private MessageCommentAdapter mMessageCommentAdapter;
+
+    private List<Post> myPostList = new ArrayList<>();; //我的所有帖子的 Id
+    User mUser;
 
     Context mContext;
 
@@ -97,7 +101,7 @@ public class MessageCommentActivity extends BaseActivity {
 
         @Override
         public void onRefresh(){
-            getComment(STATE_REFRESH);
+            getMyPostIds(STATE_REFRESH);
             mSwipeToLoadLayout.setRefreshing(false);
         }
     }
@@ -106,22 +110,48 @@ public class MessageCommentActivity extends BaseActivity {
 
         @Override
         public void onLoadMore(){
-            getComment(STATE_MORE);
+            getMyPostIds(STATE_MORE);
             mSwipeToLoadLayout.setLoadingMore(false);
         }
     }
 
-    public void getComment(int actionType){
+    public void getMyPostIds(int actionType){
         mActionType = actionType;
-        User user = GetCurrentUser.getCurrentUser(mContext);
-        if(user == null) return;
-        BmobQuery<Comment> query = new BmobQuery<>();
-        User mUser = new User();
-        mUser.setObjectId(user.getObjectId());
-        query.addWhereEqualTo("toWho", mUser);
-        query.order("-createdAt");
-        query.addQueryKeys("objectId,author,content,createdAt,post");
-        query.include("author[objectId|icon|nickname],post[objectId|photo]");
+        mUser = GetCurrentUser.getCurrentUser(mContext);
+        if(mUser == null) return;
+        BmobQuery<Post> mMyPostQuery = new BmobQuery<>();
+        mMyPostQuery.addWhereEqualTo("author", mUser);
+        mMyPostQuery.addQueryKeys("objectId");
+        mMyPostQuery.findObjects(new FindListener<Post>() {
+            @Override
+            public void done(List<Post> list, BmobException e) { //查询当前用户的关注
+                if(e == null){
+                    myPostList.clear();
+                    if(!list.isEmpty()){
+                        myPostList = list;
+                    }
+                    getComment();
+                }else{
+                    Toast.makeText(mContext, "网络出了点小差~~", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "bmob查询myPostIds失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    public void getComment(){
+        BmobQuery<Comment> q1 = new BmobQuery<>();
+        q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
+        BmobQuery<Comment> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("toWho", mUser);
+        List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
+        queries.add(q1);
+        queries.add(q2);
+        BmobQuery<Comment> commentBmobQuery = new BmobQuery<>();
+        commentBmobQuery.or(queries);
+        commentBmobQuery.order("-createdAt");
+        commentBmobQuery.addQueryKeys("objectId,author,content,createdAt,post");
+        commentBmobQuery.include("author[objectId|icon|nickname],post[objectId|photo]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询
@@ -134,14 +164,14 @@ public class MessageCommentActivity extends BaseActivity {
                 e1.printStackTrace();
             }
             // 只查询小于等于最后一个item发表时间的数据
-            query.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
+            commentBmobQuery.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
             // 跳过之前页数并去掉重复数据
-            query.setSkip(curPage * limit - 1);
+            commentBmobQuery.setSkip(curPage * limit - 1);
         }
         // 设置每页数据个数
-        query.setLimit(limit);
+        commentBmobQuery.setLimit(limit);
         // 查找数据
-        query.findObjects(new FindListener<Comment>() {
+        commentBmobQuery.findObjects(new FindListener<Comment>() {
             @Override
             public void done(List<Comment> list, BmobException e) {
                 if(e == null){

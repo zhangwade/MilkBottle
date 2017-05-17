@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_theme_list_text_my_follow_theme"
-            android:text="我的关注"
+            android:text="关注的话题"
             android:layout_centerVertical="true"
             android:textSize="?attr/textSizeSecond"
             android:layout_alignParentRight="true"/>

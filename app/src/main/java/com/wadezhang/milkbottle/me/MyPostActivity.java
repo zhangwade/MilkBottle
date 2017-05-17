@@ -74,7 +74,7 @@ public class MyPostActivity extends BaseActivity {
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mPostAdapter = new PostFriendAdapter(mPostList);
+        mPostAdapter = new PostFriendAdapter(mPostList, 0);
         mRecyclerView.setAdapter(mPostAdapter);
         autoRefresh();
         mBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class MyPostActivity extends BaseActivity {
         query.addWhereEqualTo("author", mUser);
         query.order("-createdAt");
         query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
-        query.include("theme[objectId|name],author[objectId|icon|username]");
+        query.include("theme[objectId|name],author[objectId|icon|nickname]");
         // 如果是加载更多
         if (mActionType == STATE_MORE) {
             // 处理时间查询

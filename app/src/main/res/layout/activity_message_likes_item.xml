@@ -32,7 +32,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_3d_rotation_black_24dp"
+                android:src="@mipmap/likes"
                 android:layout_marginTop="10dp"/>
             <TextView
                 android:layout_width="wrap_content"

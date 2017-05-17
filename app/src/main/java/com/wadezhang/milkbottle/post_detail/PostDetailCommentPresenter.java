@@ -45,7 +45,7 @@ public class PostDetailCommentPresenter implements PostDetailCommentContract.Pre
         mCommentQuery.addWhereEqualTo("post", mPost);
         mCommentQuery.order("-createdAt");
         mCommentQuery.addQueryKeys("objectId,post,author,createdAt,content,toWho");
-        mCommentQuery.include("post.author[objectId],author[objectId|username|icon],toWho[nickname]");
+        mCommentQuery.include("post[objectId],author[objectId|username|icon],toWho[nickname]");
         //TODO:referenceComment可能为空
         if (mActionType == STATE_MORE) {
             // 处理时间查询

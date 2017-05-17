@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.R;
+import com.wadezhang.milkbottle.search.SearchThemeActivity;
 import com.wadezhang.milkbottle.theme_category.ThemeCategory;
 
 import java.util.ArrayList;
@@ -59,6 +60,12 @@ public class SelectThemeByCategoryActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchThemeActivity.actionStart(mContext, 0);
             }
         });
     }

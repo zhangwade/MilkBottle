@@ -1,4 +1,4 @@
-package com.wadezhang.milkbottle.me;
+package com.wadezhang.milkbottle.search;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.me.UserDetailActivity;
 
 import java.util.List;
 
@@ -19,16 +19,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/5/12 0012.
+ * Created by Administrator on 2017/5/17 0017.
  */
 
-public class FollowOrFansAdapter extends RecyclerView.Adapter<FollowOrFansAdapter.ViewHolder> {
+public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
     private Context mContext;
 
     private List<User> mUserList;
 
-    public FollowOrFansAdapter(List<User> userList){
+    public SearchUserAdapter(List<User> userList){
         mUserList = userList;
     }
 
