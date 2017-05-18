@@ -27,6 +27,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:background="@mipmap/ic_3d_rotation_black_24dp"/>
     </LinearLayout>
 

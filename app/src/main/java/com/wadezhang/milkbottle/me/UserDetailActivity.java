@@ -18,6 +18,7 @@ import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.message.Fans;
 import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post.PostFriendAdapter;
 import com.wadezhang.milkbottle.theme.Theme;
@@ -33,12 +34,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2017/5/16 0016.
@@ -68,6 +73,11 @@ public class UserDetailActivity extends BaseActivity {
     private List<Post> mPostList = new ArrayList<>();
     private PostFriendAdapter mPostAdapter;
 
+    private final int STATE_NON_FOLLOW = 0; //初始状态：没关注
+    private final int STATE_FOLLOW = 1;  //初始状态：已关注
+    private final int STATE_NON_FOLLOW_CLICK = 2; //点击点赞按钮，先判断状态为 没关注
+    private final int STATE_FOLLOW_CLICK = 3;  //点击点赞按钮，先判断状态为 已关注
+
     Context mContext;
 
     private String mUserId;
@@ -88,6 +98,7 @@ public class UserDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         init();
+        checkIsFollow(0);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
         mPostAdapter = new PostFriendAdapter(mPostList, 0);
@@ -194,6 +205,123 @@ public class UserDetailActivity extends BaseActivity {
         });
     }
 
+    public void checkIsFollow(final int tag){ // 0 : 初始状态检查 1 : 单击
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        if(me.getObjectId().equals(mUserId)){
+            mAddFollow.setVisibility(View.GONE);
+            return;
+        }
+        User user = new User();
+        user.setObjectId(mUserId);
+        BmobQuery<Fans> query = new BmobQuery<>();
+        query.addWhereEqualTo("from", me);
+        query.addWhereEqualTo("to", user);
+        query.findObjects(new FindListener<Fans>() {
+            @Override
+            public void done(List<Fans> list, BmobException e) {
+                if(e == null){
+                    if(!list.isEmpty()){
+                        if(tag == 0) mAddFollow.setText(" 已关注 ");
+                            else cancelFollow(list.get(0).getObjectId());
+                    }else{
+                        if(tag == 1) addFollow();
+                    }
+                }else {
+                    Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "bmob查询是否已关注失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    public void addFollow(){
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        mAddFollow.setText(" 已关注 ");
+        Fans fans = new Fans();
+        fans.setFrom(me);
+        User user = new User();
+        user.setObjectId(mUserId);
+        fans.setTo(user);
+        fans.setIsRead(0);
+        fans.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+
+            }
+        });
+
+        User mUser = new User();
+        mUser.setObjectId(me.getObjectId());
+        BmobRelation bmobRelation = new BmobRelation();
+        bmobRelation.add(user);
+        mUser.setFollow(bmobRelation);
+        mUser.increment("followCount");
+        mUser.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+
+        User mUser1 = new User();
+        mUser1.setObjectId(me.getObjectId());
+        BmobRelation relation = new BmobRelation();
+        relation.add(mUser1);
+        user.setFans(relation);
+        user.increment("fansCount");
+        user.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+    }
+
+    public void cancelFollow(String fansRecordId){
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        mAddFollow.setText(" + 关注 ");
+        User user = new User();
+        user.setObjectId(mUserId);
+        User mUser = new User();
+        mUser.setObjectId(me.getObjectId());
+        BmobRelation relation = new BmobRelation();
+        relation.remove(user);
+        mUser.setFollow(relation);
+        mUser.increment("followCount",-1);
+        mUser.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+
+        User mUser1 = new User();
+        mUser1.setObjectId(me.getObjectId());
+        BmobRelation bmobRelation = new BmobRelation();
+        bmobRelation.remove(mUser1);
+        user.setFans(bmobRelation);
+        user.increment("fansCount",-1);
+        user.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+
+
+        Fans fans = new Fans();
+        fans.setObjectId(fansRecordId);
+        fans.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+    }
+
     public void getPost(int actionType){
         mActionType = actionType;
         BmobQuery<Post> query = new BmobQuery<>();
@@ -266,6 +394,12 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ThemeListActivity.actionStart(mContext, null, 3, mUserId);
+            }
+        });
+        mAddFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkIsFollow(1);
             }
         });
     }

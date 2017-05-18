@@ -2,6 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque"><!--  配置中的android:opacity="opaque"参数是为了防止在启动的时候出现背景的闪烁。  -->
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/splash_pic"/>
+        <bitmap android:gravity="center" android:src="@drawable/splash_photo" />
     </item>
 </layer-list>

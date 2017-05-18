@@ -121,6 +121,7 @@ public class PostFindAdapter extends RecyclerView.Adapter<PostFindAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position){
         if(mPostList != null){
+            holder.mAddFollow.setVisibility(View.GONE);
             Post mPost = mPostList.get(position);
             holder.mTheme.setText(mPost.getTheme().getName());
             ImageLoader.with(mContext, mPost.getAuthor().getIcon().getFileUrl(), holder.mIcon);

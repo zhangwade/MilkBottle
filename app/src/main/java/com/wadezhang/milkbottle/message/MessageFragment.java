@@ -15,6 +15,7 @@ import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post_detail.Comment;
 import com.wadezhang.milkbottle.search.SearchUserActivity;
 
@@ -60,6 +61,9 @@ public class MessageFragment extends BaseFragment {
     private List<Likes> likesUnReadList;
     private List<Fans> fansUnReadList;
 
+    private List<Post> myPostList = new ArrayList<>();; //我的所有帖子的 Id
+    User mUser;
+
     public static MessageFragment newInstance() {
         MessageFragment mMessageFragment = new MessageFragment();
         return mMessageFragment;
@@ -90,27 +94,67 @@ public class MessageFragment extends BaseFragment {
     public void check(){
         User user = GetCurrentUser.getCurrentUser(getContext());
         if(user == null) return;
-        User mUser = new User();
+        mUser = new User();
         mUser.setObjectId(user.getObjectId());
-        BmobQuery<Comment> commentBmobQuery = new BmobQuery<>();
-        commentBmobQuery.addWhereEqualTo("toWho", mUser);
-        commentBmobQuery.addWhereEqualTo("isRead", READ_NO);
-        commentBmobQuery.addQueryKeys("objectId");
-        commentBmobQuery.findObjects(new FindListener<Comment>() {
+
+        BmobQuery<Post> mMyPostQuery = new BmobQuery<>();  //先查我的 帖子 列表
+        mMyPostQuery.addWhereEqualTo("author", mUser);
+        mMyPostQuery.addQueryKeys("objectId");
+        mMyPostQuery.findObjects(new FindListener<Post>() {
             @Override
-            public void done(List<Comment> list, BmobException e) {
+            public void done(List<Post> list, BmobException e) { //查询当前用户的关注
                 if(e == null){
+                    myPostList.clear();
                     if(!list.isEmpty()){
-                        mImgCommentTips.setVisibility(View.VISIBLE);
-                        commentUnReadList = list;
-                        commentItemHasMsg = 1;
+                        myPostList = list;
                     }
+                    BmobQuery<Comment> q1 = new BmobQuery<>();  //再查评论消息
+                    q1.addWhereEqualTo("isRead", READ_NO);
+
+                    //BmobQuery<Comment> q2 = new BmobQuery<>();
+                    //q2.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
+                    BmobQuery<Comment> q3 = new BmobQuery<>();
+                    q3.addWhereEqualTo("toWho", mUser);
+                    List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
+                    //queries.add(q2);
+                    queries.add(q3);
+                    for (Post post : myPostList){
+                        BmobQuery<Comment> q = new BmobQuery<>();
+                        q.addWhereEqualTo("post", post);
+                        queries.add(q);
+                    }
+                    BmobQuery<Comment> mainQuery = new BmobQuery<>();
+                    BmobQuery<Comment> or = mainQuery.or(queries);
+
+                    List<BmobQuery<Comment>> andQuery = new ArrayList<>();
+                    andQuery.add(q1);
+                    andQuery.add(or);
+
+                    BmobQuery<Comment> query = new BmobQuery<>();
+                    query.and(andQuery);
+                    query.addQueryKeys("objectId");
+                    query.findObjects(new FindListener<Comment>() {
+                        @Override
+                        public void done(List<Comment> list, BmobException e) {
+                            if(e == null){
+                                if(!list.isEmpty()){
+                                    mImgCommentTips.setVisibility(View.VISIBLE);
+                                    commentUnReadList = list;
+                                    commentItemHasMsg = 1;
+                                }
+                            }else{
+                                Toast.makeText(getContext(), "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
                 }else{
-                    Toast.makeText(getContext(), "请检查网络是否开启", Toast.LENGTH_SHORT).show();
-                    Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.d(getClass().getSimpleName(), "bmob查询myPostIds失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });
+
+
         BmobQuery<Likes> likesBmobQuery = new BmobQuery<>();
         likesBmobQuery.addWhereEqualTo("to", mUser);
         likesBmobQuery.addWhereEqualTo("isRead", READ_NO);

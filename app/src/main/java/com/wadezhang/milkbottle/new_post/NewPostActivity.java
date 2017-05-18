@@ -263,7 +263,7 @@ public class NewPostActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mBtnDeletePhoto.setVisibility(View.INVISIBLE);
-                mPhoto.setImageResource(R.mipmap.ic_3d_rotation_black_24dp);
+                mPhoto.setImageResource(R.mipmap.add_photo);
                 photoPath = null;
             }
         });

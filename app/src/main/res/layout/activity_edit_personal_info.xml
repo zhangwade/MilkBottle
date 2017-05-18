@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_edit_personal_info_imgbtn_back"
-            android:background="@mipmap/ic_3d_rotation_black_24dp" />
+            android:background="@mipmap/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                     android:id="@+id/activity_edit_personal_info_img_icon"
                     android:scaleType="centerCrop"
                     android:layout_toLeftOf="@+id/activity_edit_personal_info_text_guide1"
-                    android:src="@mipmap/ic_3d_rotation_black_24dp"
+                    android:src="@mipmap/default_icon"
                     android:layout_centerVertical="true"/>
                 <TextView
                     android:layout_width="wrap_content"

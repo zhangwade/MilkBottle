@@ -85,11 +85,11 @@ public class MainActivity extends BaseActivity {
                 .hide();
         mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_1))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_2))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_3).setBadgeItem(badgeItem))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_4))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_3d_rotation_black_24dp,R.string.bottom_navigation_bar_5))
+        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.post,R.string.bottom_navigation_bar_1))
+                .addItem(new BottomNavigationItem(R.mipmap.theme,R.string.bottom_navigation_bar_2))
+                .addItem(new BottomNavigationItem(R.mipmap.message,R.string.bottom_navigation_bar_3).setBadgeItem(badgeItem))
+                .addItem(new BottomNavigationItem(R.mipmap.bottle,R.string.bottom_navigation_bar_4))
+                .addItem(new BottomNavigationItem(R.mipmap.me,R.string.bottom_navigation_bar_5))
                 .setFirstSelectedPosition(0)
                 .initialise();
         intentFilter = new IntentFilter();

@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_select_sex_imgbtn_back"
-            android:background="@mipmap/ic_3d_rotation_black_24dp" />
+            android:background="@mipmap/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="女"
+            android:text="  女"
+            android:drawableLeft="@mipmap/sex_girl"
+            android:gravity="center_vertical"
             android:textSize="?attr/textSizeFirst" />
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +66,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="男"
+            android:text="  男"
+            android:drawableLeft="@mipmap/sex_boy"
+            android:gravity="center_vertical"
             android:textSize="?attr/textSizeFirst" />
         <TextView
             android:layout_width="wrap_content"

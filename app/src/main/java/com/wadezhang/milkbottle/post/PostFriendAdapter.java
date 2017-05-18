@@ -180,7 +180,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
         }
     }
 
-    public void checkLikes(String postId, final int tag){
+    public void checkLikes(String postId, final int tag){ // 0 : 初始状态检查 1 : 单击
         User user = GetCurrentUser.getCurrentUser(mContext);
         if(user == null) return;
         BmobQuery<Likes> query = new BmobQuery<>();
@@ -241,6 +241,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
 
     public void cancelLikes(String postId, String postAuthorId){
         User user = GetCurrentUser.getCurrentUser(mContext);
+        if(user == null)return;
         Post post = new Post();
         post.setObjectId(postId);
         BmobRelation relation = new BmobRelation();

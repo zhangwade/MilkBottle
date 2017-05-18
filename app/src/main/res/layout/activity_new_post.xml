@@ -119,14 +119,14 @@
                         android:layout_height="100dp"
                         android:id="@+id/activity_new_post_img_photo"
                         android:scaleType="center"
-                        android:src="@mipmap/ic_3d_rotation_black_24dp"
+                        android:src="@mipmap/add_photo"
                         android:background="@drawable/square_image_view"/>
                     <ImageButton
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:id="@+id/activity_new_post_imgbtn_delete_photo"
                         android:layout_gravity="right"
-                        android:src="@mipmap/search"/>
+                        android:src="@mipmap/delete_photo"/>
                 </FrameLayout>
 
                 <TextView

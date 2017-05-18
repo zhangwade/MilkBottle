@@ -51,7 +51,7 @@
                     android:text="    评论"
                     style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/message_comment" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:visibility="invisible"
-                    android:src="@mipmap/search"/>
+                    android:src="@mipmap/message_tip"/>
             </LinearLayout>
 
             <TextView android:layout_height="0.5dp"
@@ -81,7 +81,7 @@
                     android:text="    赞"
                     style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/message_likes" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:visibility="invisible"
-                    android:src="@mipmap/search"/>
+                    android:src="@mipmap/message_tip"/>
             </LinearLayout>
 
             <TextView android:layout_height="0.5dp"
@@ -111,7 +111,7 @@
                     android:text="    新粉丝"
                     style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/message_fans" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:visibility="invisible"
-                    android:src="@mipmap/search"/>
+                    android:src="@mipmap/message_tip"/>
             </LinearLayout>
 
             <TextView android:layout_height="0.5dp"
@@ -132,7 +132,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_message_wechat_item"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="invisible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -155,7 +156,8 @@
 
             <TextView android:layout_height="0.5dp"
                 android:layout_width="match_parent"
-                android:background="?attr/dividerColor"/>
+                android:background="?attr/dividerColor"
+                android:visibility="invisible"/>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

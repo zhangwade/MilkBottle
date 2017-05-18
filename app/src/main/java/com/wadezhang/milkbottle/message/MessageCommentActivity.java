@@ -45,7 +45,7 @@ public class MessageCommentActivity extends BaseActivity {
     @BindView(R.id.activity_message_swipetoloadlayout) SwipeToLoadLayout mSwipeToLoadLayout;
     @BindView(R.id.swipe_target) RecyclerView mRecyclerView;
 
-    private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
+    private String lastTime = "2017-05-18 09:00:00"; //查询数据的时间边界
     private int limit = 30; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private int mActionType;
@@ -79,6 +79,7 @@ public class MessageCommentActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageCommentAdapter = new MessageCommentAdapter(mCommentList);
         mRecyclerView.setAdapter(mMessageCommentAdapter);
+        lastTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         autoRefresh();
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +133,7 @@ public class MessageCommentActivity extends BaseActivity {
                     }
                     getComment();
                 }else{
-                    Toast.makeText(mContext, "网络出了点小差~~", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "网络出了点小差1~~", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "bmob查询myPostIds失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
@@ -140,20 +141,23 @@ public class MessageCommentActivity extends BaseActivity {
     }
 
     public void getComment(){
-        BmobQuery<Comment> q1 = new BmobQuery<>();
-        q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
+        //BmobQuery<Comment> q1 = new BmobQuery<>();
+        //q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
         BmobQuery<Comment> q2 = new BmobQuery<>();
         q2.addWhereEqualTo("toWho", mUser);
         List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
-        queries.add(q1);
+        //queries.add(q1);
         queries.add(q2);
-        BmobQuery<Comment> commentBmobQuery = new BmobQuery<>();
-        commentBmobQuery.or(queries);
-        commentBmobQuery.order("-createdAt");
-        commentBmobQuery.addQueryKeys("objectId,author,content,createdAt,post");
-        commentBmobQuery.include("author[objectId|icon|nickname],post[objectId|photo]");
-        // 如果是加载更多
-        if (mActionType == STATE_MORE) {
+        for (Post post : myPostList){
+            BmobQuery<Comment> q = new BmobQuery<>();
+            q.addWhereEqualTo("post", post);
+            queries.add(q);
+        }
+        BmobQuery<Comment> mainQuery = new BmobQuery<>();
+        BmobQuery<Comment> or = mainQuery.or(queries);
+
+        BmobQuery<Comment> q3 = new BmobQuery<>();
+
             // 处理时间查询
             Date date = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -164,14 +168,23 @@ public class MessageCommentActivity extends BaseActivity {
                 e1.printStackTrace();
             }
             // 只查询小于等于最后一个item发表时间的数据
-            commentBmobQuery.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
-            // 跳过之前页数并去掉重复数据
-            commentBmobQuery.setSkip(curPage * limit - 1);
-        }
+            q3.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
+
+        List<BmobQuery<Comment>> andQuery = new ArrayList<>();
+        andQuery.add(q3);
+        andQuery.add(or);
+        BmobQuery<Comment> query = new BmobQuery<>();
+        query.and(andQuery);
+        // 如果是加载更多
+        // 跳过之前页数并去掉重复数据
+        if(mActionType == STATE_MORE) query.setSkip(curPage * limit - 1);
+        query.order("-createdAt");
+        query.addQueryKeys("objectId,author,content,createdAt,post");
+        query.include("author[objectId|icon|nickname],post[objectId|photo]");
         // 设置每页数据个数
-        commentBmobQuery.setLimit(limit);
+        query.setLimit(limit);
         // 查找数据
-        commentBmobQuery.findObjects(new FindListener<Comment>() {
+        query.findObjects(new FindListener<Comment>() {
             @Override
             public void done(List<Comment> list, BmobException e) {
                 if(e == null){
@@ -191,7 +204,7 @@ public class MessageCommentActivity extends BaseActivity {
                         Toast.makeText(mContext, "还没有评论消息", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(mContext, "网络出了点小差~~", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "网络出了点小差2~~", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }

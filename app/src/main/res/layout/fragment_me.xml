@@ -34,7 +34,7 @@
                     android:layout_height="55dp"
                     android:id="@+id/fragment_me_img_icon"
                     android:scaleType="centerCrop"
-                    android:background="@mipmap/ic_3d_rotation_black_24dp"
+                    android:background="@mipmap/default_icon"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"/>
                 <TextView
@@ -127,7 +127,7 @@
                     style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/post" />
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/theme" />
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                     style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/edit" />
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                     style="@android:style/TextAppearance.Medium"
                     android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/settings" />
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"

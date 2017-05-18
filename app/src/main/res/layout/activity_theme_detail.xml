@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_theme_detail_imgbtn_back"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+            android:background="@mipmap/btn_back"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:id="@+id/activity_theme_detail_img_author_icon"
-            android:src="@mipmap/ic_3d_rotation_black_24dp"
+            android:src="@mipmap/default_icon"
             android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
             android:layout_marginRight="10dp" />

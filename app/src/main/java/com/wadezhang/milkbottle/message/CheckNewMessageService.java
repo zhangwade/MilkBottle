@@ -80,17 +80,31 @@ public class CheckNewMessageService extends Service {
 
     public void checkComment(){
         BmobQuery<Comment> q1 = new BmobQuery<>();
-        q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
-        BmobQuery<Comment> q2 = new BmobQuery<>();
-        q2.addWhereEqualTo("toWho", mUser);
+        q1.addWhereEqualTo("isRead", READ_NO);
+
+        //BmobQuery<Comment> q2 = new BmobQuery<>();
+        //q2.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
+        BmobQuery<Comment> q3 = new BmobQuery<>();
+        q3.addWhereEqualTo("toWho", mUser);
         List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
-        queries.add(q1);
-        queries.add(q2);
-        BmobQuery<Comment> commentBmobQuery = new BmobQuery<>();
-        commentBmobQuery.or(queries);
-        commentBmobQuery.addWhereEqualTo("isRead", READ_NO);
-        commentBmobQuery.addQueryKeys("objectId");
-        commentBmobQuery.findObjects(new FindListener<Comment>() {
+        //queries.add(q2);
+        queries.add(q3);
+        for (Post post : myPostList){
+            BmobQuery<Comment> q = new BmobQuery<>();
+            q.addWhereEqualTo("post", post);
+            queries.add(q);
+        }
+        BmobQuery<Comment> mainQuery = new BmobQuery<>();
+        BmobQuery<Comment> or = mainQuery.or(queries);
+
+        List<BmobQuery<Comment>> andQuery = new ArrayList<>();
+        andQuery.add(q1);
+        andQuery.add(or);
+
+        BmobQuery<Comment> query = new BmobQuery<>();
+        query.and(andQuery);
+        query.addQueryKeys("objectId");
+        query.findObjects(new FindListener<Comment>() {
             @Override
             public void done(List<Comment> list, BmobException e) {
                 if(e == null && !list.isEmpty()){
