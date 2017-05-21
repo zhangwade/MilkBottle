@@ -14,11 +14,7 @@ public class User extends BmobUser {
     private String introduction;
     private BmobFile icon;
     private BmobRelation theme;
-    private BmobRelation follow;
-    private BmobRelation fans;
     private String nickname;
-    private Integer followCount;
-    private Integer fansCount;
 
     public String getSex() {
         return sex;
@@ -52,43 +48,11 @@ public class User extends BmobUser {
         this.theme = theme;
     }
 
-    public BmobRelation getFollow() {
-        return follow;
-    }
-
-    public void setFollow(BmobRelation follow) {
-        this.follow = follow;
-    }
-
-    public BmobRelation getFans() {
-        return fans;
-    }
-
-    public void setFans(BmobRelation fans) {
-        this.fans = fans;
-    }
-
     public String getNickname() {
         return nickname;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public Integer getFollowCount() {
-        return followCount;
-    }
-
-    public void setFollowCount(Integer followCount) {
-        this.followCount = followCount;
-    }
-
-    public Integer getFansCount() {
-        return fansCount;
-    }
-
-    public void setFansCount(Integer fansCount) {
-        this.fansCount = fansCount;
     }
 }

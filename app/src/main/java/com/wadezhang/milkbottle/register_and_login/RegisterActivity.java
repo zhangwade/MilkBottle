@@ -1,5 +1,6 @@
 package com.wadezhang.milkbottle.register_and_login;
 
+import android.app.IntentService;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.UserInfo;
 
 import java.util.Date;
 
@@ -182,8 +184,8 @@ public class RegisterActivity extends BaseActivity {
                 user.setNickname(mEditEmail.getText().toString());
                 user.setSex("未知");
                 user.setIntroduction("");
-                user.setFollowCount(0);
-                user.setFansCount(0);
+                //user.setFollowCount(0);
+                //user.setFansCount(0);
                 BmobFile icon = new BmobFile(new Date().toString()+".jpg", "", defaultIconPath);
                 user.setIcon(icon);
                 user.signUp(new SaveListener<User>() {
@@ -191,6 +193,9 @@ public class RegisterActivity extends BaseActivity {
                     public void done(User user, BmobException e){
                         progressDialog.dismiss();
                         if(e == null){
+                            Intent intent = new Intent(mContext, CreateUserInfoService.class);
+                            intent.putExtra("userId", user.getObjectId());
+                            startService(intent);
                             AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
                             mAlertDialog.setTitle("注册成功");
                             mAlertDialog.setMessage("请尽快登录您的邮箱去验证，有助于以后找回密码");
@@ -204,6 +209,7 @@ public class RegisterActivity extends BaseActivity {
                             });
                             mAlertDialog.show();
                         }else{
+                            progressDialog.dismiss();
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
                             alertDialog.setTitle("注册失败");
                             if(e.getErrorCode() == 9019 || e.getErrorCode() == 9015){

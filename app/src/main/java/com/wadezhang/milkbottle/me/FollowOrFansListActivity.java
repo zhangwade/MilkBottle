@@ -18,6 +18,7 @@ import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.UserInfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,14 +59,17 @@ public class FollowOrFansListActivity extends BaseActivity {
     private final int TYPE_FOLLOW = 0;
     private final int TYPE_FANS = 1;
 
+    private String mUserInfoId;
+
     private List<User> mUserList = new ArrayList<>();
     private FollowOrFansAdapter mFollowOrFansAdapter;
 
     Context mContext;
 
-    public static void actionStart(Context context, int type){
+    public static void actionStart(Context context, int type, String userInfoId){
         Intent intent = new Intent(context, FollowOrFansListActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("userInfoId", userInfoId);
         context.startActivity(intent);
     }
 
@@ -78,6 +82,7 @@ public class FollowOrFansListActivity extends BaseActivity {
         mContext = this;
         Intent mIntent = getIntent();
         mType = mIntent.getIntExtra("type", TYPE_FOLLOW);
+        mUserInfoId = mIntent.getStringExtra("userInfoId");
         if(mType == TYPE_FANS) mTitle.setText("粉丝");
         mSwipeToLoadLayout.setOnRefreshListener(new RefreshListener());
         mSwipeToLoadLayout.setOnLoadMoreListener(new LoadMoreListener());
@@ -126,10 +131,10 @@ public class FollowOrFansListActivity extends BaseActivity {
         User user = GetCurrentUser.getCurrentUser(mContext);
         if(user == null) return;
         BmobQuery<User> query = new BmobQuery<>();
-        User mUser = new User();
-        mUser.setObjectId(user.getObjectId());
-        if(mType == TYPE_FOLLOW) query.addWhereRelatedTo("follow", new BmobPointer(mUser));
-            else  query.addWhereRelatedTo("fans", new BmobPointer(mUser));
+        UserInfo userInfo = new UserInfo();
+        userInfo.setObjectId(mUserInfoId);
+        if(mType == TYPE_FOLLOW) query.addWhereRelatedTo("follow", new BmobPointer(userInfo));
+            else  query.addWhereRelatedTo("fans", new BmobPointer(userInfo));
         query.order("nickname");
         query.addQueryKeys("objectId,icon,nickname");
         // 如果是加载更多

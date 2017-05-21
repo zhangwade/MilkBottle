@@ -1,8 +1,13 @@
 package com.wadezhang.milkbottle.me;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +23,7 @@ import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.UserInfo;
 import com.wadezhang.milkbottle.message.Fans;
 import com.wadezhang.milkbottle.post.Post;
 import com.wadezhang.milkbottle.post.PostFriendAdapter;
@@ -73,10 +79,9 @@ public class UserDetailActivity extends BaseActivity {
     private List<Post> mPostList = new ArrayList<>();
     private PostFriendAdapter mPostAdapter;
 
-    private final int STATE_NON_FOLLOW = 0; //初始状态：没关注
-    private final int STATE_FOLLOW = 1;  //初始状态：已关注
-    private final int STATE_NON_FOLLOW_CLICK = 2; //点击点赞按钮，先判断状态为 没关注
-    private final int STATE_FOLLOW_CLICK = 3;  //点击点赞按钮，先判断状态为 已关注
+    private int isFollow = 0; //对用户是否已关注，0 代表未检查完，1 代表已关注，2 代表未关注
+    private String fansRecordId; //新粉丝通知表的记录 ID
+    private Handler handler;
 
     Context mContext;
 
@@ -98,7 +103,9 @@ public class UserDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         init();
-        checkIsFollow(0);
+        isFollow = 0;
+        mAddFollow.setEnabled(false);
+        checkIsFollow();
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
         mPostAdapter = new PostFriendAdapter(mPostList, 0);
@@ -142,7 +149,7 @@ public class UserDetailActivity extends BaseActivity {
         Intent mIntent = getIntent();
         mUserId = mIntent.getStringExtra("userId");
         BmobQuery<User> query = new BmobQuery<>();
-        query.addQueryKeys("icon,nickname,sex,introduction,followCount,fansCount");
+        query.addQueryKeys("icon,nickname,sex,introduction");
         query.getObject(mUserId, new QueryListener<User>() {
             @Override
             public void done(User user, BmobException e) {
@@ -158,6 +165,7 @@ public class UserDetailActivity extends BaseActivity {
                 }
             }
         });
+
         final User user = new User();
         user.setObjectId(mUserId);
         BmobQuery<Post> postQuery = new BmobQuery<>();
@@ -173,6 +181,8 @@ public class UserDetailActivity extends BaseActivity {
                 }
             }
         });
+
+        themeCount = 0;
         BmobQuery<Theme> themeQuery = new BmobQuery<>();
         themeQuery.addWhereEqualTo("author", user);
         themeQuery.count(Theme.class, new CountListener() {
@@ -205,27 +215,35 @@ public class UserDetailActivity extends BaseActivity {
         });
     }
 
-    public void checkIsFollow(final int tag){ // 0 : 初始状态检查 1 : 单击
+    public void checkIsFollow(){ // 0 : 初始状态检查 1 : 单击
         User me = GetCurrentUser.getCurrentUser(mContext);
         if(me == null) return;
         if(me.getObjectId().equals(mUserId)){
             mAddFollow.setVisibility(View.GONE);
             return;
         }
-        User user = new User();
-        user.setObjectId(mUserId);
+
         BmobQuery<Fans> query = new BmobQuery<>();
+        User from = new User();
+        from.setObjectId(me.getObjectId());
         query.addWhereEqualTo("from", me);
-        query.addWhereEqualTo("to", user);
+        User to = new User();
+        to.setObjectId(mUserId);
+        query.addWhereEqualTo("to", to);
         query.findObjects(new FindListener<Fans>() {
             @Override
             public void done(List<Fans> list, BmobException e) {
                 if(e == null){
+                    mAddFollow.setEnabled(true);
                     if(!list.isEmpty()){
-                        if(tag == 0) mAddFollow.setText(" 已关注 ");
-                            else cancelFollow(list.get(0).getObjectId());
+                        mAddFollow.setText(" 已关注 ");
+                        isFollow = 1;
+                        fansRecordId = list.get(0).getObjectId();
+                        //if(tag == 0) mAddFollow.setText(" 已关注 ");
+                            //else cancelFollow(list.get(0).getObjectId());
                     }else{
-                        if(tag == 1) addFollow();
+                        isFollow = 2;
+                        //if(tag == 1) addFollow();
                     }
                 }else {
                     Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
@@ -236,88 +254,228 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     public void addFollow(){
-        User me = GetCurrentUser.getCurrentUser(mContext);
+        final User me = GetCurrentUser.getCurrentUser(mContext); //我
         if(me == null) return;
-        mAddFollow.setText(" 已关注 ");
-        Fans fans = new Fans();
-        fans.setFrom(me);
-        User user = new User();
-        user.setObjectId(mUserId);
-        fans.setTo(user);
+        //mAddFollow.setText(" 已关注 ");
+
+        Fans fans = new Fans(); //添加关注记录
+        User from = new User();
+        from.setObjectId(me.getObjectId());
+        fans.setFrom(from);
+        User to = new User();  //被浏览的用户
+        to.setObjectId(mUserId);
+        fans.setTo(to);
         fans.setIsRead(0);
         fans.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-
-            }
-        });
-
-        User mUser = new User();
-        mUser.setObjectId(me.getObjectId());
-        BmobRelation bmobRelation = new BmobRelation();
-        bmobRelation.add(user);
-        mUser.setFollow(bmobRelation);
-        mUser.increment("followCount");
-        mUser.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-
-            }
-        });
-
-        User mUser1 = new User();
-        mUser1.setObjectId(me.getObjectId());
-        BmobRelation relation = new BmobRelation();
-        relation.add(mUser1);
-        user.setFans(relation);
-        user.increment("fansCount");
-        user.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-
+                if(e == null){
+                    fansRecordId = s;
+                    addFollowSec();
+                }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob添加新粉丝通知记录失败："+e.getMessage()+","+e.getErrorCode());
+                }
             }
         });
     }
 
-    public void cancelFollow(String fansRecordId){
-        User me = GetCurrentUser.getCurrentUser(mContext);
+    public void addFollowSec(){
+        final User me = GetCurrentUser.getCurrentUser(mContext); //我
         if(me == null) return;
-        mAddFollow.setText(" + 关注 ");
-        User user = new User();
-        user.setObjectId(mUserId);
-        User mUser = new User();
-        mUser.setObjectId(me.getObjectId());
-        BmobRelation relation = new BmobRelation();
-        relation.remove(user);
-        mUser.setFollow(relation);
-        mUser.increment("followCount",-1);
-        mUser.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
 
+        User u1 = new User();  //添加到我的关注列表
+        u1.setObjectId(me.getObjectId());
+        BmobQuery<UserInfo> query = new BmobQuery<>();
+        query.addWhereEqualTo("user", u1);
+        query.addQueryKeys("objectId");
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    UserInfo u1 = new UserInfo();
+                    u1.setObjectId(list.get(0).getObjectId());
+                    BmobRelation bmobRelation = new BmobRelation();
+                    User u2 = new User();
+                    u2.setObjectId(mUserId);
+                    bmobRelation.add(u2);
+                    u1.setFollow(bmobRelation);
+                    u1.increment("followCount");
+                    u1.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e == null){
+                                addFollowThird();
+                            }else{
+                                Message msg = new Message();
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                                Log.d(getClass().getSimpleName(), "bmob添加关注失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
+                }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob查询 UserInfo Id 失败："+e.getMessage()+","+e.getErrorCode());
+                }
             }
         });
+    }
 
-        User mUser1 = new User();
-        mUser1.setObjectId(me.getObjectId());
-        BmobRelation bmobRelation = new BmobRelation();
-        bmobRelation.remove(mUser1);
-        user.setFans(bmobRelation);
-        user.increment("fansCount",-1);
-        user.update(new UpdateListener() {
+    public void addFollowThird(){
+        final User me = GetCurrentUser.getCurrentUser(mContext); //我
+        if(me == null) return;
+
+        User user1 = new User();  //将我添加到用户的粉丝列表
+        user1.setObjectId(mUserId);
+        BmobQuery<UserInfo> query1 = new BmobQuery<>();
+        query1.addWhereEqualTo("user", user1);
+        query1.addQueryKeys("objectId");
+        query1.findObjects(new FindListener<UserInfo>() {
             @Override
-            public void done(BmobException e) {
-
+            public void done(List<UserInfo> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    UserInfo user1 = new UserInfo();
+                    user1.setObjectId(list.get(0).getObjectId());
+                    BmobRelation relation = new BmobRelation();
+                    User user2 = new User();
+                    user2.setObjectId(me.getObjectId());
+                    relation.add(user2);
+                    user1.setFans(relation);
+                    user1.increment("fansCount");
+                    user1.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            Message msg = new Message();
+                            if(e == null){
+                                msg.what = 1;
+                            }else{
+                                msg.what = 0;
+                                Log.d(getClass().getSimpleName(), "bmob添加粉丝失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                            handler.sendMessage(msg);
+                        }
+                    });
+                }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob查询 UserInfo Id 失败："+e.getMessage()+","+e.getErrorCode());
+                }
             }
         });
+    }
 
+    public void cancelFollow(){
+        final User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        //mAddFollow.setText(" + 关注 ");
 
         Fans fans = new Fans();
         fans.setObjectId(fansRecordId);
         fans.delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
+                if(e == null){
+                    cancelFollowSec();
+                }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob删除新粉丝通知记录失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
 
+    public void cancelFollowSec(){
+        final User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+
+        User u1 = new User();  //取消我对用户的关注
+        u1.setObjectId(me.getObjectId());
+        BmobQuery<UserInfo> query = new BmobQuery<>();
+        query.addWhereEqualTo("user", u1);
+        query.addQueryKeys("objectId");
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    UserInfo u1 = new UserInfo();
+                    u1.setObjectId(list.get(0).getObjectId());
+                    User u2 = new User();
+                    u2.setObjectId(mUserId);
+                    BmobRelation relation = new BmobRelation();
+                    relation.remove(u2);
+                    u1.setFollow(relation);
+                    u1.increment("followCount",-1);
+                    u1.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e == null){
+                                cancelFollowThird();
+                            }else{
+                                Message msg = new Message();
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                                Log.d(getClass().getSimpleName(), "bmob取消关注失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
+                }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob查询 UserInfo Id 失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    public void cancelFollowThird(){
+        final User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+
+        User user1 = new User();  //把我撤出用户的粉丝列表
+        user1.setObjectId(mUserId);
+        BmobQuery<UserInfo> query1 = new BmobQuery<>();
+        query1.addWhereEqualTo("user", user1);
+        query1.addQueryKeys("objectId");
+        query1.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    UserInfo user1 = new UserInfo();
+                    user1.setObjectId(list.get(0).getObjectId());
+                    User user2 = new User();
+                    user2.setObjectId(me.getObjectId());
+                    BmobRelation bmobRelation = new BmobRelation();
+                    bmobRelation.remove(user2);
+                    user1.setFans(bmobRelation);
+                    user1.increment("fansCount",-1);
+                    user1.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            Message msg = new Message();
+                            if(e == null){
+                                msg.what = 1;
+                            }else{
+                                msg.what = 0;
+                                Log.d(getClass().getSimpleName(), "bmob取消粉丝失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                            handler.sendMessage(msg);
+                        }
+                    });
+                }else {
+                    Message msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                    Log.d(getClass().getSimpleName(), "bmob查询 UserInfo Id 失败："+e.getMessage()+","+e.getErrorCode());
+                }
             }
         });
     }
@@ -399,7 +557,51 @@ public class UserDetailActivity extends BaseActivity {
         mAddFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkIsFollow(1);
+                final ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage("正在操作...");
+                mProgressDialog.setCancelable(false);
+                if(isFollow == 1){
+                    AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                    mAlertDialog.setMessage("确定取消关注?");
+                    mAlertDialog.setCancelable(true);
+                    mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mProgressDialog.show();
+                            cancelFollow();
+                        }
+                    });
+                    mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    mAlertDialog.show();
+                }else if(isFollow == 2){
+                    mProgressDialog.show();
+                    addFollow();
+                }
+                handler = new Handler(){
+                    public void handleMessage(Message msg){
+                        mProgressDialog.dismiss();
+                        switch (msg.what){
+                            case 1 :
+                                if(isFollow == 1){
+                                    mAddFollow.setText(" + 关注 ");
+                                    isFollow = 2;
+                                }else if (isFollow == 2){
+                                    mAddFollow.setText(" 已关注 ");
+                                    isFollow = 1;
+                                }
+                                break;
+                            case 0 :
+                                Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
             }
         });
     }

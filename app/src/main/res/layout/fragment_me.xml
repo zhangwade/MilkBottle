@@ -119,29 +119,56 @@
                     android:layout_marginTop="20dp"
                     android:background="?attr/dividerColor"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/fragment_me_text_post"
-                    android:text="    我的帖子"
-                    style="@android:style/TextAppearance.Medium"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/post" />
+                    android:orientation="horizontal"
+                    android:id="@+id/fragment_me_post_item">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    我的帖子"
+                        style="@android:style/TextAppearance.Medium"
+                        android:padding="10dp"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@mipmap/me_post" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fragment_me_text_post_count"
+                        android:layout_gravity="center_vertical"
+                        android:text="0"
+                        android:padding="10dp" />
+                </LinearLayout>
+
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"
                     android:background="?attr/dividerColor"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/fragment_me_text_theme"
-                    android:text="    我的话题"
-                    style="@android:style/TextAppearance.Medium"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/theme" />
+                    android:orientation="horizontal"
+                    android:id="@+id/fragment_me_theme_item">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    我的话题"
+                        style="@android:style/TextAppearance.Medium"
+                        android:padding="10dp"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@mipmap/me_theme" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fragment_me_text_theme_count"
+                        android:layout_gravity="center_vertical"
+                        android:text="0"
+                        android:padding="10dp" />
+                </LinearLayout>
 
                 <TextView android:layout_height="0.5dp"
                     android:layout_width="match_parent"

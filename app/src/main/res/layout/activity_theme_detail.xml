@@ -145,6 +145,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/activity_theme_detail_btn_addfollow"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:text="关注"/>
 
         </LinearLayout>
