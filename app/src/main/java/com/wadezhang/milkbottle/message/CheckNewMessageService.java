@@ -148,6 +148,25 @@ public class CheckNewMessageService extends Service {
                 if(e == null && !list.isEmpty()){
                     sendNewMessageBroadcast();
                 }else{
+                    checkNotice();
+                    //Toast.makeText(getContext(), "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    public void checkNotice(){
+        BmobQuery<Notice> noticeBmobQuery = new BmobQuery<>();
+        noticeBmobQuery.addWhereEqualTo("to", mUser);
+        noticeBmobQuery.addWhereEqualTo("isRead", READ_NO);
+        noticeBmobQuery.addQueryKeys("objectId");
+        noticeBmobQuery.findObjects(new FindListener<Notice>() {
+            @Override
+            public void done(List<Notice> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    sendNewMessageBroadcast();
+                }else{
                     //Toast.makeText(getContext(), "请检查网络是否开启", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }

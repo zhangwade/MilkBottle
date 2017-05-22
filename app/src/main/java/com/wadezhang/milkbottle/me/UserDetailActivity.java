@@ -215,7 +215,7 @@ public class UserDetailActivity extends BaseActivity {
         });
     }
 
-    public void checkIsFollow(){ // 0 : 初始状态检查 1 : 单击
+    public void checkIsFollow(){
         User me = GetCurrentUser.getCurrentUser(mContext);
         if(me == null) return;
         if(me.getObjectId().equals(mUserId)){
@@ -595,7 +595,7 @@ public class UserDetailActivity extends BaseActivity {
                                 }
                                 break;
                             case 0 :
-                                Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "操作失败! 请检查网络是否开启", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 break;

@@ -130,34 +130,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragment_message_wechat_item"
+                android:id="@+id/fragment_message_notice_item"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                android:visibility="invisible">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="    私信"
+                    android:text="    系统通知"
                     style="@android:style/TextAppearance.Medium"
                     android:gravity="center_vertical"
-                    android:drawableLeft="@mipmap/ic_3d_rotation_black_24dp" />
+                    android:drawableLeft="@mipmap/message_notice" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/fragment_message_img_wechat_tips"
+                    android:id="@+id/fragment_message_img_notice_tips"
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:visibility="invisible"
-                    android:src="@mipmap/search"/>
+                    android:src="@mipmap/message_tip"/>
             </LinearLayout>
 
             <TextView android:layout_height="0.5dp"
                 android:layout_width="match_parent"
-                android:background="?attr/dividerColor"
-                android:visibility="invisible"/>
+                android:background="?attr/dividerColor" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

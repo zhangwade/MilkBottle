@@ -84,7 +84,10 @@ public class ThemePostListHotFragment extends BaseViewPagerFragment implements T
     @Override
     public void updateAdapter(List<Post> postList, int actionType){
         if(actionType == 0) mPostList.clear();
-        mPostList.addAll(postList);
+        for(int i = postList.size() - 1;i >= 0 ;i--){
+            mPostList.add(postList.get(i));
+        }
+        //mPostList.addAll(postList);
         mThemePostListHotAdapter.notifyDataSetChanged();
     }
 
@@ -101,7 +104,7 @@ public class ThemePostListHotFragment extends BaseViewPagerFragment implements T
 
         @Override
         public void onLoadMore(){
-            mThemePostListHotPresenter.getPost(1);
+            //mThemePostListHotPresenter.getPost(1);
             mSwipeToLoadLayout.setLoadingMore(false);
         }
     }

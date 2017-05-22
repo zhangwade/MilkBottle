@@ -1,7 +1,9 @@
 package com.wadezhang.milkbottle.post_detail;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -29,6 +32,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.SwipyAppBarScrollListener;
@@ -54,6 +58,7 @@ import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2017/4/11 0011.
@@ -73,8 +78,11 @@ public class PostDetailActivity extends BaseActivity {
     @BindView(R.id.activity_post_detail_text_comment_count) TextView mCommentCount;
     @BindView(R.id.activity_post_detail_comment_recyclerview) RecyclerView mCommentRecyclerView;
     @BindView(R.id.activity_post_detail_write_comment) LinearLayout mWriteComment;
+    @BindView(R.id.activity_post_detail_text_delete) TextView mDelete;
 
     Context mContext;
+
+    private String administratorId = "jDMNRNNR";
 
     private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
     private int limit = 10; //每次查询限制数目
@@ -88,6 +96,7 @@ public class PostDetailActivity extends BaseActivity {
     private String themeName;
     private String authorObjectId;
     private String photoUrl;
+    private String postContent;
 
     private PostDetailCommentAdapter mPostDetailCommentAdapter;
     private List<Comment> mCommentList = new ArrayList<>();
@@ -127,10 +136,10 @@ public class PostDetailActivity extends BaseActivity {
         mPostDetailCommentAdapter = new PostDetailCommentAdapter(mCommentList);
         mCommentRecyclerView.setAdapter(mPostDetailCommentAdapter);
         mCommentRecyclerView.addOnScrollListener(new LoadMoreListener());
-        getComment(STATE_REFRESH);
+        //getComment(STATE_REFRESH);
         mSwipeRefreshLayout.setOnRefreshListener(new RefreshListener());
         intentFilter = new IntentFilter();
-        intentFilter.addAction("com.wadezhang.milkbottle.SEND_COMMENT_SUCCESS");
+        intentFilter.addAction("com.wadezhang.milkbottle.REFRESH_COMMENT_LIST");
         sendCommentReceiver = new SendCommentReceiver();
         registerReceiver(sendCommentReceiver, intentFilter);
         onClick();
@@ -183,9 +192,39 @@ public class PostDetailActivity extends BaseActivity {
     }
 
     public void initPost(){
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        if(me.getObjectId().equals(administratorId)) mDelete.setVisibility(View.VISIBLE);
+
         Intent mIntent = getIntent();
         if(mIntent.getStringExtra("postObjectId") != null){
             postObjectId = mIntent.getStringExtra("postObjectId");
+            BmobQuery<Post> query = new BmobQuery<>();
+            query.addQueryKeys("objectId");
+            query.getObject(postObjectId, new QueryListener<Post>() {
+                @Override
+                public void done(Post post, BmobException e) {
+                    if(e != null){
+                        if(e.getErrorCode() == 9010 || e.getErrorCode() == 9016){
+                            Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                        }else{
+                            AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                            mAlertDialog.setMessage("帖子已被删除");
+                            mAlertDialog.setCancelable(false);
+                            mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            mAlertDialog.show();
+                        }
+                        Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                    }else{
+                        getComment(STATE_REFRESH);
+                    }
+                }
+            });
             themeObjectId = mIntent.getStringExtra("themeObjectId");
             authorObjectId = mIntent.getStringExtra("authorObjectId");
             themeName = mIntent.getStringExtra("themeName");
@@ -198,34 +237,55 @@ public class PostDetailActivity extends BaseActivity {
             } else{
                 mPhoto.setVisibility(View.GONE);
             }
-            mContent.setText(mIntent.getStringExtra("content"));
+            postContent = mIntent.getStringExtra("content");
+            mContent.setText(postContent);
             mCommentCount.setText(mIntent.getStringExtra("commentCount"));
             mLikesCount.setText(mIntent.getStringExtra("likesCount"));
+            if(authorObjectId.equals(me.getObjectId())) mDelete.setVisibility(View.VISIBLE);
         }else{
             postObjectId = mIntent.getStringExtra("postId");
-            BmobQuery<Post> query = new BmobQuery<>();
-            query.addQueryKeys("theme,author,photo,content");
-            query.include("theme[objectId|name],author[objectId|icon|nickname]");
-            query.getObject(postObjectId, new QueryListener<Post>() {
-                @Override
-                public void done(Post post, BmobException e) {
-                    if(e == null){
-                        themeObjectId = post.getTheme().getObjectId();
-                        authorObjectId = post.getAuthor().getObjectId();
-                        themeName = post.getTheme().getName();
-                        mTheme.setText(themeName);
-                        ImageLoader.with(mContext, post.getAuthor().getIcon().getFileUrl(), mAuthorIcon);
-                        mAuthorName.setText(post.getAuthor().getNickname());
-                        if(post.getPhoto() != null){
-                            photoUrl = post.getPhoto().getFileUrl();
-                            ImageLoader.with(mContext, photoUrl, mPhoto);
-                        } else{
-                            mPhoto.setVisibility(View.GONE);
-                        }
-                        mContent.setText(post.getContent());
+            if(postObjectId == null){
+                AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                mAlertDialog.setMessage("帖子已被删除");
+                mAlertDialog.setCancelable(false);
+                mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
                     }
-                }
-            });
+                });
+                mAlertDialog.show();
+            }else{
+                BmobQuery<Post> query = new BmobQuery<>();
+                query.addQueryKeys("theme,author,photo,content");
+                query.include("theme[objectId|name],author[objectId|icon|nickname]");
+                query.getObject(postObjectId, new QueryListener<Post>() {
+                    @Override
+                    public void done(Post post, BmobException e) {
+                        if(e == null){
+                            themeObjectId = post.getTheme().getObjectId();
+                            authorObjectId = post.getAuthor().getObjectId();
+                            themeName = post.getTheme().getName();
+                            mTheme.setText(themeName);
+                            ImageLoader.with(mContext, post.getAuthor().getIcon().getFileUrl(), mAuthorIcon);
+                            mAuthorName.setText(post.getAuthor().getNickname());
+                            if(post.getPhoto() != null){
+                                photoUrl = post.getPhoto().getFileUrl();
+                                ImageLoader.with(mContext, photoUrl, mPhoto);
+                            } else{
+                                mPhoto.setVisibility(View.GONE);
+                            }
+                            postContent = post.getContent();
+                            mContent.setText(postContent);
+                        }else{
+                            Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+                getComment(STATE_REFRESH);
+                if(authorObjectId.equals(me.getObjectId())) mDelete.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -276,6 +336,7 @@ public class PostDetailActivity extends BaseActivity {
                         Toast.makeText(mContext, "来发表第一条评论吧~~", Toast.LENGTH_SHORT).show();
                     }
                 }else{
+                    Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
@@ -326,6 +387,53 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 UserDetailActivity.actionStart(mContext, authorObjectId);
+            }
+        });
+        mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage("正在删除...");
+                mProgressDialog.setCancelable(false);
+
+                AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                mAlertDialog.setTitle("确定删除帖子?");
+                mAlertDialog.setMessage("删除后无法恢复");
+                mAlertDialog.setCancelable(true);
+                mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mProgressDialog.show();
+                        Post post = new Post();
+                        post.setObjectId(postObjectId);
+                        post.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                mProgressDialog.dismiss();
+                                if(e == null){
+                                    User me = GetCurrentUser.getCurrentUser(mContext);
+                                    if (me.getObjectId().equals(administratorId)){
+                                        Intent intent = new Intent(mContext, CreateNoticeService.class);
+                                        intent.putExtra("type", 0);
+                                        intent.putExtra("userId", authorObjectId);
+                                        intent.putExtra("content", postContent);
+                                        startService(intent);
+                                    }
+                                    finish();
+                                }else{
+                                    Toast.makeText(mContext, "删除失败! 请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                    Log.d(getClass().getSimpleName(), "bmob删除帖子失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
+                    }
+                });
+                mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                mAlertDialog.show();
             }
         });
     }

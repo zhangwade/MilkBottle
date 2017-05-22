@@ -137,7 +137,7 @@ public class WriteCommentActivity extends BaseActivity {
                     public void done(String s, BmobException e) {
                         progressDialog.dismiss();
                         if(e == null){
-                            Intent intent = new Intent("com.wadezhang.milkbottle.SEND_COMMENT_SUCCESS");
+                            Intent intent = new Intent("com.wadezhang.milkbottle.REFRESH_COMMENT_LIST");
                             sendBroadcast(intent);
                             finish();
                         }else{

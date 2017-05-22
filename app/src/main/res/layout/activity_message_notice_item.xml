@@ -8,24 +8,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-        <FrameLayout
+        <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:id="@+id/activity_message_wechat_item_img_from_icon"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_3d_rotation_black_24dp" />
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:id="@+id/activity_message_wechat_item_img_tips"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/search"/>
-        </FrameLayout>
+            android:id="@+id/activity_message_notice_item_img_icon"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_3d_rotation_black_24dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,14 +25,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/activity_message_wechat_item_text_from_name"
+                android:id="@+id/activity_message_notice_item_text_name"
                 android:textSize="?attr/textSizeFirst"
                 android:text="昵称" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/activity_message_wechat_item_text_from_content"
+                android:id="@+id/activity_message_notice_item_text_content"
                 android:layout_marginTop="10dp"
+                android:maxLines="1"
                 android:textSize="?attr/textSizeSecond"
                 android:text="内容" />
         </LinearLayout>
@@ -51,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_message_wechat_item_text_time"
+            android:id="@+id/activity_message_notice_item_text_time"
             android:textSize="?attr/textSizeThird"
             android:layout_marginLeft="10dp"
             android:text="2017-4-16" />

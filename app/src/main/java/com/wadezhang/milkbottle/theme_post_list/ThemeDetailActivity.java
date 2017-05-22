@@ -1,9 +1,12 @@
 package com.wadezhang.milkbottle.theme_post_list;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -52,13 +55,16 @@ public class ThemeDetailActivity extends BaseActivity {
     @BindView(R.id.activity_theme_detail_text_author_sex) TextView mAuthorSex;
     @BindView(R.id.activity_theme_detail_btn_addfollow) Button mBtnAddFollow; // TODO:判断是否已经关注
     @BindView(R.id.activity_theme_detail_author_item) LinearLayout mAuthorItem;
+    @BindView(R.id.activity_theme_detail_text_add_follow_tip) TextView mTipAddFollow;
 
     String mThemeId;
 
     Context mContext;
     private String mAuthorId;
 
-    private int mIsFollow = 0;
+    private int isFollow = 0; //对用户是否已关注，0 代表未检查完，1 代表已关注，2 代表未关注
+    private Handler initHandler;
+    private Handler addFollowHandler;
 
     public static void actionStart(Context context, String themeId){
         Intent intent = new Intent(context, ThemeDetailActivity.class);
@@ -74,43 +80,22 @@ public class ThemeDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         init();
-        checkIsFollow(0);
+        isFollow = 0;
+        mBtnAddFollow.setEnabled(false);
+        initHandler = new Handler(){
+            public void handleMessage(Message msg){
+                if(msg.what == 1){
+                    checkIsFollow();
+                }
+            }
+        };
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        mAuthorItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserDetailActivity.actionStart(mContext, mAuthorId);
-            }
-        });
-        mBtnAddFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mBtnAddFollow.getText().toString().equals("已关注")){
-                    AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
-                    mAlertDialog.setMessage("确定取消关注?");
-                    mAlertDialog.setCancelable(true);
-                    mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            checkIsFollow(1);
-                        }
-                    });
-                    mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    mAlertDialog.show();
-                }else{
-                    checkIsFollow(1);
-                }
-            }
-        });
+        onClick();
     }
 
     public void init(){
@@ -131,6 +116,9 @@ public class ThemeDetailActivity extends BaseActivity {
                         mAuthorId = theme.getAuthor().getObjectId();
                         mAuthorName.setText(theme.getAuthor().getNickname());
                         mAuthorSex.setText(theme.getAuthor().getSex());
+                        Message msg = new Message();
+                        msg.what = 1;
+                        initHandler.sendMessage(msg);
                     }else{
                         Toast.makeText(mContext, "话题不存在", Toast.LENGTH_SHORT).show();
                     }
@@ -142,32 +130,39 @@ public class ThemeDetailActivity extends BaseActivity {
         });
     }
 
-    public void checkIsFollow(final int tag){  // 0 : 初始状态检查 1 : 单击
-        User mUser = GetCurrentUser.getCurrentUser(mContext);
-        if(mUser == null) return;
+    public void checkIsFollow(){
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+        if(me.getObjectId().equals(mAuthorId)){
+            mBtnAddFollow.setVisibility(View.GONE);
+            mTipAddFollow.setVisibility(View.GONE);
+            return;
+        }
+
+        User user =  new User();
+        user.setObjectId(me.getObjectId());
         BmobQuery<Theme> query = new BmobQuery<>();
-        query.addWhereRelatedTo("theme", new BmobPointer(mUser));
+        query.addWhereRelatedTo("theme", new BmobPointer(user));
         query.addQueryKeys("objectId");
         query.findObjects(new FindListener<Theme>() {
             @Override
             public void done(List<Theme> list, BmobException e) {
                 if(e == null){
+                    mBtnAddFollow.setEnabled(true);
                     if(!list.isEmpty()){
-                        int hasFollowTheme = 0;
                         for(Theme theme : list){
                             if(mThemeId.equals(theme.getObjectId())){
-                                hasFollowTheme = 1;
+                                isFollow = 1;
                                 break;
                             }
                         }
-                        if(hasFollowTheme == 1){
-                            if(tag == 0) mBtnAddFollow.setText("已关注");
-                                else cancelFollow();
+                        if(isFollow == 1){
+                            mBtnAddFollow.setText("已关注");
                         }else{
-                            if(tag == 1) addFollow();
+                            isFollow = 2;
                         }
                     }else{
-                        if(tag == 1) addFollow();
+                        isFollow = 2;
                     }
                 }else{
                     Toast.makeText(mContext, "网络出了点小差哦~~", Toast.LENGTH_SHORT).show();
@@ -178,29 +173,32 @@ public class ThemeDetailActivity extends BaseActivity {
     }
 
     public void addFollow(){
-        mBtnAddFollow.setText("已关注");
-        User mUser = GetCurrentUser.getCurrentUser(mContext);
-        if(mUser == null) return;
+        User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null) return;
+
         User user = new User();
-        user.setObjectId(mUser.getObjectId());
+        user.setObjectId(me.getObjectId());
         Theme theme = new Theme();
         theme.setObjectId(mThemeId);
-        BmobRelation relation =  new BmobRelation();
+        BmobRelation relation = new BmobRelation();
         relation.add(theme);
         user.setTheme(relation);
         user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                if(e != null){
-                    Toast.makeText(mContext, "网络出了点小差哦~~", Toast.LENGTH_SHORT).show();
+                Message msg = new Message();
+                if(e == null){
+                   msg.what = 1;
+                }else{
+                    msg.what = 0;
                     Log.d(getClass().getSimpleName(), "bmob添加关注话题失败："+e.getMessage()+","+e.getErrorCode());
                 }
+                addFollowHandler.sendMessage(msg);
             }
         });
     }
 
     public void cancelFollow(){
-        mBtnAddFollow.setText("关注");
         User mUser = GetCurrentUser.getCurrentUser(mContext);
         if(mUser == null) return;
         User user = new User();
@@ -213,10 +211,73 @@ public class ThemeDetailActivity extends BaseActivity {
         user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                if(e != null){
-                    Toast.makeText(mContext, "网络出了点小差哦~~", Toast.LENGTH_SHORT).show();
+                Message msg = new Message();
+                if(e == null){
+                    msg.what = 1;
+                }else {
+                    msg.what = 0;
                     Log.d(getClass().getSimpleName(), "bmob取消关注话题失败："+e.getMessage()+","+e.getErrorCode());
                 }
+                addFollowHandler.sendMessage(msg);
+            }
+        });
+    }
+
+    public void onClick(){
+        mAuthorItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDetailActivity.actionStart(mContext, mAuthorId);
+            }
+        });
+        mBtnAddFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage("正在操作...");
+                mProgressDialog.setCancelable(false);
+                if(isFollow == 1){
+                    AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                    mAlertDialog.setMessage("确定取消关注?");
+                    mAlertDialog.setCancelable(true);
+                    mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mProgressDialog.show();
+                            cancelFollow();
+                        }
+                    });
+                    mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    mAlertDialog.show();
+                }else if(isFollow == 2){
+                    mProgressDialog.show();
+                    addFollow();
+                }
+                addFollowHandler = new Handler(){
+                    public void handleMessage(Message msg){
+                        mProgressDialog.dismiss();
+                        switch (msg.what){
+                            case 1 :
+                                if(isFollow == 1){
+                                    mBtnAddFollow.setText("关注");
+                                    isFollow = 2;
+                                }else if (isFollow == 2){
+                                    mBtnAddFollow.setText("已关注");
+                                    isFollow = 1;
+                                }
+                                break;
+                            case 0 :
+                                Toast.makeText(mContext, "操作失败! 请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
             }
         });
     }

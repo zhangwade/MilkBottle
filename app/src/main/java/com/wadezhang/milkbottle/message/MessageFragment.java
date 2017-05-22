@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -44,11 +43,11 @@ public class MessageFragment extends BaseFragment {
     @BindView(R.id.fragment_message_comment_item) LinearLayout mComment;
     @BindView(R.id.fragment_message_likes_item) LinearLayout mLikes;
     @BindView(R.id.fragment_message_fans_item) LinearLayout mFans;
-    @BindView(R.id.fragment_message_wechat_item) LinearLayout mWechat;
+    @BindView(R.id.fragment_message_notice_item) LinearLayout mNotice;
     @BindView(R.id.fragment_message_img_comment_tips) ImageView mImgCommentTips;
     @BindView(R.id.fragment_message_img_likes_tips) ImageView mImgLikesTips;
     @BindView(R.id.fragment_message_img_fans_tips) ImageView mImgFansTips;
-    @BindView(R.id.fragment_message_img_wechat_tips) ImageView mImgWechatTips;
+    @BindView(R.id.fragment_message_img_notice_tips) ImageView mImgNoticeTips;
 
     private final int READ_NO = 0;
     private final int READ_YES = 1;
@@ -56,10 +55,12 @@ public class MessageFragment extends BaseFragment {
     private int commentItemHasMsg = 0;
     private int likesItemHasMsg = 0;
     private int fansItemHasMsg = 0;
+    private int noticeItemHasMsg = 0;
 
     private List<Comment> commentUnReadList;
     private List<Likes> likesUnReadList;
     private List<Fans> fansUnReadList;
+    private List<Notice> noticeUnReadList;
 
     private List<Post> myPostList = new ArrayList<>();; //我的所有帖子的 Id
     User mUser;
@@ -193,15 +194,17 @@ public class MessageFragment extends BaseFragment {
                 }
             }
         });
-        BmobQuery<Wechat> wechatBmobQuery = new BmobQuery<>();
-        wechatBmobQuery.addWhereEqualTo("to", mUser);
-        wechatBmobQuery.addWhereEqualTo("isRead", READ_NO);
-        wechatBmobQuery.addQueryKeys("objectId");
-        wechatBmobQuery.findObjects(new FindListener<Wechat>() {
+        BmobQuery<Notice> noticeBmobQuery = new BmobQuery<>();
+        noticeBmobQuery.addWhereEqualTo("to", mUser);
+        noticeBmobQuery.addWhereEqualTo("isRead", READ_NO);
+        noticeBmobQuery.addQueryKeys("objectId");
+        noticeBmobQuery.findObjects(new FindListener<Notice>() {
             @Override
-            public void done(List<Wechat> list, BmobException e) {
+            public void done(List<Notice> list, BmobException e) {
                 if(e == null){
-                    if(!list.isEmpty()) mImgWechatTips.setVisibility(View.VISIBLE);
+                    if(!list.isEmpty()) mImgNoticeTips.setVisibility(View.VISIBLE);
+                    noticeUnReadList = list;
+                    noticeItemHasMsg = 1;
                 }else{
                     Toast.makeText(getContext(), "请检查网络是否开启", Toast.LENGTH_SHORT).show();
                     Log.d(getClass().getSimpleName(), "bmob查询失败："+e.getMessage()+","+e.getErrorCode());
@@ -253,10 +256,16 @@ public class MessageFragment extends BaseFragment {
                 MessageFansActivity.actionStart(getContext());
             }
         });
-        mWechat.setOnClickListener(new View.OnClickListener() {
+        mNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mImgWechatTips.setVisibility(View.INVISIBLE);
+                if(noticeItemHasMsg == 1){
+                    ThreadUpdateNotice threadUpdateNotice = new ThreadUpdateNotice(noticeUnReadList);
+                    new Thread(threadUpdateNotice).start();
+                }
+                noticeItemHasMsg = 0;
+                mImgNoticeTips.setVisibility(View.INVISIBLE);
+                MessageNoticeActivity.actionStart(getContext());
             }
         });
     }
@@ -367,6 +376,46 @@ public class MessageFragment extends BaseFragment {
                     }
                 }
                 new BmobBatch().updateBatch(fansList).doBatch(new QueryListListener<BatchResult>() {
+                    @Override
+                    public void done(List<BatchResult> list, BmobException e) {
+                        if(e == null){
+
+                        }else{
+                            Toast.makeText(getContext(), "网络出了点小差~~", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "bmob更新fans失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    public class ThreadUpdateNotice implements Runnable{
+
+        List<Notice> mList;
+        int times = 1;
+
+        public ThreadUpdateNotice(List<Notice> list){
+            mList = list;
+        }
+
+        @Override
+        public void run(){
+            if(mList.size() > 50) times = mList.size() / 50 + 1;
+            for(int i = 0; i<times; i++){
+                List<BmobObject> noticeList = new ArrayList<>();
+                for(int j = 0; j < 50; j++){
+                    if(mList.size() != 0){
+                        Notice notice = new Notice();
+                        notice.setObjectId(mList.get(0).getObjectId());
+                        notice.setIsRead(1);
+                        noticeList.add(notice);
+                        mList.remove(0);
+                    }else{
+                        break;
+                    }
+                }
+                new BmobBatch().updateBatch(noticeList).doBatch(new QueryListListener<BatchResult>() {
                     @Override
                     public void done(List<BatchResult> list, BmobException e) {
                         if(e == null){

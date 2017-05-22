@@ -33,6 +33,6 @@ public class ThemePostListViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(position == 0) return "最新";
-        else return "热帖";
+        else return "推荐";
     }
 }

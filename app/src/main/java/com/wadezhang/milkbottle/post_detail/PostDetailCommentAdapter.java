@@ -1,18 +1,23 @@
 package com.wadezhang.milkbottle.post_detail;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
@@ -24,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2017/5/2 0002.
@@ -32,6 +39,8 @@ import butterknife.ButterKnife;
 public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCommentAdapter.ViewHolder> {
 
     private Context mContext;
+
+    private String administratorId = "jDMNRNNR";
 
     private List<Comment> mCommentList;
 
@@ -60,6 +69,60 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
                 UserDetailActivity.actionStart(mContext, comment.getAuthor().getObjectId());
             }
         });
+        mViewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mViewHolder.getAdapterPosition();
+                Comment comment = mCommentList.get(position);
+                final String commentId = comment.getObjectId();
+                final String authorObjectId = comment.getAuthor().getObjectId();
+                final String commentContent = comment.getContent();
+
+                final ProgressDialog mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage("正在删除...");
+                mProgressDialog.setCancelable(false);
+
+                AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
+                mAlertDialog.setTitle("确定删除评论?");
+                mAlertDialog.setMessage("删除后无法恢复");
+                mAlertDialog.setCancelable(true);
+                mAlertDialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mProgressDialog.show();
+                        Comment comment = new Comment();
+                        comment.setObjectId(commentId);
+                        comment.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                mProgressDialog.dismiss();
+                                if(e == null){
+                                    User me = GetCurrentUser.getCurrentUser(mContext);
+                                    if (me.getObjectId().equals(administratorId)){
+                                        Intent intent = new Intent(mContext, CreateNoticeService.class);
+                                        intent.putExtra("type", 1);
+                                        intent.putExtra("userId", authorObjectId);
+                                        intent.putExtra("content", commentContent);
+                                        mContext.startService(intent);
+                                    }
+                                    Intent mIntent = new Intent("com.wadezhang.milkbottle.REFRESH_COMMENT_LIST");
+                                    mContext.sendBroadcast(mIntent);
+                                }else{
+                                    Toast.makeText(mContext, "删除失败! 请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                    Log.d(getClass().getSimpleName(), "bmob删除评论失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
+                    }
+                });
+                mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                mAlertDialog.show();
+            }
+        });
         return mViewHolder;
     }
 
@@ -85,7 +148,8 @@ public class PostDetailCommentAdapter extends RecyclerView.Adapter<PostDetailCom
             String mUserId = user.getObjectId();
             boolean isPostAuthor = ( mComment.getPost().getAuthor().getObjectId().equals(mUserId) );
             boolean isCommentAuthor = ( mComment.getAuthor().getObjectId().equals(mUserId) );
-            if(!isPostAuthor && !isCommentAuthor) holder.mDelete.setVisibility(View.INVISIBLE);
+            boolean isAdministrator = ( mUserId.equals(administratorId) );
+            if(!isAdministrator && !isPostAuthor && !isCommentAuthor) holder.mDelete.setVisibility(View.INVISIBLE);
         }
     }
 

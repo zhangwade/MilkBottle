@@ -134,6 +134,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activity_theme_detail_text_add_follow_tip"
         android:text="关注话题"
         android:padding="10dp"
         android:textSize="?attr/textSizeSecond"

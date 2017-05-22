@@ -83,6 +83,10 @@
         <activity android:name=".message.MessageLikesActivity"/>
 
         <activity android:name=".message.MessageFansActivity"/>
+
+        <activity android:name=".message.MessageNoticeActivity"/>
+
+        <activity android:name=".message.MessageNoticeDetailActivity"/>
         
         <activity android:name=".new_post.SelectThemeByCategoryActivity"/>
 
@@ -104,6 +108,8 @@
         <service android:name=".message.CheckNewMessageService"/>
 
         <service android:name=".register_and_login.CreateUserInfoService"/>
+
+        <service android:name=".post_detail.CreateNoticeService"/>
 
     </application>
 

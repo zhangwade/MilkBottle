@@ -26,7 +26,7 @@ public class ThemePostListHotPresenter implements ThemePostListHotContract.Prese
     //private boolean isFirstReq = true; //缓存策略的判断标志位。第一次进入应用的时候，设置其查询的缓存策略为CACHE_ELSE_NETWORK,当用户执行上拉或者下拉刷新操作时，设置查询的缓存策略为NETWORK_ELSE_CACHE。
 
     private String lastTime = "2017-05-03 10:41:00"; //查询数据的时间边界
-    private int limit = 10; //每次查询限制数目
+    private int limit = 20; //每次查询限制数目
     private int curPage = 0; //分页查询，当前所在页
     private int mActionType;
     private final int STATE_REFRESH = 0; //下拉刷新
@@ -42,7 +42,7 @@ public class ThemePostListHotPresenter implements ThemePostListHotContract.Prese
     }
 
     @Override
-    public void getPost(int actionType){
+    public void getPost(int actionType) {
         /*
         User user = new User();
         user.setObjectId("C0NeXXX3");
@@ -77,6 +77,38 @@ public class ThemePostListHotPresenter implements ThemePostListHotContract.Prese
                 }
             }
         });   */
+        //mActionType = actionType;
+        Theme theme = new Theme();
+        theme.setObjectId(mThemeId);
+        BmobQuery<Post> query = new BmobQuery<>();
+        // 按时间降序查询
+        query.addWhereEqualTo("theme", theme);
+        query.order("commentCount");
+        query.addQueryKeys("objectId,theme,author,photo,content,createdAt,commentCount,likesCount");
+        query.include("author[objectId|icon|nickname]");
+        // 设置每页数据个数
+        query.setLimit(limit);
+        // 查找数据
+        query.findObjects(new FindListener<Post>() {
+            @Override
+            public void done(List<Post> list, BmobException e) {
+                if (e == null) {
+                    if (!list.isEmpty()) {
+                        mPostList = list;
+                        showPost(STATE_REFRESH);
+                    }  else {
+                        mThemePostListHotView.showToast("暂时没有帖子哦~~");
+                    }
+                } else {
+                    mThemePostListHotView.showToast("网络出了点小差~~");
+                    Log.d(getClass().getSimpleName(), "bmob查询失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
+            }
+        });
+    }
+/*
+    @Override
+    public void getPost(int actionType){
         mActionType = actionType;
         Theme theme = new Theme();
         theme.setObjectId(mThemeId);
@@ -131,16 +163,7 @@ public class ThemePostListHotPresenter implements ThemePostListHotContract.Prese
                 }
             }
         });
-/*
-        followIds = new ArrayList<String>(); //TODO:测试用
-        followIds.add("C3a12227"); //TODO:测试用
-        followIds.add("36mF1118"); //TODO:测试用   */
-/*
-        if(followIds.isEmpty()){
-            mPostFriendView.showToast("没有任何关注");
-            return; //没有任何关注
-        }   */
-    }
+    }   */
 
     @Override
     public void showPost(int actionType){

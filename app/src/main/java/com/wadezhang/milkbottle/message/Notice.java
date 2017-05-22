@@ -8,7 +8,7 @@ import cn.bmob.v3.BmobObject;
  * Created by Administrator on 2017/5/13 0013.
  */
 
-public class Wechat extends BmobObject {
+public class Notice extends BmobObject {
 
     private User from;
     private User to;

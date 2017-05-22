@@ -24,11 +24,12 @@
             style="@android:style/TextAppearance.Medium"
             android:textColor="?attr/navigationColor"
             android:text="帖子详情"/>
-        <ImageButton
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/activity_post_detail_text_delete"
             android:visibility="invisible"
-            android:background="@mipmap/ic_3d_rotation_black_24dp"/>
+            android:text="删除"/>
     </LinearLayout>
 
     <TextView android:layout_height="0.5dp"
