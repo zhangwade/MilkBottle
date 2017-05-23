@@ -51,7 +51,7 @@ public class RegisterActivity extends BaseActivity {
     private final int PSD_MAX_NUM = 18;
     private boolean psdShow = false;
 
-    private String defaultIconPath = "http://bmob-cdn-10919.b0.upaiyun.com/2017/04/30/a1902635402911b4806f3f7c8baac63b.jpg";
+    private String defaultIconPath = "http://bmob-cdn-10919.b0.upaiyun.com/2017/05/22/80f5c39240bbc83780687e9e70a7b439.png";
 
     Context mContext;
 

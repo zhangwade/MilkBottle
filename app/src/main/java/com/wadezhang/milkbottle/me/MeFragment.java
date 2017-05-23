@@ -1,6 +1,7 @@
 package com.wadezhang.milkbottle.me;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.wadezhang.milkbottle.BaseFragment;
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
+import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.UserInfo;
@@ -211,7 +213,7 @@ public class MeFragment extends BaseFragment {
         mSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SettingsActivity.actionStart(getContext());
             }
         });
     }

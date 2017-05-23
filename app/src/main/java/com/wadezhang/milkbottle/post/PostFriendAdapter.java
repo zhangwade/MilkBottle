@@ -61,7 +61,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if(mContext == null) mContext = parent.getContext();
-        final View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_post_viewpager_item, parent, false);
+        View mView = LayoutInflater.from(mContext).inflate(R.layout.fragment_post_viewpager_item, parent, false);
         final ViewHolder mViewHolder = new ViewHolder(mView);
         mViewHolder.mPost.setOnClickListener(new View.OnClickListener() {
             @Override

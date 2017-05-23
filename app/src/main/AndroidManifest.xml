@@ -99,6 +99,10 @@
 
         <activity android:name=".me.UserDetailActivity"/>
 
+        <activity android:name=".me.SettingsActivity"/>
+
+        <activity android:name=".me.SettingsAboutActivity"/>
+
         <activity android:name=".MainActivity" />
 
         <activity

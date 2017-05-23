@@ -3,13 +3,19 @@ package com.wadezhang.milkbottle.register_and_login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.nanchen.compresshelper.CompressHelper;
 import com.wadezhang.milkbottle.BaseActivity;
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
@@ -17,10 +23,17 @@ import com.wadezhang.milkbottle.MainActivity;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * Created by Administrator on 2017/5/11 0011.
@@ -40,6 +53,9 @@ public class EditPersonalInfoActivity extends BaseActivity {
     @BindView(R.id.activity_edit_personal_info_text_introduction) TextView mTextIntroduction;
 
     Context mContext;
+
+    private String iconPath;
+    private final int IMAGE_PICKER = 98;
 
     private final int RETURN_ICON = 0;
     private final int RETURN_NICKNAME = 1;
@@ -71,7 +87,13 @@ public class EditPersonalInfoActivity extends BaseActivity {
                 finish();
             }
         });
-        //mIconItem  TODO
+        mIconItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ImageGridActivity.class);
+                startActivityForResult(intent, IMAGE_PICKER);
+            }
+        });
         mNicknameItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +140,46 @@ public class EditPersonalInfoActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == ImagePicker.RESULT_CODE_ITEMS){
+            if(data != null && requestCode == IMAGE_PICKER){
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                iconPath = images.get(0).path;
+                ImageLoader.with(mContext, iconPath, mImgIcon);
+                File oldFile = new File(iconPath);
+                File newFile = CompressHelper.getDefault(mContext).compressToFile(oldFile);
+                iconPath = newFile.getPath();
+
+                final BmobFile photoFile = new BmobFile(new File(iconPath));
+                photoFile.uploadblock(new UploadFileListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e == null){
+                            User me = GetCurrentUser.getCurrentUser(mContext);
+                            User user = new User();
+                            if(photoFile != null) user.setIcon(photoFile);
+                            user.update(me.getObjectId(),new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if(e==null){
+                                        Toast.makeText(mContext, "上传头像成功", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        mImgIcon.setImageResource(R.mipmap.default_icon);
+                                        Toast.makeText(mContext, "上传头像失败！请重新选择图片", Toast.LENGTH_SHORT).show();
+                                        Log.d(getClass().getSimpleName(), "bmob上传图片失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+                            });
+                        }else{
+                            mImgIcon.setImageResource(R.mipmap.default_icon);
+                            Toast.makeText(mContext, "上传头像失败！请重新选择图片", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "bmob上传图片失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+            }else{
+
+            }
+        }
         switch (requestCode){
             case RETURN_ICON: //TODO
                 break;
