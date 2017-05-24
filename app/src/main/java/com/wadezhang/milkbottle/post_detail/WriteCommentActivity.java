@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2017/5/16 0016.
@@ -135,11 +136,23 @@ public class WriteCommentActivity extends BaseActivity {
                 comment.save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {
-                        progressDialog.dismiss();
                         if(e == null){
-                            Intent intent = new Intent("com.wadezhang.milkbottle.REFRESH_COMMENT_LIST");
-                            sendBroadcast(intent);
-                            finish();
+                            Post post = new Post();
+                            post.increment("commentCount");
+                            post.update(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    progressDialog.dismiss();
+                                    if(e == null){
+                                        Intent intent = new Intent("com.wadezhang.milkbottle.REFRESH_COMMENT_LIST");
+                                        sendBroadcast(intent);
+                                        finish();
+                                    }else {
+                                        Toast.makeText(mContext, "发送失败，请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                        Log.d(getClass().getSimpleName(), "bmob更新 commentCount 失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+                            });
                         }else{
                             Toast.makeText(mContext, "发送失败，请检查网络是否开启", Toast.LENGTH_SHORT).show();
                             Log.d(getClass().getSimpleName(), "bmob添加评论失败："+e.getMessage()+","+e.getErrorCode());
