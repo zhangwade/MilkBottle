@@ -124,7 +124,7 @@ public class PostFriendAdapter extends RecyclerView.Adapter<PostFriendAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position){  //TODO: final
+    public void onBindViewHolder(final ViewHolder holder, int position){
         if(mPostList != null){
             holder.mAddFollow.setVisibility(View.GONE);
             Post mPost = mPostList.get(position);

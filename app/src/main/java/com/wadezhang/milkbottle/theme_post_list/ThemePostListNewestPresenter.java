@@ -134,15 +134,6 @@ public class ThemePostListNewestPresenter implements ThemePostListNewestContract
                 }
             }
         });
-/*
-        followIds = new ArrayList<String>(); //TODO:测试用
-        followIds.add("C3a12227"); //TODO:测试用
-        followIds.add("36mF1118"); //TODO:测试用   */
-/*
-        if(followIds.isEmpty()){
-            mPostFriendView.showToast("没有任何关注");
-            return; //没有任何关注
-        }   */
     }
 
     @Override

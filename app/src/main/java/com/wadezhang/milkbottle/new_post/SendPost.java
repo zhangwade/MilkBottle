@@ -14,6 +14,7 @@ import java.io.File;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -28,7 +29,7 @@ public class SendPost {
     private User mAuthor;
     private Handler mHandler;
 
-    public SendPost(Theme theme, String photoPath, String content, User author, Handler handler){ //TODO:在对应的话题更新 帖子数 字段
+    public SendPost(Theme theme, String photoPath, String content, User author, Handler handler){
         mTheme = theme;
         mPhotoPath = photoPath;
         mContent = content;
@@ -67,6 +68,25 @@ public class SendPost {
             @Override
             public void done(String s, BmobException e) {
                 if(e == null){
+                    updatePostCount();
+                }else{
+                    Message message = new Message();
+                    message.what = 2;
+                    mHandler.sendMessage(message);
+                    Log.d(getClass().getSimpleName(), "bmob新增帖子失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    public void updatePostCount(){
+        Theme theme = new Theme();
+        theme.setObjectId(mTheme.getObjectId());
+        theme.increment("postCount");
+        theme.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e == null){
                     Message message = new Message();
                     message.what = 1;
                     mHandler.sendMessage(message);
@@ -74,7 +94,7 @@ public class SendPost {
                     Message message = new Message();
                     message.what = 2;
                     mHandler.sendMessage(message);
-                    Log.d(getClass().getSimpleName(), "bmob新增帖子失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.d(getClass().getSimpleName(), "bmob更新话题 postCount 失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });

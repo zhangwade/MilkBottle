@@ -48,7 +48,7 @@ public class SelectSexActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sex);
         ButterKnife.bind(this);

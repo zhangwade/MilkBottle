@@ -98,7 +98,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         theme = mThemeList.get(position - 2);
                     }
                     ThemePostListActivity.actionStart(mContext, theme);
-                    //Toast.makeText(mContext, Integer.toString(position), Toast.LENGTH_SHORT).show(); //TODO
                 }
             });
             return mItemViewHolder;

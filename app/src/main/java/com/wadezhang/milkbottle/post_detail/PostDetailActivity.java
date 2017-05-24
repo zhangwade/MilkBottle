@@ -125,7 +125,7 @@ public class PostDetailActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         ButterKnife.bind(this);

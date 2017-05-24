@@ -28,7 +28,6 @@ public class PostFragment extends BaseFragment {
     @BindView(R.id.fragment_post_viewpager) ViewPager mViewPager;
     @BindView(R.id.text_friend_fragment_post) TextView mTopNavigationFriend;
     @BindView(R.id.text_find_fragment_post) TextView mTopNavigationFind;
-    @BindView(R.id.fragment_post_imagebn_search) ImageButton mButtonSearch;
     @BindView(R.id.fragment_post_text_newpost) TextView mButtonNewPost;
 
     ArrayList<Fragment> mViewPagerFragmentList;
@@ -53,12 +52,6 @@ public class PostFragment extends BaseFragment {
         mTopNavigationFriend.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFind.setOnClickListener(new TopNavigationViewPagerOnClickListener());
         mTopNavigationFriend.setTextColor(getResources().getColor(R.color.highLight));
-        mButtonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //BookContentActivity.actionStart(getActivity()); //TODO:修改
-            }
-        });
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +95,7 @@ public class PostFragment extends BaseFragment {
     }
 
     private int getOldNavigationColor(){
-        return getResources().getColor(R.color.dayNavigationColor); //TODO:根据SharedPreferences判断当前主题的默认NavigationColor
+        return getResources().getColor(R.color.dayNavigationColor);
     }
 
     private class onPageChangeListener implements ViewPager.OnPageChangeListener{

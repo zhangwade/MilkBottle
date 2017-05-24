@@ -65,7 +65,7 @@ public class MyPostActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post);
         ButterKnife.bind(this);

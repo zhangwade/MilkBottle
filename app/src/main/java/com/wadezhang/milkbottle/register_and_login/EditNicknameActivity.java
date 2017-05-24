@@ -53,7 +53,7 @@ public class EditNicknameActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_nickname);
         ButterKnife.bind(this);

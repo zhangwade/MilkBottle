@@ -50,7 +50,7 @@ public class WatchBigPhotoActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_big_photo);
         ButterKnife.bind(this);
@@ -108,7 +108,7 @@ public class WatchBigPhotoActivity extends BaseActivity {
                 String fileName = new Date().toString()+".png";
                 BmobFile bmobFile = new BmobFile(fileName, "", mPhotoUrl);
                 File saveFile = new File(Environment.getExternalStorageDirectory(), bmobFile.getFilename());
-                bmobFile.download(saveFile, new DownloadFileListener() { //TODO: 可指定保存目录
+                bmobFile.download(saveFile, new DownloadFileListener() {
                     @Override
                     public void onStart(){
                         mProgressDialog.show();

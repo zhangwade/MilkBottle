@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         //Bmob.initialize(this, "88948b7c6b14026453c55e34644c8b2c");
         //SystemClock.sleep(2000);
@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity {
         registerReceiver(newMessageReceiver, intentFilter);
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
             @Override
-            public void onTabSelected(int position){//TODO:当重复点击同一Tab时，隐藏再显示可能会有跳转的画面
+            public void onTabSelected(int position){
                 android.support.v4.app.FragmentManager mFragmentManager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                 if(mShowingFragment != null){

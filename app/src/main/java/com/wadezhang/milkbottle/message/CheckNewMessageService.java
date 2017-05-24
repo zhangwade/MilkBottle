@@ -82,12 +82,10 @@ public class CheckNewMessageService extends Service {
         BmobQuery<Comment> q1 = new BmobQuery<>();
         q1.addWhereEqualTo("isRead", READ_NO);
 
-        //BmobQuery<Comment> q2 = new BmobQuery<>();
-        //q2.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
         BmobQuery<Comment> q3 = new BmobQuery<>();
         q3.addWhereEqualTo("toWho", mUser);
         List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
-        //queries.add(q2);
+
         queries.add(q3);
         for (Post post : myPostList){
             BmobQuery<Comment> q = new BmobQuery<>();

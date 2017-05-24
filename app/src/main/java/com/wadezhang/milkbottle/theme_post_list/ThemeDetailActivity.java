@@ -53,7 +53,7 @@ public class ThemeDetailActivity extends BaseActivity {
     @BindView(R.id.activity_theme_detail_img_author_icon) ImageView mAuthorIcon;
     @BindView(R.id.activity_theme_detail_text_author_name) TextView mAuthorName;
     @BindView(R.id.activity_theme_detail_text_author_sex) TextView mAuthorSex;
-    @BindView(R.id.activity_theme_detail_btn_addfollow) Button mBtnAddFollow; // TODO:判断是否已经关注
+    @BindView(R.id.activity_theme_detail_btn_addfollow) Button mBtnAddFollow;
     @BindView(R.id.activity_theme_detail_author_item) LinearLayout mAuthorItem;
     @BindView(R.id.activity_theme_detail_text_add_follow_tip) TextView mTipAddFollow;
 
@@ -74,7 +74,7 @@ public class ThemeDetailActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_detail);
         ButterKnife.bind(this);

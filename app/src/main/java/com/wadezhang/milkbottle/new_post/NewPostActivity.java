@@ -26,6 +26,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.nanchen.compresshelper.CompressHelper;
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.ImageLoader;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
@@ -67,7 +68,7 @@ public class NewPostActivity extends BaseActivity {
 
     private String themeId;
     private String themeName;
-    private String photoPath; //TODO:图片路径
+    private String photoPath;
 
     private IntentFilter intentFilter;
     private SelectThemeReceiver selectThemeReceiver;
@@ -83,7 +84,7 @@ public class NewPostActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_new_post);
@@ -158,7 +159,6 @@ public class NewPostActivity extends BaseActivity {
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                themeId = "zQ6F222e"; //TODO
                 if(themeId == null){
                     AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
                     mAlertDialog.setTitle("还没有选择话题");
@@ -167,7 +167,7 @@ public class NewPostActivity extends BaseActivity {
                     mAlertDialog.setPositiveButton("选择话题", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //TODO:打开 选择话题 activity
+                            SelectThemeByCategoryActivity.actionStart(mContext);
                         }
                     });
                     mAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -177,6 +177,8 @@ public class NewPostActivity extends BaseActivity {
                     });
                     mAlertDialog.show();
                 }else{
+                    User me  = GetCurrentUser.getCurrentUser(mContext);
+                    if(me == null) return;
                     final ProgressDialog mProgressDialog = new ProgressDialog(mContext);
                     mProgressDialog.setMessage("正在发布...");
                     mProgressDialog.setCancelable(false);
@@ -185,9 +187,9 @@ public class NewPostActivity extends BaseActivity {
                     File newFile = CompressHelper.getDefault(mContext).compressToFile(oldFile);
                     photoPath = newFile.getPath();
                     Theme theme = new Theme();
-                    theme.setObjectId(themeId); //TODO:设置话题
+                    theme.setObjectId(themeId);
                     User author = new User();
-                    author.setObjectId("C0NeXXX3"); //TODO:设置作者
+                    author.setObjectId(me.getObjectId());
                     Handler handler = new Handler(){
                         public void handleMessage(Message message){
                             mProgressDialog.dismiss();

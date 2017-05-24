@@ -70,7 +70,7 @@ public class SelectThemeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_theme_list);

@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.User;
+import com.wadezhang.milkbottle.UserInfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,74 +50,46 @@ public class PostFriendPresenter implements PostFriendContract.Presenter {
 
     @Override
     public void getPost(int actionType){
-        /*
-        User user = new User();
-        user.setObjectId("C0NeXXX3");
-
-        User user1 = new User();
-        user1.setObjectId("36mF1118");
-        BmobRelation relation1 = new BmobRelation();
-        relation1.add(user1);
-        user.setFollow(relation1);
-        user.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e == null){
-                    Log.d(getClass().getSimpleName(), "bmob添加关注36mF1118成功：");
-                }else{
-                    Log.d(getClass().getSimpleName(), "bmob添加关注36mF1118失败："+e.getMessage()+","+e.getErrorCode());
-                }
-            }
-        });
-        User user2 = new User();
-        user2.setObjectId("C3a12227");
-        BmobRelation relation2 = new BmobRelation();
-        relation2.add(user2);
-        user.setFollow(relation2);
-        user.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e == null){
-                    Log.d(getClass().getSimpleName(), "bmob添加关注C3a12227成功：");
-                }else{
-                    Log.d(getClass().getSimpleName(), "bmob添加关注C3a12227失败："+e.getMessage()+","+e.getErrorCode());
-                }
-            }
-        });   */
         mActionType = actionType;
-        final User user = GetCurrentUser.getCurrentUser(mContext);
-        if(user == null)return;
-        BmobQuery<User> mFollowQuery = new BmobQuery<>();
+        final User me = GetCurrentUser.getCurrentUser(mContext);
+        if(me == null)return;
+
+        BmobQuery<UserInfo> query = new BmobQuery<>();
         User mUser = new User();
-        mUser.setObjectId(user.getObjectId());
-        mFollowQuery.addWhereRelatedTo("follow", new BmobPointer(mUser));
-        mFollowQuery.addQueryKeys("objectId");
-        mFollowQuery.findObjects(new FindListener<User>() {
+        mUser.setObjectId(me.getObjectId());
+        query.addWhereEqualTo("user", mUser);
+        query.addQueryKeys("objectId");
+        query.findObjects(new FindListener<UserInfo>() {
             @Override
-            public void done(List<User> list, BmobException e) { //查询当前用户的关注
-                if(e == null){
-                    followIds.clear();
-                    if(!list.isEmpty()){
-                        for(User user : list){
-                            followIds.add(user.getObjectId());
+            public void done(List<UserInfo> list, BmobException e) {
+                if(e == null && !list.isEmpty()){
+                    BmobQuery<User> userQuery = new BmobQuery<User>();
+                    userQuery.addWhereRelatedTo("follow", new BmobPointer(list.get(0)));
+                    userQuery.addQueryKeys("objectId");
+                    userQuery.findObjects(new FindListener<User>() {
+                        @Override
+                        public void done(List<User> list, BmobException e) { //查询当前用户的关注
+                            if(e == null){
+                                followIds.clear();
+                                if(!list.isEmpty()){
+                                    for(User user : list){
+                                        followIds.add(user.getObjectId());
+                                    }
+                                }
+                                followIds.add(me.getObjectId()); //自己发的帖子也显示在“好友”栏里
+                                getPostFromFollow();
+                            }else{
+                                Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                                Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
+                            }
                         }
-                    }
-                    followIds.add(user.getObjectId()); //自己发的帖子不显示在“发现”栏里
-                    getPostFromFollow();
+                    });
                 }else{
-                    Log.d(getClass().getSimpleName(), "bmob查询followIds失败："+e.getMessage()+","+e.getErrorCode());
+                    Toast.makeText(mContext, "请检查网络是否开启", Toast.LENGTH_SHORT).show();
+                    Log.d(getClass().getSimpleName(), "bmob查询 UserInfo 失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });
-/*
-        followIds = new ArrayList<String>(); //TODO:测试用
-        followIds.add("C3a12227"); //TODO:测试用
-        followIds.add("36mF1118"); //TODO:测试用   */
-/*
-        if(followIds.isEmpty()){
-            mPostFriendView.showToast("没有任何关注");
-            return; //没有任何关注
-        }   */
     }
 
     public void getPostFromFollow(){

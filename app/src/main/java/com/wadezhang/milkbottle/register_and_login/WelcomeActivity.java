@@ -31,11 +31,10 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
         Bmob.initialize(this, "88948b7c6b14026453c55e34644c8b2c");
-        //User.logOut(); //TODO
         User currentUser = BmobUser.getCurrentUser(User.class);
         if(currentUser != null){  //用户已登录，直接进入主界面
             MainActivity.actionStart(this);

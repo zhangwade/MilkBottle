@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wadezhang.milkbottle.BaseActivity;
+import com.wadezhang.milkbottle.GetCurrentUser;
 import com.wadezhang.milkbottle.R;
 import com.wadezhang.milkbottle.User;
 import com.wadezhang.milkbottle.post.OnClickListenerToPostDetail;
@@ -68,7 +69,7 @@ public class NewThemeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        setTheme(R.style.DayThemeSmallText); //TODO: 判断再切换主题
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_new_theme);
@@ -238,6 +239,9 @@ public class NewThemeActivity extends BaseActivity {
                     Toast.makeText(mContext, "还没有选择话题类别哦~~", Toast.LENGTH_LONG).show();
                     return;
                 }
+                User me = GetCurrentUser.getCurrentUser(mContext);
+                if(me == null) return;
+
                 final ProgressDialog progressDialog = new ProgressDialog(mContext);
                 progressDialog.setMessage("正在创建...");
                 progressDialog.setCancelable(false);
@@ -251,7 +255,7 @@ public class NewThemeActivity extends BaseActivity {
                 theme.setIntroduction(mDecidedIntroduction);
                 theme.setPostCount(0);
                 User author = new User();
-                author.setObjectId("C0NeXXX3"); //TODO: 注册登录模块完成后要修改这里
+                author.setObjectId(me.getObjectId());
                 theme.setAuthor(author);
                 theme.save(new SaveListener<String>() {
                     @Override

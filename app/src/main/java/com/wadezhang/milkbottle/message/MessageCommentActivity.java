@@ -67,7 +67,7 @@ public class MessageCommentActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
@@ -141,12 +141,10 @@ public class MessageCommentActivity extends BaseActivity {
     }
 
     public void getComment(){
-        //BmobQuery<Comment> q1 = new BmobQuery<>();
-        //q1.addWhereContainedIn("post", myPostList); //TODO: myPostList 可能为空导致有问题
         BmobQuery<Comment> q2 = new BmobQuery<>();
         q2.addWhereEqualTo("toWho", mUser);
         List<BmobQuery<Comment>> queries = new ArrayList<BmobQuery<Comment>>();
-        //queries.add(q1);
+
         queries.add(q2);
         for (Post post : myPostList){
             BmobQuery<Comment> q = new BmobQuery<>();

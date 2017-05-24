@@ -61,7 +61,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -183,9 +183,8 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void done(User user, BmobException e){
                         progressDialog.dismiss();
-                        if(e == null){  //TODO:直接开启 MainActivity
+                        if(e == null){
                             AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(mContext);
-                            //mAlertDialog.setTitle("登录成功");
                             mAlertDialog.setMessage("登录成功");
                             mAlertDialog.setCancelable(false);
                             mAlertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {

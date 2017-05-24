@@ -74,7 +74,7 @@ public class EditPersonalInfoActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.DayThemeSmallText); //TODO
+        setTheme(R.style.DayThemeSmallText);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_personal_info);
         ButterKnife.bind(this);
@@ -181,8 +181,6 @@ public class EditPersonalInfoActivity extends BaseActivity {
             }
         }
         switch (requestCode){
-            case RETURN_ICON: //TODO
-                break;
             case RETURN_NICKNAME:
                 if(resultCode == RESULT_OK){
                     mTextNickname.setText(data.getStringExtra("newNickname"));
