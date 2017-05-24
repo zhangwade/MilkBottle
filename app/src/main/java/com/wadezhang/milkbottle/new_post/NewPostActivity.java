@@ -72,6 +72,8 @@ public class NewPostActivity extends BaseActivity {
     private IntentFilter intentFilter;
     private SelectThemeReceiver selectThemeReceiver;
 
+    private int hasTheme = 0;
+
     public static void actionStart(Context context, String themeId, String themeName){
         Intent mIntent = new Intent(context, NewPostActivity.class);
         mIntent.putExtra("themeId", themeId);
@@ -102,6 +104,7 @@ public class NewPostActivity extends BaseActivity {
         if(themeName != null){
             mTitle.setText(themeName);
             mLinearLayout.setVisibility(View.GONE);
+            hasTheme = 1;
         }else{
             mThemeName.setVisibility(View.INVISIBLE);
             mChangeTheme.setVisibility(View.INVISIBLE);
@@ -300,6 +303,6 @@ public class NewPostActivity extends BaseActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        unregisterReceiver(selectThemeReceiver);
+        if(hasTheme == 0) unregisterReceiver(selectThemeReceiver);
     }
 }
