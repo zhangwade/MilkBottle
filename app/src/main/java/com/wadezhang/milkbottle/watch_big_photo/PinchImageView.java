@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:40
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-5-4 下午8:44
+ */
+
 package com.wadezhang.milkbottle.watch_big_photo;
 
 import android.widget.ImageView;

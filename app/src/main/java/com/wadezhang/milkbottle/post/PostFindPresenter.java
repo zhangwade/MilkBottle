@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:39
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-5-24 下午3:11
+ */
+
 package com.wadezhang.milkbottle.post;
 
 import android.content.Context;

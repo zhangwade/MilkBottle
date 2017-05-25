@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:40
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-5-21 下午6:45
+ */
+
 package com.wadezhang.milkbottle.register_and_login;
 
 import android.app.IntentService;

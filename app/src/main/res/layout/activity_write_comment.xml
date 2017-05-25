@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by WadeZhang on 17-5-25 上午8:39
+  ~ Copyright(c) 2017. All rights reserved.
+  ~
+  ~ Last modified 17-5-16 下午8:05
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"

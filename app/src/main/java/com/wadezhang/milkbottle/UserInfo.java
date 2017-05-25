@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:40
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-5-21 下午2:23
+ */
+
 package com.wadezhang.milkbottle;
 
 import cn.bmob.v3.BmobObject;

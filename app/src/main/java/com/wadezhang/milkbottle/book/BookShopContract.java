@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:39
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-4-29 下午1:28
+ */
+
 package com.wadezhang.milkbottle.book;
 
 import com.wadezhang.milkbottle.BasePresenter;

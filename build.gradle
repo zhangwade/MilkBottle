@@ -1,3 +1,10 @@
+/*
+ * Created by WadeZhang on 17-5-25 上午8:40
+ * Copyright(c) 2017. All rights reserved.
+ *
+ * Last modified 17-4-24 下午8:38
+ */
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: "config.gradle"
 
